@@ -6,15 +6,26 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import ChatProvider from "./Context/ChatProvider";
 import { BrowserRouter } from "react-router-dom";
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux'
+import { reducers } from './reducers';
+
+
+const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
+  <Provider store={store}>
   <ChakraProvider>
+
     <BrowserRouter>
       <ChatProvider>
         <App />
       </ChatProvider>
     </BrowserRouter>
-  </ChakraProvider>,
+  </ChakraProvider>
+  </Provider>,
+
   document.getElementById("root")
 );
 
