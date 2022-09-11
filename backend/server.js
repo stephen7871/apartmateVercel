@@ -25,6 +25,11 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 ///app.use("/apartmentposts", aparmentPostRoute);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // --------------------------deployment------------------------------
 
 const __dirname1 = path.resolve();
@@ -57,8 +62,10 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:3000","https://aparmatesearch.herokuapp.com"]
-    // credentials: true,
+    origin: ["http://localhost:3000","http://localhost:5000"],
+    credentials: true,
+
+
   },
 });
 
