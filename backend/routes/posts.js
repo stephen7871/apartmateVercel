@@ -2,7 +2,7 @@
 //const express = require('express');
 
 //import { getPosts, getPost, createPost, getUsers,deletePost} from '../controllers/posts.js';
-const {getPosts, getPost, createPost, deletePost} = require('../controllers/posts.js')
+const {getPosts, getPost, createPost, deletePost, createApartmentPost} = require('../controllers/posts.js')
 
 
 const router = require("express").Router();

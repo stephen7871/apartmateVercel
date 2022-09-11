@@ -5,8 +5,10 @@ const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/posts")
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const aparmentPostRoute = require("./routes/aparmentPostRoute");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
+
 
 dotenv.config();
 connectDB();
@@ -21,6 +23,7 @@ app.use('/posts', postRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+///app.use("/apartmentposts", aparmentPostRoute);
 
 // --------------------------deployment------------------------------
 

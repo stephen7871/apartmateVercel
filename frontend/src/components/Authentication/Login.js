@@ -11,7 +11,7 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ const Login = () => {
 
   const submitHandler = async () => {
     setLoading(true);
-    if (!email || !password) {
+    if (!username || !password) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -42,7 +42,7 @@ const Login = () => {
 
       const { data } = await axios.post(
         "/api/user/login",
-        { email, password },
+        { username, password },
         config
       );
 
@@ -72,13 +72,13 @@ const Login = () => {
 
   return (
     <VStack spacing="10px">
-      <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
+      <FormControl id="username" isRequired>
+        <FormLabel>username</FormLabel>
         <Input
-          value={email}
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          // type="email"
+          placeholder="username"
+          onChange={(e) => setUsername(e.target.value)}
         />
       </FormControl>
       <FormControl id="password" isRequired>
@@ -111,7 +111,7 @@ const Login = () => {
         colorScheme="red"
         width="100%"
         onClick={() => {
-          setEmail("guest@example.com");
+          setUsername("guest@example.com");
           setPassword("123456");
         }}
       >

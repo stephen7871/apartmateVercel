@@ -43,24 +43,34 @@ import List from './List';
           label="Search by title"
         />
       </div>
-      <List input={inputText} setCurrentId={setCurrentId}/>
-      {/* <>
-      { counter ? (
+
+
+        {posts.map((post) => (
           <ul className={classes.list}>
+            <MeetupItem
+              post={post} 
+              setCurrentId={setCurrentId}/>
+          </ul>
+        ))}
+      
+      {/* <List input={inputText} setCurrentId={setCurrentId}/> */}
+      {/* <>
+      { counter ? ( */}
+          {/* <ul className={classes.list}>
           {postList.map((post) => (
             <MeetupItem
               post={post} 
               setCurrentId={setCurrentId}
             />
           ))}
-        </ul>
-          )
+        </ul> */}
+          {/* )
       :
       (
           <Alert severity="info">You have no post yet.  Add your own posts by going to the "Add Post" page</Alert>
-      )}
+      )} */}
       
-  </> */}
+  {/* </> */}
     </div>
   );
 }

@@ -16,10 +16,17 @@ import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { createPost } from '../../actions/posts';
+import { ThemeProvider, createMuiTheme, makeStyles, withStyles } from '@material-ui/core/styles';
+//import { createPost } from '../../actions/posts';
+import Autocomplete from '@mui/material/Autocomplete';
+//import colleges from './collegedata.js';
+//import ComboBox from './ComboBox';
+import FileBase from 'react-file-base64';
+import { createPost }  from '../../actions/posts.js';
+import colleges from './collegedata';
+import ComboBox from './ComboBox';
 
-
+//const theme = createMuiTheme();
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -62,10 +69,12 @@ const BootstrapInput = withStyles((theme) => ({
     },
   }));
 
+
+
 const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     const post = useSelector((state) => (currentId ? state.posts.find((description) => description._id === currentId) : null));
 
-    const [postData, setPostData] = useState({title: '', selectedFile: '', tags: '', description: '', username: '', max: '', min: '', wanttolive: ''});
+    const [postData, setPostData] = useState({address: '', nbedrooms: '', typeofplace: '', pricepermonth: '', nroomates: '', collegename: '', photos: '', description: '', username: ''});
   
     const [switched, setSwitched] = useState(false);
     const [isShowap, setIsShownap] = useState(true);
@@ -73,9 +82,11 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     const [isShowroap, setIsShownroap] = useState(false);
     const [selectval, setSelectval] = React.useState('');
     const [roomatenum, setroomatenum] = React.useState('');
+    
+
 
     useEffect(() => {
-      console.log(user+" user");
+      //console.log(user?.username + "user");
     }, []);
     
     
@@ -92,12 +103,16 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
   
     const clear = () => {
       setCurrentId(0);
-      setPostData({title: '', selectedFile: '', tags: '', description: '', username: '', max: '', min: '', wanttolive: ''});
+      setPostData({address: '', nbedrooms: '', typeofplace: '', pricepermonth: '', nroomates: '', collegename: '', photos: '', description: '', username: '', typeofpost: '', selectval: '', roomatenum: ''});
     };
   
     const handleselectChange = (event) => {
         setSelectval(event.target.value);
       };
+
+      const handlePhoto = (e) => {
+        setPostData({...postData, photo: e.target.files[0]});
+    }
 
       const handleselectromate = (event) => {
         setroomatenum(event.target.value);
@@ -105,9 +120,11 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+      const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
+      //console.log(collegesel.title + " college name");
       if (currentId === 0) {
-        dispatch(createPost({ ...postData, username: user, max: postData.max}));
-        console.log(postData);
+        dispatch(createPost({ ...postData, username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Aparment', collegename: collegesel.title}));
+       // console.log(postData);
         clear();
       } else {
         
@@ -121,11 +138,11 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
         <form className={classes.form} onSubmit={handleSubmit}>
   <div className={classes.control}>
     <label htmlFor='title'>address</label>
-    <input type='text' required id='title' value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })}/>
+    <input type='text' required id='address' value={postData.address} onChange={(e) => setPostData({ ...postData, address: e.target.value })}/>
   </div>
   <div className={classes.control}>
-    <label htmlFor='tags'>number of bedrooms</label>
-    <TextField name="tags" variant="outlined"  fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+    <label htmlFor='title'>number of bedrooms</label>
+    <TextField name="nbedrooms" variant="outlined"  fullWidth value={postData.nbedrooms} onChange={(e) => setPostData({ ...postData, nbedrooms: e.target.value})} />
   </div>
 
   <div className={classes.control}>
@@ -155,11 +172,11 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
   </div> */}
   <div className={classes.control}>
     <label htmlFor='max'>price per month</label>
-    <TextField name="wanttolive" variant="outlined"  fullWidth value={postData.wanttolive} onChange={(e) => setPostData({ ...postData, wanttolive: e.target.value})} />
+    <TextField name="pricepermonth" variant="outlined"  fullWidth value={postData.pricepermonth} onChange={(e) => setPostData({ ...postData, pricepermonth: e.target.value})} />
     {/* <TextField name="max" variant="outlined"  fullWidth value={postData.max} onChange={(e) => setPostData({ ...postData, max: e.target.value})} /> */}
   </div>
   <div className={classes.control}>
-    <label htmlFor='wanttolive'>number of roomates</label>
+    <label htmlFor='nroomates'>number of roomates</label>
     <FormControl className={classes.margin}>
         {/* <InputLabel id="demo-customized-select-label">type</InputLabel> */}
         <Select
@@ -183,12 +200,15 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
       </FormControl>
   </div>
   <div className={classes.control}>
-    <label htmlFor='wanttolive'>Tag a college</label>
-    <TextField name="wanttolive" variant="outlined"  fullWidth value={postData.wanttolive} onChange={(e) => setPostData({ ...postData, wanttolive: e.target.value})} />
-  </div>
+    <label htmlFor='college'>Tag a college Location</label>
+    </div>
+    <ComboBox/>
+    
+  {/* </div> */}
   <div className={classes.control}>
     <label htmlFor='wanttolive'>add photos</label>
-    <TextField name="wanttolive" variant="outlined"  fullWidth value={postData.wanttolive} onChange={(e) => setPostData({ ...postData, wanttolive: e.target.value})} />
+    <div>
+    <FileBase type="file" name="photos" accept=".png, .jpg, .jpeg" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, photos: base64 })} /></div>
   </div>
   <div className={classes.control}>
     <label htmlFor='description'>any other things to add</label>

@@ -109,7 +109,7 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
     e.preventDefault();
     if (currentId === 0) {
       dispatch(createPost({ ...postData, username: user, max: postData.max}));
-      console.log(postData);
+      //console.log(postData);
       clear();
     } else {
       

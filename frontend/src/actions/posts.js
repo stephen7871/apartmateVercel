@@ -14,9 +14,9 @@ export const getPosts = () => async (dispatch) => {
 
 export const createPost = (post) => async (dispatch) => {
   try {
-    console.log(JSON.stringify(post)+ "createPost JSON.stringify(post)");
+    //console.log(JSON.stringify(post)+ "createPost JSON.stringify(post)");
     const { data } = await api.createPost(post);
-    console.log(JSON.stringify(data)+ "createPost JSON.stringify(data)");
+    ///console.log(JSON.stringify(data)+ "createPost JSON.stringify(data)");
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -58,7 +58,7 @@ export const likePost = (id) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    console.log("deleting post with id " + id.id);
+   /// console.log("deleting post with id " + id.id);
     await api.deletePost(id.id);
     // console.log("deleting post with id " + id.id);
     dispatch({ type: DELETE, payload: id.id });

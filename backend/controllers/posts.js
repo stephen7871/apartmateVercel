@@ -50,10 +50,51 @@ module.exports.getPost = async (req, res) => {
     }
 }
 
+module.exports.createApartmentPost = async (req, res) => {
+    const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username} = req.body;
+    //console.log(username + "creating post with username");
+    const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+
+    try {
+        await newPostMessage.save();
+
+        res.status(201).json(newPostMessage);
+    } catch (error) {
+        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username});
+    }
+}
+
+// module.exports.createPost = async (req, res) => {
+//     const {title, selectedFile, wanttolive, min, max, tags, description, id, username} = req.body;
+//     //console.log(username + "creating post with username");
+//     const newPostMessage = new PostMessage({title, selectedFile, wanttolive, min, max, tags, description, id, username})
+
+//     try {
+//         await newPostMessage.save();
+
+//         res.status(201).json(newPostMessage);
+//     } catch (error) {
+//         res.status(409).json({title, selectedFile, wanttolive, min, max, tags, description, id, username});
+//     }
+// }
+
 module.exports.createPost = async (req, res) => {
-    const {title, selectedFile, wanttolive, min, max, tags, description, id, username} = req.body;
-    console.log(username + "creating post with username");
-    const newPostMessage = new PostMessage({title, selectedFile, wanttolive, min, max, tags, description, id, username})
+    const {title, selectedFile, wanttolive, min, max, tags, description, id, username,address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,typeofpost} = req.body;
+    if (typeofpost){
+        if(typeofpost === 'Aparment'){
+            const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+
+    try {
+        await newPostMessage.save();
+
+        res.status(201).json(newPostMessage);
+    } catch (error) {
+        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username});
+    }
+
+        }
+    }else{
+        const newPostMessage = new PostMessage({title, selectedFile, wanttolive, min, max, tags, description, id, username})
 
     try {
         await newPostMessage.save();
@@ -62,7 +103,11 @@ module.exports.createPost = async (req, res) => {
     } catch (error) {
         res.status(409).json({title, selectedFile, wanttolive, min, max, tags, description, id, username});
     }
+    }
+    //console.log(username + "creating post with username"); 
 }
+
+
 
 module.exports.deletePost = async (req, res) => {
     const { id } = req.params;
