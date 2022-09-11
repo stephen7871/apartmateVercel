@@ -58,7 +58,7 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>React Blog</div>
+      <div className={classes.logo}>Apartmate</div>
       <nav>
         <ul>
           <li>
