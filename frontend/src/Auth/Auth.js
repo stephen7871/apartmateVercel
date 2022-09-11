@@ -13,7 +13,7 @@ import useStyles from './styles';
 import Input from './Input';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+const initialState = { firstName: '', lastName: '', username: '', password: '', confirmPassword: '' };
 
 const SignUp = (props) => {
   const [hasError, setError] = React.useState(false);
@@ -98,7 +98,7 @@ function getStorageValue(key, defaultValue) {
         </Avatar>
         <Typography component="h1" variant="h5">{ isSignup ? 'Sign up' : 'Sign in' }</Typography>
         { hasError && (
-          <Alert severity="error">please use an email that ends with @gmail.com </Alert>
+          <Alert severity="error">please use an username that ends with @gmail.com </Alert>
         )}
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
