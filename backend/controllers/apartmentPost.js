@@ -5,7 +5,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 //import PostMessage from '../models/postMessage.js';
-const PostMessage = require('../models/postMessage')
+const Apartmentmodel = require('../models/Apartmentmodel')
 //import Checkoutpost from '../models/Checkoutpost.js';
 //const Checkoutpost = require('../models/Checkoutpost.js')
 
@@ -30,9 +30,9 @@ const router = express.Router();
 
 module.exports.getPosts = async (req, res) => { 
     try {
-        const postMessages = await PostMessage.find();
+        const aparmentMessages = await Apartmentmodel.find();
                 
-        res.status(200).json(postMessages);
+        res.status(200).json(aparmentMessages);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -42,7 +42,7 @@ module.exports.getPost = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const post = await PostMessage.findById(id);
+        const post = await Apartmentmodel.findById(id);
         
         res.status(200).json(post);
     } catch (error) {
@@ -53,7 +53,7 @@ module.exports.getPost = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username} = req.body;
     //console.log(username + "creating post with username");
-    const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+    const newPostMessage = new Apartmentmodel({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
 
     try {
         await newPostMessage.save();
@@ -69,7 +69,7 @@ module.exports.deletePost = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    await PostMessage.findByIdAndRemove(id);
+    await Apartmentmodel.findByIdAndRemove(id);
 
     res.json({ message: "Post deleted successfully." });
 }

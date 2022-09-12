@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Apartment from './Apartment';
 import Selling from './Selling';
-
+import Roomate from './Roomate';
 import { createPost } from '../../actions/posts';
 
 
@@ -143,7 +143,7 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
+          Please Sign IIn to create your own memories and like other's memories.
         </Typography>
       </Paper>
     );
@@ -154,8 +154,8 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
     <>
 
    
-    <Card> 
-      
+    
+      <Card>
       <Tooltip title="selling an appartment or house" arrow>
     <Button onClick={apartmentClick}>Selling?</Button>
     </Tooltip>
@@ -174,38 +174,12 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
 )}
 
 {isShowro && (
-  <form className={classes.form} onSubmit={handleSubmit}>
-
-  <div className={classes.control}>
-    <label htmlFor='min' >min price range</label>
-    <TextField name="min" variant="outlined"  fullWidth value={postData.min} onChange={(e) => setPostData({ ...postData, min: e.target.value})} />
-  </div>
-  {/* <div>
-    <Scrolebar/>
-  </div> */}
-  <div className={classes.control}>
-    <label htmlFor='max'>max price range</label>
-    <TextField name="max" variant="outlined"  fullWidth value={postData.max} onChange={(e) => setPostData({ ...postData, max: e.target.value})} />
-  </div>
-  <div className={classes.control}>
-    <label htmlFor='wanttolive'>where are you looking to move</label>
-    <TextField name="wanttolive" variant="outlined"  fullWidth value={postData.wanttolive} onChange={(e) => setPostData({ ...postData, wanttolive: e.target.value})} />
-  </div>
-
-  <div className={classes.control}>
-    <label htmlFor='description'>any other things to add</label>
-    <textarea id='description' required rows='5' value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })}></textarea>
-  </div>
-  <div className={classes.actions}>
-    <button>Add Post</button>
-  </div>
-</form>
-)}
-
-
-      </Card> 
-      
-     </>
+ <Roomate currentId={currentId} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+ 
+  )}
+  </Card>
+  </>
+  
   );
 }
 

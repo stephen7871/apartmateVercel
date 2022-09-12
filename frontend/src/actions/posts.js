@@ -1,12 +1,22 @@
 import { FETCH_ALL, CREATE, DELETE} from '../constants/actionTypes';
-
+import axios from 'axios';
 import * as api from '../api/index.js';
 
 export const getPosts = () => async (dispatch) => {
   try {
-    const { data } = await api.fetchPosts();
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    // const { data } = await api.fetchPosts();
+    const { data } = await axios.get(
+      "/posts",
+      {},
+      config
+    );
 
-    dispatch({ type: FETCH_ALL, payload: data });
+    //dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
     console.log(error.message);
   }

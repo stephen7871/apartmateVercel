@@ -13,6 +13,7 @@ import Navbar from '../Navbar/Navbar';
 import MyPost from '../meetups/MyPost';
 //import Chat from '../../pages/Chat';
 import Chatpage from '../../Pages/Chatpage';
+
 //import SetAvatar from '../SetAvatar';
 
 
@@ -34,8 +35,8 @@ const Home = (props ) => {
   //   dispatch(getUsers());
   // }, [currentId, dispatch]);
 
-  useEffect(() => {
-    dispatch(getPosts());
+  useEffect(async() => {
+      dispatch(getPosts());
   }, [currentId, dispatch]);
   
   

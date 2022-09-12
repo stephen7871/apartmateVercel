@@ -28,7 +28,7 @@ import useStyles from '../meetups/styles.js';
           <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
           <Typography>want to live:</Typography>
           <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
             </div>
           <p>{post.description}</p>
         </div>

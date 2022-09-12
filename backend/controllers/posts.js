@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 
 //import PostMessage from '../models/postMessage.js';
 const PostMessage = require('../models/postMessage')
+const AparmentModel = require('../models/Apartmentmodel')
+const asyncHandler = require("express-async-handler");
 //import Checkoutpost from '../models/Checkoutpost.js';
 //const Checkoutpost = require('../models/Checkoutpost.js')
 
@@ -28,17 +30,26 @@ const router = express.Router();
 //     }
 // }
 
-module.exports.getPosts = async (req, res) => { 
+module.exports.getPosts = asyncHandler(async (req, res) => {
     try {
         const postMessages = await PostMessage.find();
-                
+        //const aparmentMessages = await PostMessage.find();        
         res.status(200).json(postMessages);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
-}
+});
+module.exports.getApartmentPosts = asyncHandler(async (req, res) => {
+    try {
+        const apartmentMessages = await AparmentModel.find();
+        //const aparmentMessages = await PostMessage.find();        
+        res.status(200).json(postMessages);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+});
 
-module.exports.getPost = async (req, res) => { 
+module.exports.getPost = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -48,19 +59,19 @@ module.exports.getPost = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
-}
+});
 
 module.exports.createApartmentPost = async (req, res) => {
     const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username} = req.body;
     //console.log(username + "creating post with username");
-    const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+    const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates,collegename,photos,description,id,typeofpost,username})
 
     try {
         await newPostMessage.save();
 
         res.status(201).json(newPostMessage);
     } catch (error) {
-        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username});
+        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates,collegename,photos,description,id,typeofpost,username});
     }
 }
 
@@ -78,11 +89,11 @@ module.exports.createApartmentPost = async (req, res) => {
 //     }
 // }
 
-module.exports.createPost = async (req, res) => {
+module.exports.createPost = asyncHandler(async (req, res) => {
     const {title, selectedFile, wanttolive, min, max, tags, description, id, username,address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,typeofpost} = req.body;
     if (typeofpost){
         if(typeofpost === 'Aparment'){
-            const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+            const newPostMessage = new AparmentModel({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
 
     try {
         await newPostMessage.save();
@@ -105,11 +116,11 @@ module.exports.createPost = async (req, res) => {
     }
     }
     //console.log(username + "creating post with username"); 
-}
+});
 
 
 
-module.exports.deletePost = async (req, res) => {
+module.exports.deletePost = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
@@ -117,7 +128,7 @@ module.exports.deletePost = async (req, res) => {
     await PostMessage.findByIdAndRemove(id);
 
     res.json({ message: "Post deleted successfully." });
-}
+});
 
 /*export const updatePost = async (req, res) => {
     const { id } = req.params;

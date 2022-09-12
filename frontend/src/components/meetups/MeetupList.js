@@ -9,13 +9,18 @@ import List from './List';
 
 
   const MeetupList = ({ setCurrentId, user }) => {
+    const apartmentposts = useSelector((state) => state.posts);
     const posts = useSelector((state) => state.posts);
     const [counter, setCounter]= useState(0);
     const [postList, setPostList] = useState([]);
   const [inputText, setInputText] = useState("");
 
 
-  
+  useEffect(() => {
+    // storing input name
+    console.log(JSON.stringify(apartmentposts));
+    
+  }, []);
   let inputHandler = (e) => {
     //convert input text to lower case
     var lowerCase = e.target.value.toLowerCase();
@@ -44,16 +49,19 @@ import List from './List';
         />
       </div>
 
-
-        {posts.map((post) => (
-          <ul className={classes.list}>
+    
+{/* <ul className={classes.list}>
+        {apartmentposts.map((apartmentpost) => (
+          
             <MeetupItem
-              post={post} 
+              post={apartmentpost} 
               setCurrentId={setCurrentId}/>
-          </ul>
+         
         ))}
+        </ul> */}
       
-      {/* <List input={inputText} setCurrentId={setCurrentId}/> */}
+      
+      <List input={inputText} setCurrentId={setCurrentId}/>
       {/* <>
       { counter ? ( */}
           {/* <ul className={classes.list}>

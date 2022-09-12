@@ -19,11 +19,11 @@ app.use(express.json()); // to accept json data
 // app.get("/", (req, res) => {
 //   res.send("API Running!");
 // });
-app.use('/posts', postRoutes);
+// app.use("/posts", postRoutes);
+app.use("/posts", aparmentPostRoute);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
-///app.use("/apartmentposts", aparmentPostRoute);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -54,12 +54,12 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT;
 
-const server = app.listen(
+ 
+
+const io = require("socket.io")(app.listen(
   PORT,
   console.log(`Server running on PORT ${PORT}...`.yellow.bold)
-);
-
-const io = require("socket.io")(server, {
+), {
   pingTimeout: 60000,
   cors: {
     origin: ["http://localhost:3000","http://localhost:5000"],

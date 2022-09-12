@@ -25,7 +25,8 @@ import FileBase from 'react-file-base64';
 import { createPost }  from '../../actions/posts.js';
 import colleges from './collegedata';
 import ComboBox from './ComboBox';
-
+import axios from 'axios';
+import { CREATE } from '../../constants/actionTypes';
 //const theme = createMuiTheme();
 
 const BootstrapInput = withStyles((theme) => ({
@@ -82,6 +83,12 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     const [isShowroap, setIsShownroap] = useState(false);
     const [selectval, setSelectval] = React.useState('');
     const [roomatenum, setroomatenum] = React.useState('');
+    const [addresss, setAddresss] = React.useState('');
+    const[nbedroomss,setNbedroomss ] = React.useState('')
+    const [pricepermonthh, setPricepermonthh] = React.useState('');
+    const [photoss, setPhotoss] = React.useState('');
+    const [descriptionn, setDescriptionn] = React.useState('');
+
     
 
 
@@ -117,13 +124,32 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
       const handleselectromate = (event) => {
         setroomatenum(event.target.value);
       };
-
+    
+    const axioshandlesubmit = async (e) => {
+  
+    }
     const handleSubmit = async (e) => {
       e.preventDefault();
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      console.log("postdata.addres " + postData.nbedrooms); 
+      console.log("postdata.pricepermonth " + postData.pricepermonth);
+      console.log("postdata.photos " + postData.photos);
+      console.log("postdata.description " + postData.description);
       const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
+      const { data } = await axios.post(
+        "/posts",
+        {address: postData.address, nbedrooms: postData.nbedrooms, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Aparment', collegename: collegesel.title},
+        config
+      );
+      // dispatch({ type: CREATE, payload: data });
+      console.log(JSON.stringify(data));
       //console.log(collegesel.title + " college name");
       if (currentId === 0) {
-        dispatch(createPost({ ...postData, username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Aparment', collegename: collegesel.title}));
+        //dispatch(createPost({ ...postData, username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Aparment', collegename: collegesel.title}));
        // console.log(postData);
         clear();
       } else {

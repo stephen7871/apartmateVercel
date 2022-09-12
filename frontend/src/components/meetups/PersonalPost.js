@@ -38,7 +38,7 @@ const useStyless = makeStyles((theme) => ({
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>

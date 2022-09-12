@@ -15,20 +15,69 @@ import useStyles from '../meetups/styles.js';
   const [apartmentSwitch, setApartmentSwitch] = useState(false);
   const [roomateSwitch,setRoomateSwitch ] = useState(true);
 
-  if (post.typeofpost === 'Aparment'){
-    setApartmentSwitch(true);
-    setRoomateSwitch(false);
-  }
+  if (post.typeofpost == "Aparment"){
+    return(
+      <li className={classes.item}>
+      <Card>
+      <CardMedia className={classes.media} image={post.photo || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.photo} />
+        <div className={classes.content}>
+          <h3>{post.address}</h3>
+          <div className={classstyles.details}>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.nbedrooms}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.typeofplace}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.pricepermonth}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.nroomates}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.collegename}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.username}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.typeofpost}</Typography>
+            </div>
+          <p>{post.description}</p>
+        </div>
+        <div className={classes.actions}>
+        <Button>Chat</Button>
+        <p variant="body2">{moment(post.createdAt).fromNow()}</p>
+       
+        </div>
+      </Card>
+    </li>
 
-  useEffect(() => {
-    console.log(JSON.stringify(post));
-  }, []);
+    );
+    }
+    if(post.typeofpost == "Roomate"){
+      <li className={classes.item}>
+      <Card>
+        <div className={classes.content}>
+          <h3>{post.title}</h3>
+          <div className={classstyles.details}>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>
+            </div>
+          <p>{post.description}</p>
+        </div>
+        <div className={classes.actions}>
+        <Button>Chat</Button>
+        <p variant="body2">{moment(post.createdAt).fromNow()}</p>
+       
+        </div>
+      </Card>
+    </li>
+
+    }
+
+  
   // const user = JSON.parse(localStorage.getItem('name'));
   
 
 
   return (
-<>
+    <div>here</div>
+  );
+}
+
+export default MeetupItem;
+{/* <>
     {apartmentSwitch && (
 
 
@@ -63,7 +112,7 @@ import useStyles from '../meetups/styles.js';
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>
@@ -78,9 +127,8 @@ import useStyles from '../meetups/styles.js';
       </Card>
     </li>
     )}
-    </>
+    </> */}
     
-  );
-}
+  
 
-export default MeetupItem;
+

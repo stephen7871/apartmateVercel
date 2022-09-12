@@ -2,19 +2,22 @@
 //const express = require('express');
 
 //import { getPosts, getPost, createPost, getUsers,deletePost} from '../controllers/posts.js';
-const {getPosts, getPost, createPost, deletePost} = require('../controllers/posts.js')
+const {getPosts, getPost, createPost, deletePost} = require('../controllers/apartmentPost.js')
+
 
 
 const router = require("express").Router();
 
-router.get('/', getPosts);
+
+router.route("/").get(getPosts);
+//router.get('/', getPosts);
 // router.get('/', getUsers);
-router.post('/', createPost);
+///router.post('/', createPost);
+router.route("/").post(createPost);
 
-router.get('/:id', getPost);
+router.route('/:id').get(getPost);
+/// router.get('/:id', getPost);
 //router.patch('/:id', updatePost);
-router.delete('/:id', deletePost);
-//router.patch('/:id/likePost', likePost);
+router.route('/:id').delete(deletePost);
 
-//export default router;
 module.exports = router;
