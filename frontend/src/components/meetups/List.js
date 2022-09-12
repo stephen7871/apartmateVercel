@@ -11,6 +11,12 @@ function List(props) {
     const posts = useSelector((state) => state.posts);
     const [counter, setCounter]= useState(true);
     const [postList, setPostList] = useState([]);
+
+    useEffect(() => {
+      // storing input name
+      console.log(JSON.stringify(posts) + "List");
+      
+    }, []);
     
     // useEffect(() => {
     //     console.log(props.input + " props.inputTextt")

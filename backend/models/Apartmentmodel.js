@@ -17,6 +17,9 @@ const mongoose = require("mongoose");
     id: String,
     typeofpost: String,
     username: String,
+    max: String,
+    min: String,
+    wanttolive: String,
 })
 
 module.exports = mongoose.model("AparmentModel", AparmentModel);

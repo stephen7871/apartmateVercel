@@ -9,7 +9,7 @@ import List from './List';
 
 
   const MeetupList = ({ setCurrentId, user }) => {
-    const apartmentposts = useSelector((state) => state.posts);
+   
     const posts = useSelector((state) => state.posts);
     const [counter, setCounter]= useState(0);
     const [postList, setPostList] = useState([]);
@@ -18,7 +18,7 @@ import List from './List';
 
   useEffect(() => {
     // storing input name
-    console.log(JSON.stringify(apartmentposts));
+    console.log(JSON.stringify(posts) + "meetuplist");
     
   }, []);
   let inputHandler = (e) => {

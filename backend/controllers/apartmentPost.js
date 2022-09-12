@@ -51,16 +51,16 @@ module.exports.getPost = async (req, res) => {
 }
 
 module.exports.createPost = async (req, res) => {
-    const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username} = req.body;
+    const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username, max,min,wanttolive} = req.body;
     //console.log(username + "creating post with username");
-    const newPostMessage = new Apartmentmodel({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username})
+    const newPostMessage = new Apartmentmodel({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username, max,min,wanttolive})
 
     try {
         await newPostMessage.save();
 
         res.status(201).json(newPostMessage);
     } catch (error) {
-        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username});
+        res.status(409).json({address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username, max,min,wanttolive});
     }
 }
 

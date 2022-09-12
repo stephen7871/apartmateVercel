@@ -21,6 +21,7 @@ import Apartment from './Apartment';
 import Selling from './Selling';
 import axios from 'axios';
 import { createPost } from '../../actions/posts';
+import ComboBox from './ComboBox';
 
 
 
@@ -75,7 +76,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
   
   const post = useSelector((state) => (currentId ? state.posts.find((description) => description._id === currentId) : null));
 
-  const [postData, setPostData] = useState({title: '', selectedFile: '', tags: '', description: '', username: '', max: '', min: '', wanttolive: ''});
+  const [postData, setPostData] = useState({title: '', selectedFile: '', tags: '', description: '', username: '', max: '', min: '', wanttolive: '', collegename: ''});
 
   const [switched, setSwitched] = useState(false);
   const [isShowap, setIsShownap] = useState(true);
@@ -112,10 +113,11 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
           "Content-type": "application/json",
         },
       };
+      const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
     const { data } = await axios.post(
         
         "/posts",
-        {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username},
+        {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username, typeofpost: "Roomate", collegename: collegesel.title},
         config
       );
     if (currentId === 0) {
@@ -180,6 +182,10 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
     <label htmlFor='wanttolive'>where are you looking to move</label>
     <TextField name="wanttolive" variant="outlined"  fullWidth value={postData.wanttolive} onChange={(e) => setPostData({ ...postData, wanttolive: e.target.value})} />
   </div>
+  <div className={classes.control}>
+  <label htmlFor='wanttolive'>tag a college</label>
+  </div>
+  <ComboBox/>
 
   <div className={classes.control}>
     <label htmlFor='description'>any other things to add</label>

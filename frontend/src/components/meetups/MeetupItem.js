@@ -14,6 +14,13 @@ import useStyles from '../meetups/styles.js';
   const classstyles = useStyles();
   const [apartmentSwitch, setApartmentSwitch] = useState(false);
   const [roomateSwitch,setRoomateSwitch ] = useState(true);
+  useEffect(() => {
+
+    console.log(JSON.stringify(post) +"post data");
+    console.log(JSON.stringify(post.typeofpost) +"post.typeofpost ");
+    // eslint-disable-next-line
+  }, []);
+
 
   if (post.typeofpost == "Aparment"){
     return(
@@ -44,6 +51,7 @@ import useStyles from '../meetups/styles.js';
     );
     }
     if(post.typeofpost == "Roomate"){
+      return(
       <li className={classes.item}>
       <Card>
         <div className={classes.content}>
@@ -63,7 +71,7 @@ import useStyles from '../meetups/styles.js';
         </div>
       </Card>
     </li>
-
+      );
     }
 
   
