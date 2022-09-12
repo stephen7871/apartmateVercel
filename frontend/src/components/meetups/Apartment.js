@@ -185,9 +185,9 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>House</MenuItem>
-          <MenuItem value={20}>Appartment</MenuItem>
-          <MenuItem value={30}>Condo</MenuItem>
+          <MenuItem value={"House"}>House</MenuItem>
+          <MenuItem value={"appartment"}>Appartment</MenuItem>
+          <MenuItem value={"condo"}>Condo</MenuItem>
         </Select>
       </FormControl>
     
