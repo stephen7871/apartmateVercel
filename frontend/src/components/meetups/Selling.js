@@ -142,7 +142,7 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
       const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
       const { data } = await axios.post(
         "/posts",
-        {address: postData.address, nbedrooms: postData.nbedrooms, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Aparment', collegename: collegesel.title},
+        {address: postData.address, nbedrooms: postData.nbedrooms, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Renting', collegename: collegesel.title},
         config
       );
       // dispatch({ type: CREATE, payload: data });

@@ -117,7 +117,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
     const { data } = await axios.post(
         
         "/posts",
-        {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username, typeofpost: "Roomate", collegename: collegesel.title},
+        {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username, typeofpost: "Looking for a Roomate", collegename: collegesel.title},
         config
       );
     if (currentId === 0) {

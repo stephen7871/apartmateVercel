@@ -2,10 +2,10 @@ import React,{useState,useEffect} from 'react';
 import MeetupItem from './MeetupItem';
 import classes from './MeetupList.module.css';
 import InputBase from '@material-ui/core/InputBase';
-import { Paper,Typography,TextField, Button, Box, Select, MenuItem, ListItemText, Label, InputLabel, FormLabel  } from '@material-ui/core';
+import { Paper,Typography,TextField, Button, Box, Select, Form,  MenuItem, ListItemText, Label, InputLabel, FormLabel ,  } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-
+import PostChain from './PostChain'
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
@@ -18,7 +18,7 @@ import { MenuProps, useStyles } from "./utils";
 import { useSelector } from 'react-redux';
 import List from './List';
 import FormControl from '@material-ui/core/FormControl';
-import ComboBox from './ComboBox';
+import ComboBoxPostchain from './ComboBoxPostchain';
 
 
 
@@ -90,13 +90,14 @@ const opentop = makeStyles((theme) => ({
 
 
   const MeetupList = ({ setCurrentId, user }) => {
+    const posts = useSelector((state) => state.posts);
     
     
     
 
     
    
-    const posts = useSelector((state) => state.posts);
+    
     const [counter, setCounter]= useState(0);
     const [postList, setPostList] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -105,11 +106,24 @@ const opentop = makeStyles((theme) => ({
   const [typeofplaceval, setTypeofplaceval] = React.useState("Type");
   const [selected, setSelected] = useState([]);
   const [typeval, setTypeval] = useState([]);
+  const [maxval, setMaxval] = React.useState('');
+  const [minval, setMinval] = React.useState('');
+  const [show, SetShow] = React.useState(false);
+  const [conpricelist, setConPricelist] = useState({max: '', min: ''});
+  const [pricelist, setPricelist] = useState({max: '', min: ''});
   
   useEffect(() => {
     console.log( JSON.stringify(typeval) + " typeval");
     console.log( JSON.stringify(selected) + " selected");
   }, [typeval,selected]);
+
+  const handleminvalChange = (event) => {
+    setMinval(event.target.value);
+  };
+
+  const handlemaxvalChange = (event) => {
+    setMaxval(event.target.value);
+  };
 
   const handletypeChange = (event) => {
     setTypeofplaceval(event.target.value);
@@ -123,6 +137,23 @@ const opentop = makeStyles((theme) => ({
     setBedroomsval(event.target.value);
   };
 
+  const handleSubmit = (e) => {
+   
+    console.log(pricelist.max + "pricelist.max");
+    setMaxval(pricelist.max);
+    setMinval(pricelist.min);
+    console.log(JSON.stringify(maxval) + "setMaxval");
+    console.log(minval + "setMinval");
+  }
+
+  const revealTextField = () =>{
+    if (show == true){
+      SetShow(false);
+    }
+    if (show == false){
+      SetShow(true);
+    }
+  }
   useEffect(() => {
     // storing input name
     console.log(JSON.stringify(posts) + "meetuplist");
@@ -188,7 +219,7 @@ const opentop = makeStyles((theme) => ({
     
 
     <FormControl className={classes.margin}>
-      <ComboBox/>
+      <ComboBoxPostchain/>
       </FormControl>
       <div className={classes.space}>
       </div>
@@ -328,41 +359,46 @@ const opentop = makeStyles((theme) => ({
       <div className={classes.space}>
       </div>
     <FormControl className={opent.formControl}>
-    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+    <InputLabel id="demo-simple-select-label">bedrooms</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={bedroomsval}
           onChange={handlebednChange}
         >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={"bedrooms"}></MenuItem>
+          <MenuItem value={1}>1+</MenuItem>
+          <MenuItem value={2}>2+</MenuItem>
+          <MenuItem value={3}>3+</MenuItem>
+          <MenuItem value={4}>4+</MenuItem>
+          <MenuItem value={5}>5+</MenuItem>
+          <MenuItem value={6}>6+</MenuItem>
           <MenuItem value={7}>7+</MenuItem>
         </Select>
       </FormControl>
-        {/* <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={bedroomsval}
-          onChange={handlebednChange}
-          input={<BootstrapInput />}
-        >
-          <MenuItem value={bedroomsval}>
-            <em>{bedroomsval}</em>
-          </MenuItem>
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7+</MenuItem>
-        </Select>
-      </FormControl> */}
+
+      <div className={classes.space}>
+      </div>
+      <>
+      <FormControl className={opent.formControl}>
+      <Button onClick={revealTextField}> price </Button>
+        {show && (
+          <>
+          <form onSubmit={handleSubmit}>
+          <TextField id="filled-basic" label="max" variant="filled" value={pricelist.max} onChange={(e) => setPricelist({ ...pricelist, max: e.target.value })}/>
+          
+          <TextField id="filled-basic" label="min" variant="filled" value={pricelist.min} onChange={(e) => setPricelist({ ...pricelist, min: e.target.value })}/>
+         
+          <Button onClick={handleSubmit}>Submit</Button>
+         
+          </form>
+          </>
+        )}
+        </FormControl>
+        </>
+
+      
+      
 
 
 </Box>
@@ -390,9 +426,17 @@ const opentop = makeStyles((theme) => ({
          
         ))}
         </ul> */}
-      
-      
-      <List input={inputText} setCurrentId={setCurrentId}/>
+
+<ul className={classes.list}>
+        {posts.map((apartmentpost) => (
+          <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+            
+         
+        ))}
+
+      </ul>
+      {/* <PostChain input={inputText} setCurrentId={setCurrentId} /> */}
+      {/* <List input={inputText} setCurrentId={setCurrentId}/> */}
       {/* <>
       { counter ? ( */}
           {/* <ul className={classes.list}>
