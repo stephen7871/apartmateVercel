@@ -156,7 +156,7 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
    
     
       <Card>
-      <Tooltip title="selling an appartment or house" arrow>
+      <Tooltip title="selling an apartment or house" arrow>
     <Button onClick={apartmentClick}>Selling?</Button>
     </Tooltip>
     <Tooltip title="looking for roomates and an apartment" arrow>

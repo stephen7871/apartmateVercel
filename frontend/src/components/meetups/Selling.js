@@ -117,6 +117,9 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
         setSelectval(event.target.value);
       };
 
+      const handlenbedroomsChange = (event) => {
+        setNbedroomss(event.target.value);
+      };
       const handlePhoto = (e) => {
         setPostData({...postData, photo: e.target.files[0]});
     }
@@ -128,6 +131,7 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
     const axioshandlesubmit = async (e) => {
   
     }
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       const config = {
@@ -142,7 +146,7 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
       const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
       const { data } = await axios.post(
         "/posts",
-        {address: postData.address, nbedrooms: postData.nbedrooms, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Renting', collegename: collegesel.title},
+        {address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Renting', collegename: collegesel.title},
         config
       );
       // dispatch({ type: CREATE, payload: data });
@@ -157,7 +161,14 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
         clear();
       }
     };
-  
+    const onchangeprice = (e) => {
+      // e.preventDefault();
+      //   setPostData({ ...postData, pricepermonth: e.target.value})
+      let input = e.target.value ;
+      if( !input || ( input[input.length-1].match('[0-9]') && input[0].match('[1-9]')) ){
+      setPostData({ ...postData, pricepermonth: e.target.value})
+      }
+      } 
 
     return(
 
@@ -166,9 +177,31 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
     <label htmlFor='title'>address</label>
     <input type='text' required id='address' value={postData.address} onChange={(e) => setPostData({ ...postData, address: e.target.value })}/>
   </div>
+
+
   <div className={classes.control}>
-    <label htmlFor='title'>number of bedrooms</label>
-    <TextField name="nbedrooms" variant="outlined"  fullWidth value={postData.nbedrooms} onChange={(e) => setPostData({ ...postData, nbedrooms: e.target.value})} />
+    <label htmlFor='min' >number of bedrooms</label>
+    <div>
+      <FormControl className={classes.margin}>
+        <Select
+          labelId="demo-customized-select-label"
+          id="demo-customized-select"
+          value={nbedroomss}
+          onChange={handlenbedroomsChange}
+          input={<BootstrapInput />}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={0}>0</MenuItem>
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+        </Select>
+      </FormControl>
+    
+    </div>
   </div>
 
   <div className={classes.control}>
@@ -186,8 +219,9 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
             <em>None</em>
           </MenuItem>
           <MenuItem value={"House"}>House</MenuItem>
-          <MenuItem value={"appartment"}>Appartment</MenuItem>
-          <MenuItem value={"condo"}>Condo</MenuItem>
+          <MenuItem value={"Apartment"}>Apartment</MenuItem>
+          <MenuItem value={"Condo"}>Condo</MenuItem>
+          <MenuItem value={"TownHouse"}>TownHouse</MenuItem>
         </Select>
       </FormControl>
     
@@ -198,7 +232,8 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
   </div> */}
   <div className={classes.control}>
     <label htmlFor='max'>price per month</label>
-    <TextField name="pricepermonth" variant="outlined"  fullWidth value={postData.pricepermonth} onChange={(e) => setPostData({ ...postData, pricepermonth: e.target.value})} />
+    <TextField name="pricepermonth"
+    variant="outlined" inputProps={{pattern: "[0-9]*",}} fullWidth value={postData.pricepermonth} onChange={onchangeprice} />
     {/* <TextField name="max" variant="outlined"  fullWidth value={postData.max} onChange={(e) => setPostData({ ...postData, max: e.target.value})} /> */}
   </div>
   

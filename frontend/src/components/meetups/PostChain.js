@@ -11,25 +11,23 @@ import SellingItem from './SellingItem';
 
 
 
-  const PostChain = ({lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
+  const PostChain = ({collegesel, pclist, setPcist, list, counter, lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
   const dispatch = useDispatch();
   const classstyles = useStyles();
+
+ 
+
+  //const [pclist, setPcist] =  React.useState({looking: '',typeval: '', bedrooms: ''});
+  const [name, setName] = React.useState('');
   const [apartmentSwitch, setApartmentSwitch] = useState(false);
   const [roomateSwitch,setRoomateSwitch ] = useState(true);
-  const [collegesel,setCollegesel ] = useState(true);
-  useEffect(async () => {
-    setCollegesel( await JSON.parse(localStorage.getItem("meetupitemcollege")));
-    console.log(JSON.stringify(proplist) +"proplist");
-    console.log(JSON.stringify(lookingfor) +"lookingfor");
-    console.log(JSON.stringify(typeval) +"typeval");
-    console.log(JSON.stringify(bedroomsval) +"bedroomsval");
-    console.log(JSON.stringify(collegesel) +"collegesel");
-    // console.log(JSON.stringify(post) +"post data");
-    console.log(JSON.stringify(minval) +" minval");
-    console.log(JSON.stringify(maxval) +" maxval");
-    // console.log(JSON.stringify(post.typeofpost) +"post.typeofpost ");
-    // eslint-disable-next-line
-  }, []);
+  const [looking, setLooking] = useState(false);
+  const [place, setPlace] = useState(false);
+  const [bedrooms, setBedrooms] = useState(false);
+  const [price, setPrice] = useState(false);
+  const [returnpost, setReturnpost] = useState(false);
+ 
+//   const [collegesel,setCollegesel ] = useState(true);
 
 //   address: String,
 //     nbedrooms: String,
@@ -59,115 +57,193 @@ import SellingItem from './SellingItem';
 
 //const PostChain = ({lookingfor, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist })
 
- if(lookingfor[0] == null && typeval[0] == null && bedroomsval == "bedrooms" && collegesel == null){
+if(maxval == ""){
+    maxval = "0";
 
-    if (post.typeofpost == "Apartment and Roomate"){
-        return(
-            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-        );
-        }
-        if(post.typeofpost == "Looking for a Roomate"){
-          return(
-          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-          );
-        }
-        if(post.typeofpost == "Renting"){
-            return(
-            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-            );
-        }
+}
+if(minval == ""){
+    minval = "0";
+}
+if((maxval == "0" && minval == "0") || (maxval == "0" && minval > 0)){
 
- }
- if(typeval.includes(post.typeofplace)){
-    console.log("typeval.incudes(post.typeofplace");
-
-    if (post.typeofpost == "Apartment and Roomate"){
-        return(
-            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-        );
-        }
-        if(post.typeofpost == "Looking for a Roomate"){
-          return(
-          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-          );
-        }
-        if(post.typeofpost == "Renting"){
-            return(
-            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-            );
-        }
- }
-
- if(lookingfor.includes(post.typeofpost)){
-    console.log("typeval.incudes(post.typeofplace");
-    if (post.typeofpost == "Apartment and Roomate"){
-        return(
-            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-        );
-        }
-        if(post.typeofpost == "Looking for a Roomate"){
-          return(
-          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-          );
-        }
-        if(post.typeofpost == "Renting"){
-            return(
-            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-            );
-        }
- }
-
-
- if(parseInt(bedroomsval) <= parseInt(post?.nbedrooms)){
-    console.log("typeval.incudes(post.typeofplace");
-    if (post.typeofpost == "Apartment and Roomate"){
-        return(
-            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-        );
-        }
-        if(post.typeofpost == "Looking for a Roomate"){
-          return(
-          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-          );
-        }
-        if(post.typeofpost == "Renting"){
-            return(
-            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-            );
-        }
- }
-
- if(parseInt(maxval) >= parseInt(post?.pricepermonth)){
-    if (post.typeofpost == "Apartment and Roomate"){
-        return(
-            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-        );
-        }
-        if(post.typeofpost == "Looking for a Roomate"){
-          return(
-          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-          );
-        }
-        if(post.typeofpost == "Renting"){
-            return(
-            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
-            );
-        }
- }
+}
+// const looking = lookingfor.includes(post.typeofpost);
+// const place = typeval.includes(post.typeofplace);
+// const bedrooms = parseInt(bedroomsval) <= parseInt(post?.nbedrooms);
+// const price = (parseInt(maxval) >= parseInt(post?.pricepermonth)) && (parseInt(maxval) >= parseInt(post?.pricepermonth));
+// const college = collegesel == post?.college;
 
 
 
 
+//  if(lookingfor[0] == null && typeval[0] == null && bedroomsval == "bedrooms" && collegesel == "" && maxval == "0" && minval == "0"){
+
+//     if (post.typeofpost == "Apartment and Roomate"){
+//         return(
+//             <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//         );
+//         }
+//         if(post.typeofpost == "Looking for a Roomate"){
+//           return(
+//           <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//           );
+//         }
+//         if(post.typeofpost == "Renting"){
+//             return(
+//             <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//             );
+//         }
+
+//  }
+
+
+
+
+
+
+
+// useEffect(() => {
+  // console.log("here");
+  // console.log(JSON.stringify(pclist.looking)  + " pclist.looking");
+  // console.log(JSON.stringify(list.looking)+ " list.looking");
+  // if(pclist.looking != list.looking){
+  //   console.log(JSON.stringify(pclist.looking)  + " pclist.looking");
+  //   console.log(JSON.stringify(list.looking)+ " list.looking");
+  //   console.log("made false at plist.looking != list.looking")
+  //   //setReturnpost(false); 
+  // }
+// }, [pclist]);
+
+// useEffect(() => {
+//     setPcist({looking: '',typeval: '', bedrooms: ''});
+//     console.log(JSON.stringify(pclist) +"true")
+
+//     if(typeval.includes(post.typeofplace)){
+//       console.log("typeval.includes(post.typeofplace)");
+//       setPcist({...pclist, typeval: 'typeval'});
+//       console.log(JSON.stringify(pclist) + " list added typeval postchain");
+//     }
+//     console.log( post.typeofpost + " apartmentpost.typeofpost");
+//     console.log(lookingfor + " lookingfor");
+//     if(lookingfor.includes(post.typeofpost)){
+//       setPcist({...pclist, looking: 'selected'});
+//        console.log(JSON.stringify(pclist) + " list added selected for postchain");
+//     }
+//     if(parseInt(bedroomsval) <= parseInt(post?.nbedrooms)){
+//       setPcist({...pclist, bedrooms: 'bedroomsval'});
+//        console.log(JSON.stringify(pclist) + " list added bedroomsval for postchain");
   
+//     }
+//   // console.log("postchain");  
+//  }, [list]);
 
+
+//  console.log(list); 
+//  console.log(pclist.looking + "pclist.looking"); 
+//  console.log(pclist.typeval + "pclist.typeval"); 
+//  console.log("postchain");
+//  if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){   
+console.log(minval+ " minval postchain");
+if(
+
+(
+  (parseInt(bedroomsval) <= parseInt(post?.nbedrooms))
+  ||
+  (bedroomsval == "bedrooms")
+)
+&&
+(
+  (typeval.includes(post.typeofplace))
+  ||
+  (typeval[0] == null)
+)
+&&
+(
+  (lookingfor.includes(post.typeofpost))
+  ||
+  (lookingfor[0] == null)
+)
+
+&&
+
+(
+  ((parseInt(maxval) >= parseInt(post?.pricepermonth)) && (parseInt(minval) <= parseInt(post?.pricepermonth)))
+  ||
+  //((maxval == "0" && minval == "0") || (maxval == "0" || minval == "0"))
+  (maxval == "0" && minval == "0") || (maxval == "0" && parseInt(minval) <= parseInt(post?.pricepermonth))
+)
+
+
+  )
   
-  // const user = JSON.parse(localStorage.getItem('name'));
   
+  {
+if (post.typeofpost == "Apartment and Roomate"){
+        return(
+            <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+        );
+        }
+        if(post.typeofpost == "Looking for a Roomate"){
+          return(
+          <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+          );
+        }
+        if(post.typeofpost == "Renting"){
+            return(
+            <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+            );
+        }
+     }
+return(
+<div> here </div>
+);
+// useEffect(() => {
+  // if(pclist.typeval != list.typeval){
+  //   console.log("made false at pclist.typeval != list.typeval")
+  //   setReturnpost(false); 
+  // }
+// }, [pclist.typeval]);
 
 
-  return (
-    <div>here</div>
-  );
+// if(returnpost == true){
+//   if (post.typeofpost == "Apartment and Roomate"){
+//             return(
+//                 <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//             );
+//             }
+//             if(post.typeofpost == "Looking for a Roomate"){
+//               return(
+//               <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//               );
+//             }
+//             if(post.typeofpost == "Renting"){
+//                 return(
+//                 <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//                 );
+//             }
+
+//  }
+
+//  if((parseInt(maxval) >= parseInt(post?.pricepermonth)) && (parseInt(maxval) >= parseInt(post?.pricepermonth)))
+ 
+//  {
+//     if (post.typeofpost == "Apartment and Roomate"){
+//         return(
+//             <ApartmentItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//         );
+//         }
+//         if(post.typeofpost == "Looking for a Roomate"){
+//           return(
+//           <RoomateItem post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//           );
+//         }
+//         if(post.typeofpost == "Renting"){
+//             return(
+//             <SellingItem  post={post} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+//             );
+//         }
+//  }
+  
 }
 
 export default PostChain;

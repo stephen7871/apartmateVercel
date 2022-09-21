@@ -44,12 +44,12 @@ const SellingItem = ({ post, setCurrentId, user, setUser,proplist }) => {
         <div className={classes.content}>
           <h3>{post.address}</h3>
           <div className={classstyles.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.nbedrooms}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.typeofplace}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.pricepermonth}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.collegename}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.username}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.typeofpost}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">bedrooms: {post.nbedrooms}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">type of place:{post.typeofplace}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">price per month:{post.pricepermonth}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">college name:{post.collegename}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">username:{post.username}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">type of post:{post.typeofpost}</Typography>
             </div>
           <p>{post.description}</p>
         </div>

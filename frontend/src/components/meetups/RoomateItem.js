@@ -20,10 +20,10 @@ import useStyles from '../meetups/styles.js';
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">min: {post.min}</Typography>
+        <Typography variant="body2" color="textSecondary" component="h2">max: {post.max}</Typography>
+        {/* <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography> */}
+        <Typography variant="body2" color="textSecondary" component="h2">want to live:{post.wanttolive}</Typography>
             </div>
           <p>{post.description}</p>
         </div>

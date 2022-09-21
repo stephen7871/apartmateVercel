@@ -105,7 +105,15 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
     setPostData({description: '', username: '', max: '', min: '', wanttolive: ''});
   };
 
-
+  const onchangeprice = (e) => {
+    // e.preventDefault();
+    //   setPostData({ ...postData, pricepermonth: e.target.value})
+    let input = e.target.value ;
+    if( !input || ( input[input.length-1].match('[0-9]') && input[0].match('[1-9]')) ){
+    setPostData({ ...postData, pricepermonth: e.target.value})
+    }
+    } 
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {

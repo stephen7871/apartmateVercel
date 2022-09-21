@@ -58,7 +58,7 @@ import ApartmentItem from './ApartmentItem';
 
 
   return (
-    <div>here</div>
+    <div></div>
   );
 }
 

@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import List from './List';
 import FormControl from '@material-ui/core/FormControl';
 import ComboBoxPostchain from './ComboBoxPostchain';
+import { max } from 'moment';
 
 
 
@@ -92,14 +93,17 @@ const opentop = makeStyles((theme) => ({
   const MeetupList = ({ setCurrentId, user }) => {
     const posts = useSelector((state) => state.posts);
     
-    
+
+    const initialList = [
+      {looking: '',typeval: '', bedrooms: ''}
+    ];
     
 
     
    
     
     const [counter, setCounter]= useState(0);
-    const [postList, setPostList] = useState([]);
+   
   const [inputText, setInputText] = useState("");
   const [bedroomsval, setBedroomsval] = React.useState("bedrooms");
   const [lookingfor, setLookingfor] = React.useState("Looking for");
@@ -109,13 +113,90 @@ const opentop = makeStyles((theme) => ({
   const [maxval, setMaxval] = React.useState('');
   const [minval, setMinval] = React.useState('');
   const [show, SetShow] = React.useState(false);
-  const [conpricelist, setConPricelist] = useState({max: '', min: ''});
-  const [pricelist, setPricelist] = useState({max: '', min: ''});
+  const [flag, setFlag] = React.useState(true);
+  const [cflag, csetFlag] = React.useState(false)
+  const [coll, setcoll] = useState('');
+  const [list, setList] = React.useState({looking: '',typeval: '', bedrooms: ''});
+  const [pricelist, setPricelist] = React.useState({min: '',max: ''});
+  const [name, setName] = React.useState('');
+  const [pclist, setPcist] =  React.useState({looking: '',typeval: '', bedrooms: ''});
+  const [addlist, setAddlist] = React.useState([]);
+  const [topost, setTopost] = React.useState({});
+
+  // useEffect(() => {
+  //   if(selected.length == 0){
+  //     setList({...list, looking: ''});
+     // console.log(JSON.stringify(list) + " list 0 looking");
+    //}
+      // if(selected.length > 0){
+      // setList({...list, looking: 'selected'});
+     // console.log(JSON.stringify(list) + " list added looking");
+    //}
+  // }, [selected]);
+
+  // useEffect(() => {
+  //   console.log(typeval + " tttypeval")
+  //   if(typeval.length == 0){
+  //     setList({...list, typeval: ''});
+  //     console.log(JSON.stringify(list) + " list 0 typval");
+  //   }
+    // if(typeval.length > 0){
+      // setList({...list, typeval: 'typeval'});
+      //console.log(JSON.stringify(list) + " list added typval");
+  //   }
+  // }, [typeval]);
+
+  // useEffect(() => {
+  //   if(bedroomsval == "bedrooms"){
+  //     setList({...list, bedrooms: ''});
+      //console.log(JSON.stringify(list) + " list 0 bedrooms");
+    // }else{
+    //   setList({...list, bedrooms: 'bedroomsval'});
+     // console.log(JSON.stringify(list) + " list added bedrooms");
+  //   }
+  // }, [bedroomsval]);
+
+  // useEffect(() => {
+    
+  //   {posts.map((apartmentpost) => {
+  //   setPcist({looking: '',typeval: '', bedrooms: ''});
+  //   console.log(JSON.stringify(pclist) +"true")
+
+  //   if(typeval.includes(apartmentpost.typeofplace)){
+      
+  //     setPcist({...pclist, typeval: 'typeval'});
+      
+  //   }
+   
+  //   console.log(selected + " :selected");
+  //   console.log(apartmentpost.typeofpost + " :apartmentpost.typeofpost");
+  //   if(selected.includes(apartmentpost.typeofpost)){
+  //     setPcist({...pclist, looking: 'selected'});
+    
+  //   }
+  //   if(parseInt(bedroomsval) <= parseInt(apartmentpost?.nbedrooms)){
+  //     setPcist({...pclist, bedrooms: 'bedroomsval'});
+       
+
+  //   }
+  //   console.log(pclist.looking + "pclist.looking");
+         
+  //   setTopost(apartmentpost);
+  // })}
   
-  useEffect(() => {
-    console.log( JSON.stringify(typeval) + " typeval");
-    console.log( JSON.stringify(selected) + " selected");
-  }, [typeval,selected]);
+  // console.log("postchain");  
+//  }, [list]);
+
+
+//  useEffect(() => {
+//   if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
+//     setAddlist(...addlist, topost);
+//    }else{
+//     setTopost({});
+//    }
+// }, [pclist]);
+  
+
 
   const handleminvalChange = (event) => {
     setMinval(event.target.value);
@@ -138,13 +219,36 @@ const opentop = makeStyles((theme) => ({
   };
 
   const handleSubmit = (e) => {
-   
-    console.log(pricelist.max + "pricelist.max");
-    setMaxval(pricelist.max);
-    setMinval(pricelist.min);
-    console.log(JSON.stringify(maxval) + "setMaxval");
-    console.log(minval + "setMinval");
+    e.preventDefault();
+    
+    
+    if (cflag == true){
+      setMaxval(pricelist.max);
+      setMinval(pricelist.min);
+      csetFlag(false);
+      setFlag(true);
+      console.log(maxval+ " maxval")
+      if (flag == false){
+        setMaxval(pricelist.max);
+        setMinval(pricelist.min);
+        setFlag(true);
+        csetFlag(false);
+        console.log(maxval+ " maxval")
+      }
+
+    }
+    csetFlag(true);
+    setFlag(false);
+    
   }
+  const comboSubmit = async (e) => {
+    e.preventDefault();
+    setcoll(await JSON.parse(localStorage.getItem("meetupitemcollege")));
+    // console.log(coll +" coll")
+    
+    
+
+      }
 
   const revealTextField = () =>{
     if (show == true){
@@ -154,11 +258,11 @@ const opentop = makeStyles((theme) => ({
       SetShow(true);
     }
   }
-  useEffect(() => {
+  // useEffect(() => {
     // storing input name
-    console.log(JSON.stringify(posts) + "meetuplist");
+    //console.log(JSON.stringify(posts) + "meetuplist");
     
-  }, []);
+  // }, []);
   let inputHandler = (e) => {
     //convert input text to lower case
     var lowerCase = e.target.value.toLowerCase();
@@ -176,7 +280,7 @@ const opentop = makeStyles((theme) => ({
 
   const typeoptions = [
     "House",
-    "Townhouse",
+    "TownHouse",
     "Apartment",
     "Condo",
   ];
@@ -187,19 +291,30 @@ const opentop = makeStyles((theme) => ({
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
       setSelected(selected.length === lookingforoptions.length ? [] : lookingforoptions);
+      
       return;
     }
     setSelected(value);
+    
+    
   };
+
+
 
   const typeChange = (event) => {
     const value = event.target.value;
+    console.log("changing type");
     if (value[value.length - 1] === "all") {
       setTypeval(typeval.length === typeoptions.length ? [] : typeoptions);
       return;
     }
     setTypeval(value);
+    
   };
+
+
+  
+ 
 
   if (!user) {
     return (
@@ -210,8 +325,24 @@ const opentop = makeStyles((theme) => ({
       </Paper>
     );
   }
-  
 
+  const onchangeprice = (e) => {
+    // e.preventDefault();
+    //   setPostData({ ...postData, pricepermonth: e.target.value})
+    let input = e.target.value ;
+    if( !input || ( input[input.length-1].match('[0-9]') && input[0].match('[1-9]')) ){
+      setPricelist({ ...pricelist, max: e.target.value })}
+    }
+
+    const onchangepricemin = (e) => {
+      // e.preventDefault();
+      //   setPostData({ ...postData, pricepermonth: e.target.value})
+      let input = e.target.value ;
+      if( !input || ( input[input.length-1].match('[0-9]') && input[0].match('[1-9]')) ){
+        setPricelist({ ...pricelist, min: e.target.value })}
+      }
+      
+ 
   
   return (
     <>
@@ -219,7 +350,10 @@ const opentop = makeStyles((theme) => ({
     
 
     <FormControl className={classes.margin}>
+      <form onSubmit={comboSubmit}>
       <ComboBoxPostchain/>
+      <button onChange={comboSubmit}>Submit</button>
+      </form>
       </FormControl>
       <div className={classes.space}>
       </div>
@@ -266,32 +400,7 @@ const opentop = makeStyles((theme) => ({
 
     
 
-      <div className={classes.space}>
-      </div>
 
-{/* 
-      <FormControl className={classes.margin}>
-      
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={lookingfor}
-          onChange={handlelookingforChange}
-          input={<BootstrapInput />}
-          style= {{width: '150px'}}
-        >
-          <MenuItem value={lookingfor}>
-            <em>{lookingfor}</em>
-          </MenuItem>
-          
-          <MenuItem value={"Apartment"}>Looking for roomate and a place</MenuItem>
-          <MenuItem value={"Roomate"}>Looking for a roomate</MenuItem>
-          <MenuItem value={"Selling"}>renting</MenuItem>
-        </Select>
-      </FormControl> */}
-    
-    {/* <div className={classes.space}>
-      </div> */}
       <div className={classes.space}>
       </div>
       <FormControl className={classess.formControl}>
@@ -337,24 +446,6 @@ const opentop = makeStyles((theme) => ({
 
     <div className={classes.space}>
       </div>
-    {/* <FormControl className={classes.margin}>
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={typeofplaceval}
-          onChange={handletypeChange}
-          input={<BootstrapInput />}
-        >
-          <MenuItem value={typeofplaceval}>
-            <em>{typeofplaceval}</em>
-          </MenuItem>
-          <MenuItem value={"House"}>House</MenuItem>
-          <MenuItem value={"Apartment"}>Apartment</MenuItem>
-          <MenuItem value={"Townhouse"}>Townhouse</MenuItem>
-          <MenuItem value={"Condo"}>Condo</MenuItem>
-          
-        </Select>
-      </FormControl> */}
 
       <div className={classes.space}>
       </div>
@@ -371,9 +462,6 @@ const opentop = makeStyles((theme) => ({
           <MenuItem value={2}>2+</MenuItem>
           <MenuItem value={3}>3+</MenuItem>
           <MenuItem value={4}>4+</MenuItem>
-          <MenuItem value={5}>5+</MenuItem>
-          <MenuItem value={6}>6+</MenuItem>
-          <MenuItem value={7}>7+</MenuItem>
         </Select>
       </FormControl>
 
@@ -385,11 +473,11 @@ const opentop = makeStyles((theme) => ({
         {show && (
           <>
           <form onSubmit={handleSubmit}>
-          <TextField id="filled-basic" label="max" variant="filled" value={pricelist.max} onChange={(e) => setPricelist({ ...pricelist, max: e.target.value })}/>
+          <TextField id="filled-basic" label="max" variant="filled" value={pricelist.max} onChange={onchangeprice}/>
           
-          <TextField id="filled-basic" label="min" variant="filled" value={pricelist.min} onChange={(e) => setPricelist({ ...pricelist, min: e.target.value })}/>
+          <TextField id="filled-basic" label="min" variant="filled" value={pricelist.min} onChange={onchangepricemin}/>
          
-          <Button onClick={handleSubmit}>Submit</Button>
+          <button onChange={handleSubmit}>Submit</button>
          
           </form>
           </>
@@ -427,14 +515,48 @@ const opentop = makeStyles((theme) => ({
         ))}
         </ul> */}
 
-<ul className={classes.list}>
-        {posts.map((apartmentpost) => (
-          <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
-            
-         
-        ))}
 
-      </ul>
+<ul className={classes.list}>
+  {posts?.map((apartmentpost) => {
+  //setPcist({looking: '',typeval: '', bedrooms: ''}); 
+
+  
+  // console.log(" list added bedroomsval for postchain");
+  // if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
+     return(
+       <PostChain pclist={pclist} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+   ); 
+  //}
+
+   
+  })}
+</ul>
+
+{/* {flag && (
+  <ul className={classes.list}>
+  {posts.map((apartmentpost) => (
+    <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+      
+   
+  ))}
+</ul>
+)}
+
+{cflag && (
+  <ul className={classes.list}>
+  {posts.map((apartmentpost) => (
+    <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+      
+   
+  ))}
+</ul>
+)
+
+} */}
+
+
+
+      
       {/* <PostChain input={inputText} setCurrentId={setCurrentId} /> */}
       {/* <List input={inputText} setCurrentId={setCurrentId}/> */}
       {/* <>
