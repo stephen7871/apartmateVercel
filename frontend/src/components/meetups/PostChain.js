@@ -11,7 +11,7 @@ import SellingItem from './SellingItem';
 
 
 
-  const PostChain = ({collegesel, firstAddress, address, pclist, setPcist, list, counter, lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
+  const PostChain = ({college, firstAddress, address, pclist, setPcist, list, counter, lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
   const dispatch = useDispatch();
   const classstyles = useStyles();
 
@@ -104,17 +104,17 @@ if((maxval == "0" && minval == "0") || (maxval == "0" && minval > 0)){
 
 
 
-// useEffect(() => {
-  // console.log("here");
-  // console.log(JSON.stringify(pclist.looking)  + " pclist.looking");
-  // console.log(JSON.stringify(list.looking)+ " list.looking");
-  // if(pclist.looking != list.looking){
-  //   console.log(JSON.stringify(pclist.looking)  + " pclist.looking");
-  //   console.log(JSON.stringify(list.looking)+ " list.looking");
-  //   console.log("made false at plist.looking != list.looking")
-  //   //setReturnpost(false); 
-  // }
-// }, [pclist]);
+useEffect(() => {
+  console.log("here");
+  console.log(JSON.stringify(college)  + " collegeSubmit in postchain");
+  console.log(JSON.stringify(list.looking)+ " list.looking");
+  if(pclist.looking != list.looking){
+    console.log(JSON.stringify(pclist.looking)  + " pclist.looking");
+    console.log(JSON.stringify(list.looking)+ " list.looking");
+    console.log("made false at plist.looking != list.looking")
+    //setReturnpost(false); 
+  }
+}, []);
 
 // useEffect(() => {
 //     setPcist({looking: '',typeval: '', bedrooms: ''});
@@ -181,6 +181,13 @@ if(
   ||
   //((maxval == "0" && minval == "0") || (maxval == "0" || minval == "0"))
   (maxval == "0" && minval == "0") || (maxval == "0" && parseInt(minval) <= parseInt(post?.pricepermonth))
+)
+
+&&
+(
+  (college?.title == post?.collegename)
+  ||
+  (college == "")
 )
 
 

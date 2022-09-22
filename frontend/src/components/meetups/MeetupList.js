@@ -135,7 +135,12 @@ const opentop = makeStyles((theme) => ({
   console.log(JSON.stringify( await JSON.parse(localStorage.getItem("firstcollege")))+ " searchcollege in meetuplist");
 }, [ ] );
   
-
+// useEffect(async () => {
+//   setAddressSubmit(await JSON.parse(localStorage.getItem("firstaddress")));
+//   setAddress(await JSON.parse(localStorage.getItem("firstaddress")));
+//   setCollegeSubmit(await JSON.parse(localStorage.getItem("firstcollege")));
+//   console.log(JSON.stringify( await JSON.parse(localStorage.getItem("firstcollege")))+ " searchcollege in meetuplist");
+// }, [ ] );
 
   const handleminvalChange = (event) => {
     setMinval(event.target.value);
@@ -187,7 +192,7 @@ const opentop = makeStyles((theme) => ({
   }
   const comboSubmit = async (e) => {
     e.preventDefault();
-    setcoll(await JSON.parse(localStorage.getItem("meetupitemcollege")));
+    setCollegeSubmit(await JSON.parse(localStorage.getItem("firstcollegesecond")));
     // console.log(coll +" coll")
     
     
@@ -310,7 +315,7 @@ const opentop = makeStyles((theme) => ({
       <form onSubmit={comboSubmit}>
       <ComboBoxFirst coll={"display"}/>
       {/* <ComboBoxPostChain collegePostChain={collegeSubmit}/> */}
-      <button onChange={comboSubmit}>Submit</button>
+      <button onChange={comboSubmit}>search</button>
       </form>
 
       </FormControl>
@@ -483,7 +488,7 @@ const opentop = makeStyles((theme) => ({
   // console.log(" list added bedroomsval for postchain");
   // if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
      return(
-       <PostChain firstAddress={firstAddress} colloge={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+       <PostChain firstAddress={firstAddress} college={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
    ); 
   //}
 

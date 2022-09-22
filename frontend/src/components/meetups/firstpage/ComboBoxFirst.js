@@ -9,13 +9,15 @@ import { Button } from '@material-ui/core';
 
 export default function ComboBoxFirst(props) {
   const [autoselectval, setAutoselectval] = React.useState('');
+  const [show, setShow] = React.useState(true);
   useEffect(() => {
-    //console.log(JSON.stringify(autoselectval.title) + " autoselectval changes in comboboxfirst");
+   localStorage.setItem("firstcollegesecond", JSON.stringify(autoselectval))
   }, [autoselectval]);
 
   useEffect(async() => {
    console.log(JSON.stringify(await JSON.parse(localStorage.getItem("firstcollege"))) + " autoselectval in comboboxfirst");
    if(props.coll == "display"){
+    setShow(false);
     setAutoselectval(await JSON.parse(localStorage.getItem("firstcollege")));
    }
     
@@ -28,6 +30,7 @@ export default function ComboBoxFirst(props) {
 
   const handleSubmitcollege = async (e) => {
     e.preventDefault();
+    console.log(JSON.stringify(autoselectval) +"printing out submit" );
     localStorage.setItem("firstcollege", JSON.stringify(autoselectval));
     localStorage.setItem("firstaddress", JSON.stringify(""));
     navigate("/Home/Blog");
@@ -49,9 +52,13 @@ export default function ComboBoxFirst(props) {
       onChange={(event, value) => setAutoselectval(value)}
       renderInput={(params) => <TextField size="small" value={"here"} {...params} label="choose a college" variant="outlined" />}
     />
-    <div onClick={handleSubmitcollege}>
-        <Button>search</Button>
-        </div>
+    {show && (
+      <div onClick={handleSubmitcollege}>
+      <Button>search</Button>
+      </div>
+    )
+    }
+    
         </>
           
   );
