@@ -5,19 +5,19 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import colleges from './collegedata';
 
 export default function ComboBoxPostChain(props) {
-  const [autoselectval, setAutoselectval] = React.useState(props?.collegePostChain?.title);
+  const [autoselectval, setAutoselectval] = React.useState(props?.collegePostChain);
   useEffect(() => {
-    
+    localStorage.setItem("comboboxpostchain", JSON.stringify(autoselectval));
     // setAutoselectval(props?.collegePostChain?.title);
-    console.log(props?.collegePostChain?.title+ "autoselectval");
+    //console.log(props?.collegePostChain?.title+ "autoselectval in postchain");
   }, [autoselectval]);
 
-  useEffect(() => {
-    
-    setAutoselectval(props?.collegePostChain?.title);
-    console.log(props?.collegePostChain?.title+ "autoselectvalllll");
-  }, []);
-  
+  useEffect(async() => {
+    // console.log(props?.collegePostChain?.title + "colee")
+    //setAutoselectval(props?.collegePostChain);
+    // console.log(JSON.stringify(autoselectval.title) + " autoselectval changes in comboboxfirst");
+     setAutoselectval(await JSON.parse(localStorage.getItem("firstcollege")));
+   }, []);
 
   const handleselectChange = (event) => {
     setAutoselectval(event.target.value);
@@ -32,12 +32,15 @@ export default function ComboBoxPostChain(props) {
 
     <Autocomplete
       id="combo-box-demo"
-      options={colleges}
+      options={colleges }
       value={autoselectval}
-      getOptionLabel={(option) => option.title}
-      style={{ width: 300 }}
+      //defaultValue={'yourDefaultStringValue'}
+      getOptionLabel={(option) => option?.title}
+      // value={autoselectval}
+      // getOptionLabel={(option) => option.title}
+      style={{ width: 300 }} 
       onChange={(event, value) => setAutoselectval(value)}
-      renderInput={(params) => <TextField size="small" {...params} label="choose a college" variant="outlined" />}
+      renderInput={(params) => <TextField size="small" value={"here"} {...params} label="choose a college" variant="outlined" />}
     />
   );
 }

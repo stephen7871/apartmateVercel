@@ -9,8 +9,8 @@ import clas from './NewMeetupForm.module.css';
 import PostChain from './PostChain'
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-
-
+import ComboBoxFirst from './firstpage/ComboBoxFirst';
+import ComboBoxPostChain from './ComboBoxPostchain';
 
 
 
@@ -131,7 +131,8 @@ const opentop = makeStyles((theme) => ({
  useEffect(async () => {
   setAddressSubmit(await JSON.parse(localStorage.getItem("firstaddress")));
   setAddress(await JSON.parse(localStorage.getItem("firstaddress")));
-  setCollegeSubmit(await JSON.parse(localStorage.getItem("searchcollege")));
+  setCollegeSubmit(await JSON.parse(localStorage.getItem("firstcollege")));
+  console.log(JSON.stringify( await JSON.parse(localStorage.getItem("firstcollege")))+ " searchcollege in meetuplist");
 }, [ ] );
   
 
@@ -307,7 +308,8 @@ const opentop = makeStyles((theme) => ({
 
     <FormControl className={classes.margin}>
       <form onSubmit={comboSubmit}>
-      <ComboBoxPostchain/>
+      <ComboBoxFirst coll={"display"}/>
+      {/* <ComboBoxPostChain collegePostChain={collegeSubmit}/> */}
       <button onChange={comboSubmit}>Submit</button>
       </form>
 

@@ -57,6 +57,8 @@ import SellingItem from './SellingItem';
 
 //const PostChain = ({lookingfor, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist })
 
+
+
 if(maxval == ""){
     maxval = "0";
 

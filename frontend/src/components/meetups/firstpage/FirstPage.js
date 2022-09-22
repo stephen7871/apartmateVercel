@@ -68,12 +68,7 @@ const FirstPage = ({ currentId, setCurrentId, user, setUser}) => {
 
     const handleSubmitaddress = async (e) => {
         localStorage.setItem("firstaddress", JSON.stringify(address));
-        navigate("/Home/Blog");
-      }
-     
-      const handleSubmitcollege = async (e) => {
-        localStorage.setItem("searchcollege", JSON.stringify(await JSON.parse(localStorage.getItem("searchcollege"))));
-        console.log(await JSON.parse(localStorage.getItem("firstcollege")) + "addres combo");
+        localStorage.setItem("firstcollege", JSON.stringify(""));
         navigate("/Home/Blog");
       }
   
@@ -97,9 +92,6 @@ const FirstPage = ({ currentId, setCurrentId, user, setUser}) => {
           </div>
 
           <ComboBoxFirst/>
-          <div onClick={handleSubmitcollege}>
-        <Button>search</Button>
-        </div>
           </form>
     );
 }
