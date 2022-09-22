@@ -5,11 +5,18 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import colleges from './collegedata';
 
 export default function ComboBoxPostChain(props) {
-  const [autoselectval, setAutoselectval] = React.useState('');
+  const [autoselectval, setAutoselectval] = React.useState(props?.collegePostChain?.title);
   useEffect(() => {
-    console.log(JSON.stringify(autoselectval.title) + " autoselectval");
+    
+    // setAutoselectval(props?.collegePostChain?.title);
+    console.log(props?.collegePostChain?.title+ "autoselectval");
   }, [autoselectval]);
 
+  useEffect(() => {
+    
+    setAutoselectval(props?.collegePostChain?.title);
+    console.log(props?.collegePostChain?.title+ "autoselectvalllll");
+  }, []);
   
 
   const handleselectChange = (event) => {

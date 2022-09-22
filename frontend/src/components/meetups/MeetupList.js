@@ -1,10 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useRef,useState,useEffect} from 'react';
 import MeetupItem from './MeetupItem';
 import classes from './MeetupList.module.css';
 import InputBase from '@material-ui/core/InputBase';
 import { Paper,Typography,TextField, Button, Box, Select, Form,  MenuItem, ListItemText, Label, InputLabel, FormLabel ,  } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
+import clas from './NewMeetupForm.module.css';
 import PostChain from './PostChain'
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -122,79 +123,16 @@ const opentop = makeStyles((theme) => ({
   const [pclist, setPcist] =  React.useState({looking: '',typeval: '', bedrooms: ''});
   const [addlist, setAddlist] = React.useState([]);
   const [topost, setTopost] = React.useState({});
-
-  // useEffect(() => {
-  //   if(selected.length == 0){
-  //     setList({...list, looking: ''});
-     // console.log(JSON.stringify(list) + " list 0 looking");
-    //}
-      // if(selected.length > 0){
-      // setList({...list, looking: 'selected'});
-     // console.log(JSON.stringify(list) + " list added looking");
-    //}
-  // }, [selected]);
-
-  // useEffect(() => {
-  //   console.log(typeval + " tttypeval")
-  //   if(typeval.length == 0){
-  //     setList({...list, typeval: ''});
-  //     console.log(JSON.stringify(list) + " list 0 typval");
-  //   }
-    // if(typeval.length > 0){
-      // setList({...list, typeval: 'typeval'});
-      //console.log(JSON.stringify(list) + " list added typval");
-  //   }
-  // }, [typeval]);
-
-  // useEffect(() => {
-  //   if(bedroomsval == "bedrooms"){
-  //     setList({...list, bedrooms: ''});
-      //console.log(JSON.stringify(list) + " list 0 bedrooms");
-    // }else{
-    //   setList({...list, bedrooms: 'bedroomsval'});
-     // console.log(JSON.stringify(list) + " list added bedrooms");
-  //   }
-  // }, [bedroomsval]);
-
-  // useEffect(() => {
-    
-  //   {posts.map((apartmentpost) => {
-  //   setPcist({looking: '',typeval: '', bedrooms: ''});
-  //   console.log(JSON.stringify(pclist) +"true")
-
-  //   if(typeval.includes(apartmentpost.typeofplace)){
-      
-  //     setPcist({...pclist, typeval: 'typeval'});
-      
-  //   }
-   
-  //   console.log(selected + " :selected");
-  //   console.log(apartmentpost.typeofpost + " :apartmentpost.typeofpost");
-  //   if(selected.includes(apartmentpost.typeofpost)){
-  //     setPcist({...pclist, looking: 'selected'});
-    
-  //   }
-  //   if(parseInt(bedroomsval) <= parseInt(apartmentpost?.nbedrooms)){
-  //     setPcist({...pclist, bedrooms: 'bedroomsval'});
-       
-
-  //   }
-  //   console.log(pclist.looking + "pclist.looking");
-         
-  //   setTopost(apartmentpost);
-  // })}
-  
-  // console.log("postchain");  
-//  }, [list]);
-
-
-//  useEffect(() => {
-//   if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
-//     setAddlist(...addlist, topost);
-//    }else{
-//     setTopost({});
-//    }
-// }, [pclist]);
+  const [address, setAddress] = React.useState('');
+  const [addressSubmit, setAddressSubmit] = React.useState('');
+  const [collegeSubmit, setCollegeSubmit] = React.useState('');
+  const [firstAddress, setFirstAddress] = React.useState('');
+ 
+ useEffect(async () => {
+  setAddressSubmit(await JSON.parse(localStorage.getItem("firstaddress")));
+  setAddress(await JSON.parse(localStorage.getItem("firstaddress")));
+  setCollegeSubmit(await JSON.parse(localStorage.getItem("searchcollege")));
+}, [ ] );
   
 
 
@@ -218,6 +156,11 @@ const opentop = makeStyles((theme) => ({
     setBedroomsval(event.target.value);
   };
 
+  const handleSubmitaddress = async (e) => {
+    e.preventDefault();
+    setAddress(addressSubmit);
+
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -316,15 +259,15 @@ const opentop = makeStyles((theme) => ({
   
  
 
-  if (!user) {
-    return (
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
-        </Typography>
-      </Paper>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <Paper className={classes.paper}>
+  //       <Typography variant="h6" align="center">
+  //         Please Sign In to create your own memories and like other's memories.
+  //       </Typography>
+  //     </Paper>
+  //   );
+  // }
 
   const onchangeprice = (e) => {
     // e.preventDefault();
@@ -343,10 +286,23 @@ const opentop = makeStyles((theme) => ({
       }
       
  
-  
+     
   return (
     <>
     <Box sx={{ ...commonStyles, border: 1 }}>
+
+
+    <FormControl className={classess.formControl}>
+    <div className={clas.control}>
+    <label htmlFor='title'>address</label>
+    <input type='text' required id='address' value={addressSubmit} onChange={(e) => setAddressSubmit( e.target.value)}/>
+    <div onClick={handleSubmitaddress}>
+      <Button>search</Button>
+    </div>
+  </div>
+ 
+    </FormControl>
+
     
 
     <FormControl className={classes.margin}>
@@ -354,6 +310,7 @@ const opentop = makeStyles((theme) => ({
       <ComboBoxPostchain/>
       <button onChange={comboSubmit}>Submit</button>
       </form>
+
       </FormControl>
       <div className={classes.space}>
       </div>
@@ -524,7 +481,7 @@ const opentop = makeStyles((theme) => ({
   // console.log(" list added bedroomsval for postchain");
   // if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
      return(
-       <PostChain pclist={pclist} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+       <PostChain firstAddress={firstAddress} colloge={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
    ); 
   //}
 

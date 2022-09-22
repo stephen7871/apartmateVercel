@@ -11,7 +11,7 @@ import SellingItem from './SellingItem';
 
 
 
-  const PostChain = ({collegesel, pclist, setPcist, list, counter, lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
+  const PostChain = ({collegesel, firstAddress, address, pclist, setPcist, list, counter, lookingfor, maxval, minval, typeval, bedroomsval, post, setCurrentId, user, setUser,proplist }) => {
   const dispatch = useDispatch();
   const classstyles = useStyles();
 
@@ -143,7 +143,7 @@ if((maxval == "0" && minval == "0") || (maxval == "0" && minval > 0)){
 //  console.log(pclist.typeval + "pclist.typeval"); 
 //  console.log("postchain");
 //  if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){   
-console.log(minval+ " minval postchain");
+// console.log(minval+ " minval postchain");
 if(
 
 (
@@ -153,15 +153,23 @@ if(
 )
 &&
 (
-  (typeval.includes(post.typeofplace))
+  (typeval.includes(post?.typeofplace))
   ||
   (typeval[0] == null)
 )
 &&
 (
-  (lookingfor.includes(post.typeofpost))
+  (lookingfor.includes(post?.typeofpost))
   ||
   (lookingfor[0] == null)
+)
+
+&&
+
+(
+  (post.address?.includes(address))
+  ||
+  (address == '' || address == null)
 )
 
 &&

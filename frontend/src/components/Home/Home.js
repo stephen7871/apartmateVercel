@@ -13,6 +13,7 @@ import Navbar from '../Navbar/Navbar';
 import MyPost from '../meetups/MyPost';
 //import Chat from '../../pages/Chat';
 import Chatpage from '../../Pages/Chatpage';
+import Homepage from '../../Pages/Homepage';
 
 //import SetAvatar from '../SetAvatar';
 
@@ -49,6 +50,8 @@ const Home = (props ) => {
 <div>
             <Navbar user={username} setUser={setUserName} />
             <Routes>
+
+              {/* <Route path="/Auth" element={<Homepage />}/>  */}
              <Route path="Blog" element={<MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/> 
             
             <Route path="CreatePost" element={<NewMeetupForm currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/>

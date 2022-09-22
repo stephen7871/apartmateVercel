@@ -54,7 +54,7 @@ function SideDrawer() {
   const navigate = useNavigate()
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    navigate("/");
+    navigate("/Auth");
   };
 
   const handleSearch = async () => {

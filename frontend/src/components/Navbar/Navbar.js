@@ -32,7 +32,7 @@ const Navbar = (props ) => {
     localStorage.removeItem("name")
     props.setUser(undefined);
    // props.history.push("/Auth");
-    navigate("/")
+    navigate("/Auth")
     
   };
 
@@ -86,7 +86,7 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
           </div>
         ) : (
           
-          <Button component={Link} to="/" variant="contained" color="primary">Sign In</Button>
+          <Button component={Link} to="/Auth" variant="contained" color="primary">Sign In</Button>
         )}
           </li>
 
