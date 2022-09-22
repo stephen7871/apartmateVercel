@@ -62,7 +62,7 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
       <nav>
         <ul>
           <li>
-            <Link to="/Home/Blog">Blog page</Link>
+            <Link to="/Home/Blog">listings page</Link>
           </li>
           <li>
             <Link to="/Home/CreatePost">Add Post</Link>

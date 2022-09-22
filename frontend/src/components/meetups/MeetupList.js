@@ -106,7 +106,7 @@ const opentop = makeStyles((theme) => ({
     const [counter, setCounter]= useState(0);
    
   const [inputText, setInputText] = useState("");
-  const [bedroomsval, setBedroomsval] = React.useState("bedrooms");
+  const [bedroomsval, setBedroomsval] = React.useState("");
   const [lookingfor, setLookingfor] = React.useState("Looking for");
   const [typeofplaceval, setTypeofplaceval] = React.useState("Type");
   const [selected, setSelected] = useState([]);
@@ -298,10 +298,11 @@ const opentop = makeStyles((theme) => ({
     <Box sx={{ ...commonStyles, border: 1 }}>
 
 
-    <FormControl className={classess.formControl}>
+    <FormControl className={opent.formControl} >
     <div className={clas.control}>
-    <label htmlFor='title'>address</label>
-    <input type='text' required id='address' value={addressSubmit} onChange={(e) => setAddressSubmit( e.target.value)}/>
+    
+    <TextField label="address" type='text' required id='address'value={addressSubmit} onChange={(e) => setAddressSubmit( e.target.value)}/>
+ 
     <div onClick={handleSubmitaddress}>
       <Button>search</Button>
     </div>
@@ -311,21 +312,23 @@ const opentop = makeStyles((theme) => ({
 
     
 
-    <FormControl className={classes.margin}>
+    <FormControl style={{width: '15%'}}className={opent.formControl} >
       <form onSubmit={comboSubmit}>
+
       <ComboBoxFirst coll={"display"}/>
       {/* <ComboBoxPostChain collegePostChain={collegeSubmit}/> */}
       <button onChange={comboSubmit}>search</button>
       </form>
-
       </FormControl>
-      <div className={classes.space}>
-      </div>
-      <FormControl className={classess.formControl}>
-      <InputLabel id="mutiple-select-label">Looking for</InputLabel>
+   
+      {/* <div className={classes.space}>
+      </div> */}
+      <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
+      <InputLabel  id="mutiple-select-label">Looking for</InputLabel>
       <Select
         labelId="mutiple-select-label"
         multiple
+        
         value={selected}
         onChange={handleChange}
         renderValue={(selected) => selected.join(", ")}
@@ -365,13 +368,14 @@ const opentop = makeStyles((theme) => ({
     
 
 
-      <div className={classes.space}>
-      </div>
-      <FormControl className={classess.formControl}>
+      {/* <div>
+      </div> */}
+      <FormControl variant="outlined" style={{width: '13%'}} className={opent.formControl}  >
       <InputLabel id="mutiple-select-label">Type of Place</InputLabel>
       <Select
         labelId="mutiple-select-label"
         multiple
+        
         value={typeval}
         onChange={typeChange}
         renderValue={(typeval) => typeval.join(", ")}
@@ -408,20 +412,21 @@ const opentop = makeStyles((theme) => ({
       </Select>
     </FormControl>
 
-    <div className={classes.space}>
-      </div>
+    {/* <div className={classes.space}>
+      </div> */}
 
-      <div className={classes.space}>
-      </div>
-    <FormControl className={opent.formControl}>
+      {/* <div className={classes.space}>
+      </div> */}
+    <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
     <InputLabel id="demo-simple-select-label">bedrooms</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
           value={bedroomsval}
+          label="bedrooms"
           onChange={handlebednChange}
         >
-          <MenuItem value={"bedrooms"}></MenuItem>
+          <MenuItem value={""}>clear</MenuItem> 
           <MenuItem value={1}>1+</MenuItem>
           <MenuItem value={2}>2+</MenuItem>
           <MenuItem value={3}>3+</MenuItem>
@@ -429,10 +434,9 @@ const opentop = makeStyles((theme) => ({
         </Select>
       </FormControl>
 
-      <div className={classes.space}>
-      </div>
+     
       <>
-      <FormControl className={opent.formControl}>
+      <FormControl style={{width: '10%'}} className={opent.formControl}>
       <Button onClick={revealTextField}> price </Button>
         {show && (
           <>

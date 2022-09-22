@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import colleges from '../collegedata';
 import { Button } from '@material-ui/core';
+import {Popper} from '@material-ui/core';
 
 
 export default function ComboBoxFirst(props) {
@@ -34,24 +35,38 @@ export default function ComboBoxFirst(props) {
     localStorage.setItem("firstcollege", JSON.stringify(autoselectval));
     localStorage.setItem("firstaddress", JSON.stringify(""));
     navigate("/Home/Blog");
+
   }
 
+  const styles = (theme) => ({
+    popper: {
+       width: "30%"
+    }
+ });
+
+ const styless = styles()
+  const PopperMy = function (props) {
+    return <Popper {...props} style={styless.popper} placement="bottom-start" />;
+ };
 
   return (
   
 
 <>
+
     <Autocomplete
       id="combo-box-demo"
       options={colleges }
       value={autoselectval}
-
+      
+      
       getOptionLabel={(option) => option?.title}
-    
-      style={{ width: 300 }} 
+      
+      // style={{ width: 50 }} 
       onChange={(event, value) => setAutoselectval(value)}
       renderInput={(params) => <TextField size="small" value={"here"} {...params} label="choose a college" variant="outlined" />}
     />
+  
     {show && (
       <div onClick={handleSubmitcollege}>
       <Button>search</Button>
