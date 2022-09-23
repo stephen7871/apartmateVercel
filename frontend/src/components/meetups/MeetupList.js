@@ -192,6 +192,7 @@ const opentop = makeStyles((theme) => ({
   }
   const comboSubmit = async (e) => {
     e.preventDefault();
+    console.log(await JSON.parse(localStorage.getItem("firstcollegesecond"))+ " firstcollegesecond")
     setCollegeSubmit(await JSON.parse(localStorage.getItem("firstcollegesecond")));
     // console.log(coll +" coll")
     

@@ -183,7 +183,7 @@ if(
 (
   (college?.title == post?.collegename)
   ||
-  (college == "")
+  (college == "" || college == null)
 )
 
 
