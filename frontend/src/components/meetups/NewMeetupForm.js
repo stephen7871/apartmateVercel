@@ -82,10 +82,18 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
   const [isShowro, setIsShownro] = useState(false);
   const [isShowroap, setIsShownroap] = useState(false);
   const [selectval, setSelectval] = React.useState('');
-
-  useEffect(() => {
-    console.log(user+" user");
+  const [username, setUserName] = useState("");
+  useEffect(async () => {
+    setUserName(
+      await JSON.parse(localStorage.getItem("userInfo")
+      )
+    );
   }, []);
+
+  // useEffect(() => {
+    
+  //   console.log(user+" user");
+  // }, []);
   
   
     useEffect(() => {
@@ -139,7 +147,7 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
 
   
 
-  if (!user) {
+  if (!username) {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">

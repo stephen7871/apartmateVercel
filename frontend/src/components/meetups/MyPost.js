@@ -17,7 +17,13 @@ import { useSelector } from 'react-redux';
   const [counter, setCounter]= React.useState(false);
   const [postList, setPostList] = useState([]);
   const [hasError, setError] = React.useState(false);
-
+  const [username, setUserName] = useState("");
+  useEffect(async () => {
+    setUserName(
+      await JSON.parse(localStorage.getItem("userInfo")
+      )
+    );
+  }, []);
 
   
 
@@ -35,11 +41,11 @@ import { useSelector } from 'react-redux';
   }, []);
 
   
-  if (!user) {
+  if (!username) {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
+          Please Sign In to see your listing.
         </Typography>
       </Paper>
     );

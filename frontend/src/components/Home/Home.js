@@ -51,7 +51,7 @@ const Home = (props ) => {
             <Navbar user={username} setUser={setUserName} />
             <Routes>
 
-              {/* <Route path="/Auth" element={<Homepage />}/>  */}
+              <Route path="Auth" element={<Homepage />}/>  
              <Route path="Blog" element={<MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/> 
             
             <Route path="CreatePost" element={<NewMeetupForm currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/>

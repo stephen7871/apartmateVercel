@@ -164,7 +164,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
+          Please Sign In to create a listing.
         </Typography>
       </Paper>
     );
@@ -200,7 +200,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
     <textarea id='description' required rows='5' value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })}></textarea>
   </div>
   <div className={classes.actions}>
-     <button>Add Post</button> 
+     <button>Add listingt</button> 
   </div>
 </form>
 )

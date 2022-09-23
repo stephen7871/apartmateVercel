@@ -29,10 +29,11 @@ const Navbar = (props ) => {
   const navigate = useNavigate()
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
-    localStorage.removeItem("name")
-    props.setUser(undefined);
+    //localStorage.setItem("userInfo", JSON.stringify(""));
+    localStorage.removeItem("userInfo");
+    //props.setUser(undefined);
    // props.history.push("/Auth");
-    navigate("/Auth")
+    navigate("/Home/Auth")
     
   };
 
@@ -62,13 +63,13 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
       <nav>
         <ul>
           <li>
-            <Link to="/Home/Blog">listings page</Link>
+            <Link to="/Home/Blog">Listings Page</Link>
           </li>
           <li>
-            <Link to="/Home/CreatePost">Add Post</Link>
+            <Link to="/Home/CreatePost">Add Listing</Link>
           </li>
           <li>
-            <Link to="/Home/MyPost">My Posts</Link>
+            <Link to="/Home/MyPost">My Listings</Link>
           </li>
           <li>
             <Link to="/Home/Chats">Chat</Link>
@@ -86,7 +87,7 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
           </div>
         ) : (
           
-          <Button component={Link} to="/Auth" variant="contained" color="primary">Sign In</Button>
+          <Button component={Link} to="/Home/Auth" variant="contained" color="primary">Sign In</Button>
         )}
           </li>
 

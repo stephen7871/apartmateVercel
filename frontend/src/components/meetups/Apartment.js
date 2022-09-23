@@ -279,7 +279,7 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     <textarea id='description' required rows='5' value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })}></textarea>
   </div>
   <div className={classes.actions}>
-    <button>Add Post</button>
+    <button>Add listing</button>
   </div>
 </form>
     );
