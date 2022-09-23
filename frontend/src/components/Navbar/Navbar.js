@@ -13,20 +13,20 @@ import * as actionType from '../../constants/actionTypes';
 import useStyles from './styles';
 
 const Navbar = (props ) => {
-
+  const navigate = useNavigate()
   const [username, setUserName] = useState("");
   useEffect(async () => {
     setUserName(
       await JSON.parse(localStorage.getItem("userInfo")
       )
     );
-  }, []);
+  }, [navigate]);
   
   const dispatch = useDispatch();
   const location = useLocation();
   
   const classess = useStyles();
-  const navigate = useNavigate()
+  
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
     //localStorage.setItem("userInfo", JSON.stringify(""));
