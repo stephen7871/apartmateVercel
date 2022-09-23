@@ -160,15 +160,15 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
 
   
 
-  if (!user) {
-    return (
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Please Sign In to create a listing.
-        </Typography>
-      </Paper>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <Paper className={classes.paper}>
+  //       <Typography variant="h6" align="center">
+  //         Please Sign In to create a listing.
+  //       </Typography>
+  //     </Paper>
+  //   );
+  // }
 
   return (
     
