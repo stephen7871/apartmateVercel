@@ -45,7 +45,10 @@ const ApartmentItem = ({ post, setCurrentId, user, setUser,proplist }) => {
           <h3>addres: {post.address}</h3>
           <div className={classstyles.details}>
         <Typography variant="body2" color="textSecondary" component="h2">number of bedrooms: {post.nbedrooms}</Typography>
-        <img src={post.photos[0]}  height={100} width={100} alt="BigCo Inc. logo"/>
+        <div style={{textalign: 'center',
+            paddingLeft: '430px'}}>
+        <img src={post.photos[0]}  height={'200px'} width={'300px'} alt="BigCo Inc. logo"/>
+        </div>
         <Typography variant="body2" color="textSecondary" component="h2">type of place: {post.typeofplace}</Typography>
       
         <Typography variant="body2" color="textSecondary" component="h2">price per month:{post.pricepermonth}</Typography>

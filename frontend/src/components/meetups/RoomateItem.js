@@ -20,7 +20,10 @@ import useStyles from '../meetups/styles.js';
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
-          <img src={post.photos[0]}  height={100} width={100} alt="BigCo Inc. logo"/>
+          <div style={{textalign: 'center',
+            paddingLeft: '540px'}}>
+          <img src={post.photos[0]}  height={'100px'} width={'100px'}  alt="BigCo Inc. logo"/>
+          </div>
         <Typography variant="body2" color="textSecondary" component="h2">min: {post.min}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">max: {post.max}</Typography>
         {/* <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography> */}
