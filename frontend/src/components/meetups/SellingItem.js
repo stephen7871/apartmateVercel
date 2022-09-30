@@ -45,16 +45,20 @@ const SellingItem = ({ post, setCurrentId, user, setUser,proplist }) => {
           <h3>{post.address}</h3>
           <div className={classstyles.details}>
         <Typography variant="body2" color="textSecondary" component="h2">bedrooms: {post.nbedrooms}</Typography>
+        <img src={post.photos[0]}  height={100} width={100} alt="BigCo Inc. logo"/>
+       
         <Typography variant="body2" color="textSecondary" component="h2">type of place:{post.typeofplace}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">price per month:{post.pricepermonth}</Typography>
+       
         <Typography variant="body2" color="textSecondary" component="h2">college name:{post.collegename}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">username:{post.username}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">type of post:{post.typeofpost}</Typography>
-            </div>
+           
           <p>{post.description}</p>
         </div>
         <div className={classes.actions}>
         <Button>Chat</Button>
+        </div>
         <p variant="body2">{moment(post.createdAt).fromNow()}</p>
        
         </div>

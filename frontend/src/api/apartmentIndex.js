@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-//const baseURL = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
-//const url = 'http://localhost:8000'
-const API = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
-const url = 'https://apartmatesearch.herokuapp.com';
+const baseURL = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
+const url = 'https://apartmatesearch.herokuapp.com'
+// const API = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
+// const url = 'https://apartmatesearch.herokuapp.com';
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('form')) {
       req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('form')).token}`;

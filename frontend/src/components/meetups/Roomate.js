@@ -83,6 +83,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
   const [isShowro, setIsShownro] = useState(false);
   const [isShowroap, setIsShownroap] = useState(false);
   const [selectval, setSelectval] = React.useState('');
+  const [image, setImage] = React.useState(null);
 
   useEffect(() => {
     console.log(user+" user");
@@ -99,6 +100,11 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
   const classesslide = useStyler();
   const classselect = useStyles();
 
+
+  const fileSelected = event => {
+    const file = event.target.files
+    setImage(file)
+  }
 
   const clear = () => {
     setCurrentId(0);
@@ -121,13 +127,35 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
           "Content-type": "application/json",
         },
       };
-      const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
-    const { data } = await axios.post(
+
+      const formdata = new FormData();
+         
+      for ( let i = 0; i < image.length; i++ ) {
+       formdata.append( "imagecropped", image[ i ], image[ i ].name );
+     }
+     const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
+         //   // {photos: formdata, address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Apartment and Roomate', collegename: collegesel.title},
+     formdata.append("max", postData.max)
+     formdata.append("min", postData.min)
+     formdata.append("pricepermonth", postData.pricepermonth)
+     formdata.append("description", postData.description)
+     formdata.append("username", user?.username)
+     formdata.append("wanttolive", postData.wanttolive)
+     formdata.append("typeofpost", "Looking for a Roomate")
+     formdata.append("collegename", collegesel.title)
+      await axios.post("/posts", formdata, { headers: {
+       'accept': 'application/json',
+       'Content-Type': 'multipart/form-data'
+     }})
+
+
+      
+    // const { data } = await axios.post(
         
-        "/posts",
-        {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username, typeofpost: "Looking for a Roomate", collegename: collegesel.title},
-        config
-      );
+    //     "/posts",
+    //     {description: postData.description, max: postData.max, min: postData.min, wanttolive: postData.wanttolive,username: user?.username, typeofpost: "Looking for a Roomate", collegename: collegesel.title},
+    //     config
+    //   );
     if (currentId === 0) {
       //dispatch(createPost({ ...postData, username: user, max: postData.max}));
       //console.log(postData);
@@ -196,9 +224,21 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
   <ComboBox/>
 
   <div className={classes.control}>
+    <label htmlFor='wanttolive'>add photosss</label>
+    <div>
+    <div className="container-buttons">
+
+    <input multiple onChange={fileSelected} type="file" accept="image/*"></input>
+
+          
+              </div>
+          </div>
+  </div>
+  <div className={classes.control}>
     <label htmlFor='description'>any other things to add</label>
     <textarea id='description' required rows='5' value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })}></textarea>
   </div>
+  
   <div className={classes.actions}>
      <button>Add listingt</button> 
   </div>

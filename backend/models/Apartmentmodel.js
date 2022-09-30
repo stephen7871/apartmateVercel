@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
     pricepermonth: String,
     nroomates: String,
     collegename: String,
-    photos: String,
+    photos: [String],
     description: String,
     createdAt: {
         type: Date,

@@ -63,7 +63,7 @@ module.exports.getPost = asyncHandler(async (req, res) => {
 
 module.exports.createApartmentPost = async (req, res) => {
     const {address,nbedrooms,typeofplace,pricepermonth,nroomates: String,collegename,photos,description,id,typeofpost,username} = req.body;
-    //console.log(username + "creating post with username");
+    console.log(photos + "photos");
     const newPostMessage = new PostMessage({address,nbedrooms,typeofplace,pricepermonth,nroomates,collegename,photos,description,id,typeofpost,username})
 
     try {

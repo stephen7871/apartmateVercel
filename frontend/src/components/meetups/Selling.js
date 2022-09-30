@@ -88,9 +88,9 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
     const [pricepermonthh, setPricepermonthh] = React.useState('');
     const [photoss, setPhotoss] = React.useState('');
     const [descriptionn, setDescriptionn] = React.useState('');
-
-    
-
+  
+   
+    const [image, setImage] = React.useState(null);
 
     useEffect(() => {
       //console.log(user?.username + "user");
@@ -108,6 +108,10 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
     const classselect = useStyles();
   
   
+    const fileSelected = event => {
+      const file = event.target.files
+      setImage(file)
+    }
     const clear = () => {
       setCurrentId(0);
       setPostData({address: '', nbedrooms: '', typeofplace: '', pricepermonth: '', nroomates: '', collegename: '', photos: '', description: '', username: '', typeofpost: '', selectval: '', roomatenum: ''});
@@ -139,18 +143,35 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
           "Content-type": "application/json",
         },
       };
-      console.log("postdata.addres " + postData.nbedrooms); 
-      console.log("postdata.pricepermonth " + postData.pricepermonth);
-      console.log("postdata.photos " + postData.photos);
-      console.log("postdata.description " + postData.description);
+      const formdata = new FormData();
+         
+         for ( let i = 0; i < image.length; i++ ) {
+          formdata.append( "imagecropped", image[ i ], image[ i ].name );
+        }
+      // console.log("postdata.addres " + postData.nbedrooms); 
+      // console.log("postdata.pricepermonth " + postData.pricepermonth);
+      // console.log("postdata.photos " + postData.photos);
+      // console.log("postdata.description " + postData.description);
       const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
-      const { data } = await axios.post(
-        "/posts",
-        {address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Renting', collegename: collegesel.title},
-        config
-      );
+      formdata.append("address", postData.address)
+        formdata.append("nbedrooms", nbedroomss)
+        formdata.append("pricepermonth", postData.pricepermonth)
+        formdata.append("description", postData.description)
+        formdata.append("username", user?.username)
+        formdata.append("typeofplace", selectval)
+        formdata.append("typeofpost", 'Renting')
+        formdata.append("collegename", collegesel.title)
+         await axios.post("/posts", formdata, { headers: {
+					'accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				}})
+      // const { data } = await axios.post(
+      //   "/posts",
+      //   {address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, typeofpost: 'Renting', collegename: collegesel.title},
+      //   config
+      // );
       // dispatch({ type: CREATE, payload: data });
-      console.log(JSON.stringify(data));
+     
       //console.log(collegesel.title + " college name");
       if (currentId === 0) {
         //dispatch(createPost({ ...postData, username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Aparment', collegename: collegesel.title}));
@@ -246,7 +267,12 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
   <div className={classes.control}>
     <label htmlFor='wanttolive'>add photos</label>
     <div>
-    <FileBase type="file" name="photos" accept=".png, .jpg, .jpeg" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, photos: base64 })} /></div>
+    {/* <FileBase type="file" name="photos" accept=".png, .jpg, .jpeg" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, photos: base64 })} /> */}
+
+
+    <input multiple onChange={fileSelected} type="file" accept="image/*"></input>
+
+    </div>
   </div>
   <div className={classes.control}>
     <label htmlFor='description'>any other things to add</label>
