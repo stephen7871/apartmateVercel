@@ -21,7 +21,7 @@ import useStyles from '../meetups/styles.js';
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
           <div style={{textalign: 'center',
-            paddingLeft: '540px'}}>
+            paddingLeft: '590px'}}>
           <img src={post.photos[0]}  height={'100px'} width={'100px'}  alt="BigCo Inc. logo"/>
           </div>
         <Typography variant="body2" color="textSecondary" component="h2">min: {post.min}</Typography>
