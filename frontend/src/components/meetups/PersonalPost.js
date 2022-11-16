@@ -5,9 +5,12 @@ import { CardActions, CardContent, CardMedia, Button, Typography } from '@materi
 import classes from './MeetupItem.module.css';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import { deletePost } from '../../actions/posts';
-import useStyles from '../meetups/styles.js';
+import {deletePost} from '../../actions/posts';
+import useStyles from './styles.js';
 import { makeStyles } from '@material-ui/core/styles';
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import PromotePost from './promotePost/PromotePost';
+import MyPost from './MyPost';
 
 
 const useStyless = makeStyles((theme) => ({
@@ -21,8 +24,9 @@ const useStyless = makeStyles((theme) => ({
   const PersonalPost = ({ post, setCurrentId, user, setUser }) => {
   const dispatch = useDispatch();
   const classstyles = useStyles();
+  const navigate = useNavigate();
   // const user = JSON.parse(localStorage.getItem('name'));
-  
+  const [switchPage, setSwitchPage] = React.useState(false);
  
 
   const handleOnSubmit = (e) =>{
@@ -32,8 +36,23 @@ const useStyless = makeStyles((theme) => ({
 
   }
 
+
+  const navigateToPromote = event => {
+    setSwitchPage(true)
+    // 👇️ navigate to /contacts
+    
+  };
   return (
-    <li className={classes.item}>
+<div>
+    {switchPage
+      ? (<>
+      <PromotePost post={post} typeofpost={post.typeofpost}/>
+     
+      </>
+      )
+      : (
+
+        <li className={classes.item}>
       <Card>
         <div className={classes.content}>
           <h3>{post.title}</h3>
@@ -49,12 +68,19 @@ const useStyless = makeStyles((theme) => ({
             <DeleteIcon/>
         </Button>
         <div className={classes.actions}>
-        <Button>Chat</Button>
+        <Button Button onClick={navigateToPromote}>Promote</Button>
         <p variant="body2">{moment(post.createdAt).fromNow()}</p>
        
         </div>
       </Card>
     </li>
+
+
+      )
+    }
+    </div>
+    
+    
   );
 }
 

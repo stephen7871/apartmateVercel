@@ -317,13 +317,12 @@ const opentop = makeStyles((theme) => ({
       <form onSubmit={comboSubmit}>
 
       <ComboBoxFirst coll={"display"}/>
-      {/* <ComboBoxPostChain collegePostChain={collegeSubmit}/> */}
+     
       <button onChange={comboSubmit}>search</button>
       </form>
       </FormControl>
    
-      {/* <div className={classes.space}>
-      </div> */}
+      
       <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
       <InputLabel  id="mutiple-select-label">Looking for</InputLabel>
       <Select
@@ -369,8 +368,7 @@ const opentop = makeStyles((theme) => ({
     
 
 
-      {/* <div>
-      </div> */}
+      
       <FormControl variant="outlined" style={{width: '13%'}} className={opent.formControl}  >
       <InputLabel id="mutiple-select-label">Type of Place</InputLabel>
       <Select
@@ -413,11 +411,7 @@ const opentop = makeStyles((theme) => ({
       </Select>
     </FormControl>
 
-    {/* <div className={classes.space}>
-      </div> */}
-
-      {/* <div className={classes.space}>
-      </div> */}
+    
     <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
     <InputLabel id="demo-simple-select-label">bedrooms</InputLabel>
         <Select
@@ -463,88 +457,21 @@ const opentop = makeStyles((theme) => ({
 
 
     <div className="main">
-      {/* <div className="search">
-        <TextField
-          id="outlined-basic"
-          onChange={inputHandler}
-          variant="outlined"
-          fullWidth
-          label="Search by title"
-        />
-      </div> */}
-
-    
-{/* <ul className={classes.list}>
-        {apartmentposts.map((apartmentpost) => (
-          
-            <MeetupItem
-              post={apartmentpost} 
-              setCurrentId={setCurrentId}/>
-         
-        ))}
-        </ul> */}
+      
 
 
 <ul className={classes.list}>
   {posts?.map((apartmentpost) => {
-  //setPcist({looking: '',typeval: '', bedrooms: ''}); 
-
   
-  // console.log(" list added bedroomsval for postchain");
-  // if((list.bedrooms == pclist.bedrooms) && (list.looking == pclist.looking) && (list.typeval == pclist.typeval)){
+
      return(
        <PostChain firstAddress={firstAddress} college={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
    ); 
-  //}
+  
 
    
   })}
 </ul>
-
-{/* {flag && (
-  <ul className={classes.list}>
-  {posts.map((apartmentpost) => (
-    <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
-      
-   
-  ))}
-</ul>
-)}
-
-{cflag && (
-  <ul className={classes.list}>
-  {posts.map((apartmentpost) => (
-    <PostChain maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
-      
-   
-  ))}
-</ul>
-)
-
-} */}
-
-
-
-      
-      {/* <PostChain input={inputText} setCurrentId={setCurrentId} /> */}
-      {/* <List input={inputText} setCurrentId={setCurrentId}/> */}
-      {/* <>
-      { counter ? ( */}
-          {/* <ul className={classes.list}>
-          {postList.map((post) => (
-            <MeetupItem
-              post={post} 
-              setCurrentId={setCurrentId}
-            />
-          ))}
-        </ul> */}
-          {/* )
-      :
-      (
-          <Alert severity="info">You have no post yet.  Add your own posts by going to the "Add Post" page</Alert>
-      )} */}
-      
-  {/* </> */}
     </div>
     </>
   );

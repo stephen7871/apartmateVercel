@@ -26,6 +26,7 @@ export const createPost = (post) => async (dispatch) => {
   try {
     //console.log(JSON.stringify(post)+ "createPost JSON.stringify(post)");
     const { data } = await api.createPost(post);
+    //const { data } = await baseURL.createPost(post);
     ///console.log(JSON.stringify(data)+ "createPost JSON.stringify(data)");
     dispatch({ type: CREATE, payload: data });
   } catch (error) {

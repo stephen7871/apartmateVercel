@@ -4,7 +4,7 @@ import { CardActions, CardContent, CardMedia, Button, Typography } from '@materi
 import classes from './MeetupItem.module.css';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import useStyles from '../meetups/styles.js';
+import useStyles from './styles.js';
 import ApartmentItem from './ApartmentItem';
 
 
@@ -32,9 +32,13 @@ import ApartmentItem from './ApartmentItem';
       return(
       <li className={classes.item}>
       <Card>
+       
+
+        
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
+          
         <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.max}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>

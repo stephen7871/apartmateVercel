@@ -4,7 +4,7 @@ import { CardActions, CardContent, CardMedia, Button, Typography } from '@materi
 import classes from './MeetupItem.module.css';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import useStyles from '../meetups/styles.js';
+import useStyles from './styles.js';
 
 
 

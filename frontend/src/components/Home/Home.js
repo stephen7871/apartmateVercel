@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useSelector } from 'react';
 import { Container, Grow, Grid, Button } from '@material-ui/core';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,19 +9,19 @@ import MeetupList from '../meetups/MeetupList.js';
 //import Layout from '../layout/NewLayout';
 import Navbar from '../Navbar/Navbar';
 //import Auth from '../Auth/Auth.js';
-//import { getUsers } from '../../actions/posts';
+import { getUsers } from '../../actions/posts';
 import MyPost from '../meetups/MyPost';
 //import Chat from '../../pages/Chat';
 import Chatpage from '../../Pages/Chatpage';
 import Homepage from '../../Pages/Homepage';
-
+//import PromotePost from '../meetups/promotePost/PromotePost';
 //import SetAvatar from '../SetAvatar';
 
 
 
 const Home = (props ) => {
   //const [user, setUser] = useState(JSON.parse(localStorage.getItem("name")));
-
+ 
   const [username, setUserName] = useState("");
   useEffect(async () => {
     setUserName(
@@ -32,13 +32,19 @@ const Home = (props ) => {
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
   
-  //  useEffect(() => {
-  //   dispatch(getUsers());
-  // }, [currentId, dispatch]);
+   useEffect(() => {
+    dispatch(getUsers());
+  }, [currentId, dispatch]);
+
 
   useEffect(async() => {
-      dispatch(getPosts());
-  }, [currentId, dispatch]);
+    dispatch(getPosts());
+}, [currentId, dispatch]);
+
+
+
+ 
+  
   
   
 
@@ -52,11 +58,12 @@ const Home = (props ) => {
             <Routes>
 
               <Route path="Auth" element={<Homepage />}/>  
-             <Route path="Blog" element={<MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/> 
+             <Route path="Blog" element={<MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/> 
             
-            <Route path="CreatePost" element={<NewMeetupForm currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/>
+            <Route path="CreatePost" element={<NewMeetupForm currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/>
            
-            <Route path="MyPost" element={<MyPost currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName}/>}/> 
+            <Route path="MyPost" element={<MyPost currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/> 
+            {/* <Route path="Promote" element={<PromotePost currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/>  */}
             {/* <Route path="SetAvatar" element={<SetAvatar/>}/> */}
             <Route path= "chats" element={<Chatpage />} /> 
             </Routes>
