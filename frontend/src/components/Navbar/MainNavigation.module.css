@@ -1,25 +1,26 @@
 .header {
-  width: 100%;
+  width: 160%;
   height: 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #77002e;
-  padding: 0 10%;
+
 }
 
 .logo {
   font-size: 2rem;
   color: white;
+  padding-left: 5%;
   font-weight: bold;
 }
 
 .header ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  float: left;
   display: flex;
   align-items: baseline;
+  
 }
 
 .header li {

@@ -8,6 +8,10 @@ const messageRoutes = require("./routes/messageRoutes");
 const aparmentPostRoute = require("./routes/aparmentPostRoute");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
+require("dotenv").config()
+const stripe = require("stripe")("sk_test_51M31CkLqdUUllD3Zms6W2abzsC7epVsyzhEgsXSTQyy6KbN4K4IvbtRvuA1esq3FajBL3wMwgXqoVytz47VoFE9j00SrbnvNKf")
+const bodyParser = require("body-parser")
+const cors = require("cors")
 
 
 
@@ -26,7 +30,32 @@ app.use("/posts", aparmentPostRoute);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+// app.use("/payment" , PaymentRoute)
 
+
+app.post("/payment",cors(), async (req, res) => {
+  let { amount, id } = req.body
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Spatula company",
+      payment_method: id,
+      confirm: true
+    })
+    console.log("Payment", payment)
+    res.json({
+      message: "Payment successful",
+      success: true
+    })
+  } catch (error) {
+    console.log("Error", error)
+    res.json({
+      message: "Payment failed",
+      success: false
+    })
+  }
+})
 
 const __dirname1 = path.resolve();
 
@@ -58,10 +87,12 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:3000","http://localhost:5001/posts"]
+    origin: ["http://localhost:3000","http://localhost:5001/posts","http://localhost:5001/payment"]
     // credentials: true,
   },
 });
+
+
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
@@ -69,6 +100,8 @@ io.on("connection", (socket) => {
     socket.join(userData._id);
     socket.emit("connected");
   });
+
+  
 
   socket.on("join chat", (room) => {
     socket.join(room);

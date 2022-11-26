@@ -14,8 +14,12 @@ import MyPost from '../meetups/MyPost';
 //import Chat from '../../pages/Chat';
 import Chatpage from '../../Pages/Chatpage';
 import Homepage from '../../Pages/Homepage';
-//import PromotePost from '../meetups/promotePost/PromotePost';
+import PromotePost from '../meetups/promotePost/PromotePost';
+import GoogleMaps from '../map/GoogleMaps';
+import classes from './NavbarStyles.module.css'
+import Cropped from '../meetups/crop/Cropped';
 //import SetAvatar from '../SetAvatar';
+
 
 
 
@@ -53,19 +57,37 @@ const Home = (props ) => {
     
     
     
-<div>
+<div >
+            <div>
             <Navbar user={username} setUser={setUserName} />
+            </div>
             <Routes>
 
               <Route path="Auth" element={<Homepage />}/>  
-             <Route path="Blog" element={<MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/> 
+             <Route path="Blog" element={
+
+             <MeetupList currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />
+             
+             }/> 
+             <Route path="Crop" element={
+
+<div style={{marginTop:'60%',marginRight: '50%' }}>
+<Cropped/>
+</div>
+
+}/> 
+            
             
             <Route path="CreatePost" element={<NewMeetupForm currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/>
            
             <Route path="MyPost" element={<MyPost currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/> 
+            {/* <Route path="Map" element={
+                 <GoogleMaps  currentId={props.currentId} setCurrentId={props.setCurrentId}/>
+            }/>   */}
             {/* <Route path="Promote" element={<PromotePost currentId={props.currentId} setCurrentId={props.setCurrentId} user={username} setUser={setUserName} />}/>  */}
             {/* <Route path="SetAvatar" element={<SetAvatar/>}/> */}
-            <Route path= "chats" element={<Chatpage />} /> 
+            {/* <Route path="Promote" element={<StripeContainerApp/>}/> */}
+            <Route path= "Chats" element={<Chatpage />} /> 
             </Routes>
             </div>           
              

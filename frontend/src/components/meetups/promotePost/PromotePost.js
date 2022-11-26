@@ -8,15 +8,30 @@ import ApartmentItem from '../ApartmentItem';
 import RoomateItem from '../RoomateItem'
 import SellingItem from '../SellingItem'
 import MyPost from '../MyPost';
+import StripeContainer from './StripeContainer';
+import Card from '../../ui/Card';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
+
+const opentop = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 
 
 const PromotePost = ({ post, setCurrentId, user, setUser,proplist, typeofpost }) => {
+  const opent = opentop();
   const dispatch = useDispatch();
   const classstyles = useStyles();
-  const [switchPage, setSwitchPage] =React.useState(false)
   
+  const [switchPage, setSwitchPage] =React.useState(false)
+  const [showItem, setShowItem] = useState(false);
 
   const navigateToPromote  = () => {
     
@@ -44,17 +59,31 @@ const PromotePost = ({ post, setCurrentId, user, setUser,proplist, typeofpost })
           return(
             <>
             <div>
-                  {returnPost}
+            {returnPost}
+            {showItem ? (
+                
+                <div >
+				<StripeContainer />
+        </div>
+               
+                
+			) : (
+        <>
+				<>
+					<Button className={opent.formControl}  style={{width: '30%'}} variant="contained" color="primary" onClick={() => setShowItem(true)}>promote post to Gold $10 month</Button>
+				</>
+        <>
+        <Button className={opent.formControl}  style={{width: '30%'}} variant="contained" color="primary" onClick={() => setShowItem(true)}>promote post to Silver $8 month</Button>
+      </>
+      <>
+        <Button className={opent.formControl}  style={{width: '30%'}} variant="contained" color="primary" onClick={() => setShowItem(true)}>promote post to Bronze $6 month</Button>
+      </>
+      </>
+      
+			)}
+                  
                   </div>
-                  <Button>
-                  promote post to Gold $10 month
-                  </Button>
-                  <Button>
-                  promote post to Silver $8 month
-                  </Button>
-                  <Button>
-                  promote post to Bronze $6 month
-                  </Button>
+                 
             </>
             
           )

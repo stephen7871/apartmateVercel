@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import classes from './NewMeetupForm.module.css';
-import { TextField } from '@material-ui/core';
+import { TextField,Button } from '@material-ui/core';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 
 import InputBase from '@material-ui/core/InputBase';
 
-
+import Cropped from './crop/Cropped';
 
 import {useSelector } from 'react-redux';
 import {makeStyles, withStyles } from '@material-ui/core/styles';
@@ -82,10 +82,10 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     
 
     
-    const [image, setImage] = React.useState(null);
-  
+    const [image, setImage] = React.useState([]);
+    const [addImage, setAddimage] = React.useState(null);
 
-   
+    
     
     
       useEffect(() => {
@@ -108,10 +108,45 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
         setSelectval(event.target.value);
       };
 
+    // const fileSelected = event => {
+    //   // const file = event.target.files
+
+    //   const file = event.target.files
+    //   setImage(file);
+    //   console.log(JSON.stringify(image.indexOf(image[0].name)) + "image"); 
+    // }
+
     const fileSelected = event => {
+      // const file = event.target.files
       const file = event.target.files
-      setImage(file)
+      setAddimage(file);
+      // console.log(JSON.stringify(addImage) + "addImage"); 
     }
+
+    const fileSelectedAdd = () => {
+      // const file = event.target.files
+      // console.log(JSON.stringify(JSON.stringify(addImage[0].name)) + "addImage name"); 
+      // const newList = image?.push(addImage[0].name);
+      
+      setImage([...image, addImage]);
+      // console.log(JSON.stringify(image) + "image"); 
+    }
+    const handleAnotherPhoto = () => {
+      console.log(JSON.stringify(image.name) + "image"); 
+      const newList = image.concat(addImage);
+      setImage(newList);
+    }
+
+    const handleChange = event => {
+      const file = event.target.files
+      setAddimage(file);
+    }
+
+    const clearPhotos = event => {
+      
+      setImage(null);
+    }
+    
 
       const handleselectromate = (event) => {
         setroomatenum(event.target.value);
@@ -169,7 +204,9 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
   
 
     return(
-
+      <div>
+        {/* <Cropped/> */}
+        
         <form className={classes.form} onSubmit={handleSubmit}>
   <div className={classes.control}>
     <label htmlFor='title'>address</label>
@@ -263,15 +300,22 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     
 
   <div className={classes.control}>
-    <label htmlFor='wanttolive'>add photosss</label>
+    {/* <label htmlFor='wanttolive'>add photosss</label> */}
     <div>
     <div className="container-buttons">
 
     <input multiple onChange={fileSelected} type="file" accept="image/*"></input>
-
+    {/* <input multiple onChange={handleChange} type="file" accept="image/*"/>
+     
+    */}
+    <Button  onClick={fileSelectedAdd}>
+          Add
+        </Button> 
+   
           
               </div>
           </div>
+  <Button onclick={clearPhotos}>clear</Button>
   </div>
   <div className={classes.control}>
     <label htmlFor='description'>any other things to add</label>
@@ -281,6 +325,7 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     <button>Add listing</button>
   </div>
 </form>
+</div>
     );
 }
 export default Apartment;

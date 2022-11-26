@@ -45,16 +45,33 @@ export const getUsers = () => async (dispatch) => {
     console.log(error.message);
   }
 };
-/*
-export const updatePost = (id, post) => async (dispatch) => {
-  try {
-    const { data } = await api.updatePost(id, post);
 
-    dispatch({ type: UPDATE, payload: data });
+// export const updatePost = (id, post) => async (dispatch) => {
+//   try {
+//     // const { data } = await api.updatePost(id, post);
+//     await axios.patch(`/posts//${id.id}`, post);
+// // //export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updatedPost);
+//     // dispatch({ type: UPDATE, payload: data });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+
+
+
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    console.log("deleting post with id " + id.id);
+    // await axios.delete(`${'https://univinfomation.herokuapp.com'}/${id.id}`);
+    await axios.delete(`/posts/${id.id}`);
+    console.log("deleted post with id " + id.id);
+    //dispatch({ type: DELETE, payload: id.id });
   } catch (error) {
     console.log(error.message);
   }
 };
+
+/*
 
 export const likePost = (id) => async (dispatch) => {
   try {
@@ -66,16 +83,5 @@ export const likePost = (id) => async (dispatch) => {
   }
 };
 */
-
-export const deletePost = (id) => async (dispatch) => {
-  try {
-   /// console.log("deleting post with id " + id.id);
-    await api.deletePost(id.id);
-    // console.log("deleting post with id " + id.id);
-    dispatch({ type: DELETE, payload: id.id });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 

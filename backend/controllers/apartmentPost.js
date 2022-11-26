@@ -207,6 +207,34 @@ module.exports.deletePost = async (req, res) => {
     res.json({ message: "Post deleted successfully." });
 }
 
+
+// export const updatePost = async (req, res) => {
+//     const { id } = req.params;
+//     const {photos: galleryImgLocationArray, 
+//         address: caption,
+//         nbedrooms: nbedrooms,
+//         typeofplace: typeofplace,
+//         pricepermonth: pricepermonth,
+//         nroomates: nroomates,
+//          collegename: collegename,
+//         description: description,
+//         typeofpost: typeofpost,
+//         username: username,
+//          max: max,
+//          min: min,
+//         wanttolive: wanttolive
+//         promote: promote
+//     } = req.body;
+    
+//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+//     const updatedPost = {title, discription, selectedFile, _id: id };
+
+//     await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+//     res.json(updatedPost);
+// }
+
 /*export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { title, selectedFile, discription, address} = req.body;

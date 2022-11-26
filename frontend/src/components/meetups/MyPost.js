@@ -89,14 +89,25 @@ import classess from './MeetupItem.module.css';
     
   };
 
+  const handleOnSubmit = (post) =>{
+    
+    console.log(post?._id, " post id");
+    dispatch(deletePost({id: post?._id}));
+  
+  }
+
 return (
   
   <>
   { counter ? (
-    <div>
+    <div style={{width: '50%', 
+    top: '20%', 
+    left: '30%',
+    position: 'absolute'}}>
     {switchPage
       ? (<>
       {/* <PromotePost post={postInfo} typeofpost={"Apartment and Roomate"}/> */}
+      
       <PromotePost post={postInfo} typeofpost={postType}/>
    
       </>
@@ -121,9 +132,9 @@ return (
             </div>
           <p>{post.description}</p>
         </div>
-        <Button >
-            <DeleteIcon/>
-        </Button>
+        <Button Button onClick={() => handleOnSubmit(post)}>
+          <DeleteIcon/>
+      </Button>
         <div className={classess.actions}>
         <Button Button onClick={() => navigateToPromote(post)}>Promote</Button>
         <p variant="body2">{moment(post.createdAt).fromNow()}</p>

@@ -20,6 +20,7 @@ const mongoose = require("mongoose");
     max: String,
     min: String,
     wanttolive: String,
+    promote: String,
 })
 
 module.exports = mongoose.model("AparmentModel", AparmentModel);

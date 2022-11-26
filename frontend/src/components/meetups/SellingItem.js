@@ -38,16 +38,16 @@ const SellingItem = ({ post, setCurrentId, user, setUser,proplist }) => {
 
 
     return(
+      
       <li className={classes.item}>
       <Card>
-      <CardMedia className={classes.media} image={post.photo || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.photo} />
+
         <div className={classes.content}>
           <h3>{post.address}</h3>
           <div className={classstyles.details}>
         <Typography variant="body2" color="textSecondary" component="h2">bedrooms: {post.nbedrooms}</Typography>
-        <div style={{textalign: 'center',
-            paddingLeft: '480px'}}>
-        <img src={post.photos[0]}  height={'200px'} width={'300px'} alt="BigCo Inc. logo"/>
+        <div className={classes.center}>
+        <img  src={post.photos[0]}  height={'200px'} width={'300px'} alt="BigCo Inc. logo"/>
         </div>
         <Typography variant="body2" color="textSecondary" component="h2">type of place:{post.typeofplace}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">price per month:{post.pricepermonth}</Typography>
@@ -66,6 +66,7 @@ const SellingItem = ({ post, setCurrentId, user, setUser,proplist }) => {
         </div>
       </Card>
     </li>
+   
 
     );
     }

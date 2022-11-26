@@ -1,5 +1,6 @@
 .item {
   margin: 1rem 0;
+  
 }
 
 .image {
@@ -44,3 +45,23 @@
 .actions button:active {
   background-color: #ffe2ed;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+.floatchild {
+  width: 90%;
+  padding: 3%;
+  margin-top: 30%; 
+  margin-left: 180%;
+  
+  
+ 
+  
+  
+  
+} 

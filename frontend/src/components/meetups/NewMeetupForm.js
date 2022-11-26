@@ -24,6 +24,27 @@ import { createPost } from '../../actions/posts';
 
 
 
+const btn = makeStyles((theme) => ({
+  backGround: {
+    bgcolor: 'blue',
+    color: 'white',
+
+  }
+  
+}));
+
+const opentop = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+
+
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -63,6 +84,7 @@ const BootstrapInput = withStyles((theme) => ({
 const useStyler = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
+    
   },
 }));
 
@@ -74,7 +96,7 @@ const useStyler = makeStyles((theme) => ({
 const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
   
   const post = useSelector((state) => (currentId ? state.posts.find((description) => description._id === currentId) : null));
-
+  const opent = opentop();
   const [postData, setPostData] = useState({title: '', selectedFile: '', tags: '', description: '', username: '', max: '', min: '', wanttolive: ''});
 
   const [switched, setSwitched] = useState(false);
@@ -162,16 +184,18 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
     <>
 
    
-    
-      <Card>
+    <div className={opent.formControl} style={{width: '200%', 
+    marginTop: '30%', 
+    marginLeft: '60%'}} >
+      <Card >
       <Tooltip title="selling an apartment or house" arrow>
-    <Button onClick={apartmentClick}>Selling?</Button>
+    <Button className={opent.formControl}  style={{width: '32%'}} variant="contained" color="primary" onClick={apartmentClick}>Make a Listing?</Button>
     </Tooltip>
     <Tooltip title="looking for roomates and an apartment" arrow>
-    <Button onClick={roomateClick}>roomate?</Button>
+    <Button className={opent.formControl}  style={{width: '30%'}} variant="contained" color="primary" onClick={roomateClick}>roomate?</Button>
     </Tooltip>
     <Tooltip title="have an apartment and looking for roomates" arrow>
-    <Button onClick={roomateapartmentClick}>Have an apartment?</Button>
+    <Button className={opent.formControl} style={{width: '32%'}} variant="contained" color="primary" onClick={roomateapartmentClick}>Need a Roomate?</Button>
     </Tooltip>
 {/* 👇️ show elements on click */}
 {isShowap && (
@@ -186,6 +210,8 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
  
   )}
   </Card>
+  </div>
+
   </>
   
   );

@@ -2,16 +2,18 @@ import React,{useRef,useState,useEffect} from 'react';
 import MeetupItem from './MeetupItem';
 import classes from './MeetupList.module.css';
 import InputBase from '@material-ui/core/InputBase';
-import { Paper,Typography,TextField, Button, Box, Select, Form,  MenuItem, ListItemText, Label, InputLabel, FormLabel ,  } from '@material-ui/core';
+import { Paper,Typography,TextField, Button, Box, Select, Form,  MenuItem, ListItemText, Label, InputLabel, FormLabel  } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import clas from './NewMeetupForm.module.css';
 import PostChain from './PostChain'
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ComboBoxFirst from './firstpage/ComboBoxFirst';
 import ComboBoxPostChain from './ComboBoxPostchain';
-
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grid from '@mui/material/Grid';
 
 
 import { MenuProps, useStyles } from "./utils";
@@ -21,63 +23,38 @@ import List from './List';
 import FormControl from '@material-ui/core/FormControl';
 import ComboBoxPostchain from './ComboBoxPostchain';
 import { max } from 'moment';
+import GoogleMaps from '../map/GoogleMaps';
+import { blue } from '@material-ui/core/colors';
 
-
-
-
-
-
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-   
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
-
-const useStyler = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
 const commonStyles = {
   bgcolor: 'background.paper',
-  m: 1,
   borderColor: 'text.primary',
-  width: "100%",
-  padding: '10px',
-
- 
+  color: 'grey',
+  width: "120%",
+  marginTop: '0%',
+  position: 'fixed',
+  backgroundColor: '#e3f2fd',
   height: '5rem',
 };
+
+const revealCommonStyles = {
+  bgcolor: 'background.paper',
+  borderColor: 'text.primary',
+  width: "10%",
+  backgroundColor: '#e3f2fd',
+  height: '5rem',
+};
+
+
+
+const btn = makeStyles((theme) => ({
+  backGround: {
+    bgcolor: 'blue',
+    color: 'white',
+
+  }
+  
+}));
 
 const opentop = makeStyles((theme) => ({
   formControl: {
@@ -89,10 +66,20 @@ const opentop = makeStyles((theme) => ({
   },
 }));
 
+const btnPrice = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    width: 80,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 
-  const MeetupList = ({ setCurrentId, user }) => {
-    const posts = useSelector((state) => state.posts);
+
+  const MeetupList = ({ setCurrentId, user, currentId}) => {
+    const posts = useSelector((state) => state?.posts);
     
 
     const initialList = [
@@ -104,7 +91,7 @@ const opentop = makeStyles((theme) => ({
    
     
     const [counter, setCounter]= useState(0);
-   
+  const [changeStyleBtn, setChangeStyleBtn] = React.useState(false);
   const [inputText, setInputText] = useState("");
   const [bedroomsval, setBedroomsval] = React.useState("");
   const [lookingfor, setLookingfor] = React.useState("Looking for");
@@ -114,6 +101,7 @@ const opentop = makeStyles((theme) => ({
   const [maxval, setMaxval] = React.useState('');
   const [minval, setMinval] = React.useState('');
   const [show, SetShow] = React.useState(false);
+  const [showCollege, setShowCollege] =  React.useState(false);
   const [flag, setFlag] = React.useState(true);
   const [cflag, csetFlag] = React.useState(false)
   const [coll, setcoll] = useState('');
@@ -163,7 +151,7 @@ const opentop = makeStyles((theme) => ({
   };
 
   const handleSubmitaddress = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     setAddress(addressSubmit);
 
   }
@@ -200,12 +188,30 @@ const opentop = makeStyles((theme) => ({
 
       }
 
+  const revealCollegeField = () =>{
+    revealChangeStyleBtn();
+    if (showCollege == true){
+      setShowCollege(false);
+    }
+    if (showCollege == false){
+      setShowCollege(true);
+    }
+  }
+
   const revealTextField = () =>{
     if (show == true){
       SetShow(false);
     }
     if (show == false){
       SetShow(true);
+    }
+  }
+  const revealChangeStyleBtn = () =>{
+    if (changeStyleBtn == true){
+      setChangeStyleBtn(false);
+    }
+    if (changeStyleBtn == false){
+      setChangeStyleBtn(true);
     }
   }
   // useEffect(() => {
@@ -262,6 +268,8 @@ const opentop = makeStyles((theme) => ({
     
   };
 
+  
+
 
   
  
@@ -292,28 +300,67 @@ const opentop = makeStyles((theme) => ({
         setPricelist({ ...pricelist, min: e.target.value })}
       }
       
+
+      const [open, setOpen] = React.useState(false);
+
+      const handleTooltipClose = () => {
+        setOpen(false);
+      };
+    
+      const handleTooltipOpen = () => {
+        setOpen(true);
+      };
  
      
   return (
     <>
-    <Box sx={{ ...commonStyles, border: 1 }}>
+    {/* bellow added this fixed postion */}
+    <div style={{position:'fixed', top: '10%'}}>
+    <Box sx={{ ...commonStyles}}>
 
 
     <FormControl className={opent.formControl} >
     <div className={clas.control}>
+    <div >
+    <TextField 
+
+onKeyPress={(ev) => {
+  // console.log(`Pressed keyCode ${ev?.key}`);
+  if (ev?.key === 'Enter') {
+    handleSubmitaddress();
+    ev?.preventDefault();
+  }
+}} style={{float: 'left', top: '3%'}} label="address" type='text' id='outlined'value={addressSubmit} onChange={(e) => setAddressSubmit( e?.target.value)}/> 
     
-    <TextField label="address" type='text' required id='address'value={addressSubmit} onChange={(e) => setAddressSubmit( e.target.value)}/>
- 
-    <div onClick={handleSubmitaddress}>
-      <Button>search</Button>
     </div>
   </div>
+
  
     </FormControl>
 
     
+    {/* <Tooltip title={
+    <>
 
-    <FormControl style={{width: '15%'}}className={opent.formControl} >
+
+
+</>
+  }> */}
+
+
+{/* { changeStyleBtn ? (
+ 
+  <Button  style={{marginTop: '1%'}}variant="contained" color="primary" onClick={revealCollegeField}> College{<ExpandMoreIcon/>}</Button>
+
+
+):(
+
+<Button  style={{marginTop: '1%'}}variant="outlined" color="primary" onClick={revealCollegeField}> College{<ExpandMoreIcon/>}</Button>)
+  } */}
+
+  <>
+
+  <FormControl style={{width: '15%'}}className={opent.formControl} >
       <form onSubmit={comboSubmit}>
 
       <ComboBoxFirst coll={"display"}/>
@@ -321,6 +368,9 @@ const opentop = makeStyles((theme) => ({
       <button onChange={comboSubmit}>search</button>
       </form>
       </FormControl>
+      
+
+      
    
       
       <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
@@ -331,13 +381,13 @@ const opentop = makeStyles((theme) => ({
         
         value={selected}
         onChange={handleChange}
-        renderValue={(selected) => selected.join(", ")}
+        renderValue={(selected) => selected?.join(", ")}
         MenuProps={MenuProps}
       >
         <MenuItem
           value="all"
           classes={{
-            root: isAllSelected ? classes.selectedAll : ""
+            root: isAllSelected ? classes?.selectedAll : ""
           }}
         >
           <ListItemIcon>
@@ -345,7 +395,7 @@ const opentop = makeStyles((theme) => ({
               classes={{ indeterminate: classes.indeterminateColor }}
               checked={isAllSelected}
               indeterminate={
-                selected.length > 0 && selected.length < lookingforoptions.length
+                selected?.length > 0 && selected?.length < lookingforoptions?.length
               }
             />
           </ListItemIcon>
@@ -354,16 +404,35 @@ const opentop = makeStyles((theme) => ({
             primary="Select All"
           />
         </MenuItem>
-        {lookingforoptions.map((option) => (
+        {lookingforoptions?.map((option) => (
           <MenuItem key={option} value={option}>
             <ListItemIcon>
-              <Checkbox checked={selected.indexOf(option) > -1} />
+              <Checkbox checked={selected?.indexOf(option) > -1} />
             </ListItemIcon>
             <ListItemText primary={option} />
           </MenuItem>
         ))}
       </Select>
     </FormControl>
+    
+    </>
+
+
+   
+
+
+
+
+
+    
+  
+  
+    
+    
+
+    
+
+    
 
     
 
@@ -377,33 +446,33 @@ const opentop = makeStyles((theme) => ({
         
         value={typeval}
         onChange={typeChange}
-        renderValue={(typeval) => typeval.join(", ")}
+        renderValue={(typeval) => typeval?.join(", ")}
         MenuProps={MenuProps}
       >
         <MenuItem
           value="all"
           classes={{
-            root: isAllSelected ? classes.selectedAll : ""
+            root: isAllSelected ? classes?.selectedAll : ""
           }}
         >
           <ListItemIcon>
             <Checkbox
-              classes={{ indeterminate: classes.indeterminateColor }}
+              classes={{ indeterminate: classes?.indeterminateColor }}
               checked={isAllSelected}
               indeterminate={
-                typeval.length > 0 && typeval.length < typeoptions.length
+                typeval?.length > 0 && typeval?.length < typeoptions?.length
               }
             />
           </ListItemIcon>
           <ListItemText
-            classes={{ primary: classes.selectAllText }}
+            classes={{ primary: classes?.selectAllText }}
             primary="Select All"
           />
         </MenuItem>
-        {typeoptions.map((option) => (
+        {typeoptions?.map((option) => (
           <MenuItem key={option} value={option}>
             <ListItemIcon>
-              <Checkbox checked={typeval.indexOf(option) > -1} />
+              <Checkbox checked={typeval?.indexOf(option) > -1} />
             </ListItemIcon>
             <ListItemText primary={option} />
           </MenuItem>
@@ -412,7 +481,7 @@ const opentop = makeStyles((theme) => ({
     </FormControl>
 
     
-    <FormControl variant="outlined" style={{width: '10%'}} className={opent.formControl} >
+    <FormControl variant="outlined" style={{width: '10%'}} className={opent?.formControl} >
     <InputLabel id="demo-simple-select-label">bedrooms</InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
@@ -430,15 +499,22 @@ const opentop = makeStyles((theme) => ({
       </FormControl>
 
      
+      
+
       <>
-      <FormControl style={{width: '10%'}} className={opent.formControl}>
-      <Button onClick={revealTextField}> price </Button>
+      <FormControl className={btnPrice.formControl}>
+      <div style={{width: '10%'}}>
+        
+      <Button  onClick={revealTextField}> price </Button>
+      
+      </div>
         {show && (
           <>
-          <form onSubmit={handleSubmit}>
-          <TextField id="filled-basic" label="max" variant="filled" value={pricelist.max} onChange={onchangeprice}/>
           
-          <TextField id="filled-basic" label="min" variant="filled" value={pricelist.min} onChange={onchangepricemin}/>
+          <form onSubmit={handleSubmit}>
+          <TextField  id="filled-basic" label="max" variant="filled" value={pricelist?.max} onChange={onchangeprice}/>
+          
+          <TextField  id="filled-basic" label="min" variant="filled" value={pricelist?.min} onChange={onchangepricemin}/>
          
           <button onChange={handleSubmit}>Submit</button>
          
@@ -449,31 +525,48 @@ const opentop = makeStyles((theme) => ({
         </>
 
       
-      
 
 
 </Box>
+</div>
+<div className={classes.floatcontainer}></div>
+<div className={classes.map}>
+<GoogleMaps  currentId={currentId} setCurrentId={setCurrentId} />
+</div>
 
+<div >
+    {/* <div className="main" > */}
+    <div className={classes.floatchild}>
+    <div  >
 
-
-    <div className="main">
       
 
 
-<ul className={classes.list}>
+<ul >
+{/* <ul className={classes.list}> */}
+
   {posts?.map((apartmentpost) => {
   
 
      return(
+      
        <PostChain firstAddress={firstAddress} college={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+       
    ); 
   
 
    
   })}
+  
 </ul>
+
     </div>
+    </div>
+    </div>
+    
     </>
+    
+    
   );
 }
 

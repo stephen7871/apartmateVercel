@@ -15,15 +15,15 @@ import useStyles from './styles.js';
   
 
       return(
+       
       <li className={classes.item}>
       <Card>
         <div className={classes.content}>
           <h3>{post.title}</h3>
           <div className={classstyles.details}>
-          <div style={{textalign: 'center',
-            paddingLeft: '590px'}}>
-          <img src={post.photos[0]}  height={'100px'} width={'100px'}  alt="BigCo Inc. logo"/>
-          </div>
+          <div className={classes.center}>
+        <img  src={post.photos[0]}  height={'200px'} width={'300px'} alt="BigCo Inc. logo"/>
+        </div>
         <Typography variant="body2" color="textSecondary" component="h2">min: {post.min}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">max: {post.max}</Typography>
         {/* <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography> */}
@@ -38,6 +38,7 @@ import useStyles from './styles.js';
         </div>
       </Card>
     </li>
+ 
       );
       }
 

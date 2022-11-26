@@ -5,6 +5,7 @@ import { CardActions, CardContent, CardMedia, Button, Typography } from '@materi
 import classes from './MeetupItem.module.css';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
+
 import {deletePost} from '../../actions/posts';
 import useStyles from './styles.js';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,9 +32,11 @@ const useStyless = makeStyles((theme) => ({
 
   const handleOnSubmit = (e) =>{
     e.preventDefault();
-    console.log(post._id, " post id");
-    dispatch(deletePost({id: post._id}));
 
+    console.log("post id");
+    console.log(post._id, " post id");
+    
+  
   }
 
 
@@ -62,11 +65,11 @@ const useStyless = makeStyles((theme) => ({
         <Typography variant="body2" color="textSecondary" component="h2">{post.min}</Typography>
         <Typography variant="body2" color="textSecondary" component="h2">{post.wanttolive}</Typography>
             </div>
-          <p>{post.description}</p>
+          <p>description: {post.description}</p>
         </div>
         <Button onClick={handleOnSubmit}>
-            <DeleteIcon/>
-        </Button>
+          <DeleteIcon/>
+      </Button>
         <div className={classes.actions}>
         <Button Button onClick={navigateToPromote}>Promote</Button>
         <p variant="body2">{moment(post.createdAt).fromNow()}</p>
