@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import classes from './NewMeetupForm.module.css';
 import { TextField,Button } from '@material-ui/core';
@@ -8,11 +8,26 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import InputBase from '@material-ui/core/InputBase';
+import {imgPreview} from './crop/imgPreview';
 
 import Cropped from './crop/Cropped';
-
+import Resizer from "react-image-file-resizer";
 import {useSelector } from 'react-redux';
 import {makeStyles, withStyles } from '@material-ui/core/styles';
+
+
+
+import ReactCrop, {
+  centerCrop,
+  makeAspectCrop,
+  Crop,
+  PixelCrop,
+} from 'react-image-crop'
+import { canvasPreview } from './crop/canvasPreview';
+import { useDebounceEffect } from './crop/useDebounceEffect'
+import Backdrop from '@mui/material/Backdrop';
+
+import 'react-image-crop/dist/ReactCrop.css'
 
 
 
@@ -21,6 +36,25 @@ import {makeStyles, withStyles } from '@material-ui/core/styles';
 import ComboBox from './ComboBox';
 import axios from 'axios';
 
+function centerAspectCrop(
+  mediaWidth,
+  mediaHeight,
+  aspect,
+) {
+  return centerCrop(
+    makeAspectCrop(
+      {
+        unit: '%',
+        width: 90,
+      },
+      aspect,
+      mediaWidth,
+      mediaHeight,
+    ),
+    mediaWidth,
+    mediaHeight,
+  )
+}
 
 
 const BootstrapInput = withStyles((theme) => ({
@@ -162,12 +196,14 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
       };
 
 
-      
+        console.log(image[0]?.name + "consol log image name on result");
          const formdata = new FormData();
          
-         for ( let i = 0; i < image.length; i++ ) {
-          formdata.append( "imagecropped", image[ i ], image[ i ].name );
-        }
+        //  for ( let i = 0; i < image.length; i++ ) {
+        //   image[i]?.name
+        //   formdata.append( "imagecropped", image[ i ], 'McNally_.PNG');
+        // }
+        formdata.append( "imagecropped", image, "McNally_.PNG")
         console.log(JSON.stringify(image) + "image")
           const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
             //   // {photos: formdata, address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Apartment and Roomate', collegename: collegesel.title},
@@ -199,6 +235,225 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
       setPostData({ ...postData, pricepermonth: e.target.value})
       }
       }
+
+//////////resize image bellow
+
+const resizeFile = (file) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      completedCrop?.width,
+      completedCrop?.hight,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+  });
+
+
+  const onChange = async (event) => {
+    try {
+      const file = event.target.files[0];
+      const image = await resizeFile(file);
+      console.log(image);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+
+/////resize image bellow
+      /////crop functions below
+
+      
+      
+      
+        const [imgSrc, setImgSrc] = useState('')
+        const [imgFinal, setImgFinal] = useState([]);
+        const previewCanvasRef = useRef(null)
+        const imgRef = useRef(null)
+        const [crop, setCrop] = useState()
+        const [completedCrop, setCompletedCrop] = useState()
+        const [scale, setScale] = useState(1)
+        const [rotate, setRotate] = useState(0)
+        const [aspect, setAspect] = useState(16 / 9)
+        const [open, setOpen] = React.useState(false);
+        const [previewSrc, setPreviewSrc] = React.useState('');
+        
+      
+        function toBlob(canvas){
+          return new Promise((resolve) => {
+            canvas.toBlob(resolve)
+          })
+        }
+
+        function onSelectFile(e) {
+          if (e.target.files && e.target.files.length > 0) {
+            setCrop(undefined) // Makes crop preview update between images.
+            const reader = new FileReader()
+            reader.addEventListener('load', () =>
+              setImgSrc(reader.result?.toString() || ''),
+            )
+            reader.readAsDataURL(e.target.files[0])
+            console.log(JSON.stringify(e.target.files) + "e.target.files");
+            setImgFinal(e.target.files);
+            // setImage(e.target.files);
+          }
+
+        }
+        const fileCompleted = () => {
+          // const file = event.target.files
+          console.log(JSON.stringify(previewCanvasRef.current) + " previewCanvasRef");
+          // setImage(imgRef.current);
+          
+          handleClose();
+          // console.log(JSON.stringify(addImage) + "addImage"); 
+        }
+        function onImageLoad(e) {
+          if (aspect) {
+            const { width, height } = e.currentTarget
+            setCrop(centerAspectCrop(width, height, aspect))
+          }
+        }
+      
+
+        useDebounceEffect(
+          async () => {
+            if (
+              completedCrop?.width &&
+              completedCrop?.height &&
+              imgRef.current &&
+              previewCanvasRef.current
+            ) {
+              // We use canvasPreview as it's much faster than imgPreview.
+              canvasPreview(
+                imgRef.current,
+                previewCanvasRef.current,
+                completedCrop,
+                scale,
+                rotate,
+              )
+            }
+          },
+          100,
+          [completedCrop, scale, rotate],
+        )
+      
+        function handleToggleAspectClick() {
+          if (aspect) {
+            setAspect(undefined)
+          } else if (imgRef.current) {
+            const { width, height } = imgRef.current
+            setAspect(16 / 9)
+            setCrop(centerAspectCrop(width, height, 16 / 9))
+          }
+        }
+        const fileValues = () => {
+          console.log(JSON.stringify(imgFinal[0]?.name) + "fileValues" );
+        }
+
+        const b64toBlob = (b64Data, contentType, sliceSize=512) => {
+          const byteCharacters = atob(b64Data);
+          const byteArrays = [];
+        
+          for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+        
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+              byteNumbers[i] = slice.charCodeAt(i);
+            }
+        
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+          }
+        
+          const blob = new Blob(byteArrays, {type: contentType});
+          return blob;
+        }
+        // const resizeSave = async() => {
+
+          
+          
+        //   const image = await resizeFile(imgFinal[0]);
+        //   console.log(JSON.stringify(image) + "image resized");
+          
+        //   var base64result = image?.split(';base64,')[1];
+        //   const contentType = 'image/png';
+        //   console.log(JSON.stringify(base64result) + "base64result");
+        //   const blob = b64toBlob(base64result, contentType);
+        //   const blobUrl = URL.createObjectURL(blob);
+        //   const img = document.createElement('img');
+        //   img.src = blobUrl;
+        //   document.body.appendChild(img);
+        //    console.log(JSON.stringify(blobUrl) + " blobUrl");
+          
+        //   setImage(blob);
+         
+          
+        //   handleClose();
+        // }
+      
+        
+        const resizeSave = async() => {
+          const blob = await imgPreview(
+            imgRef.current,
+            completedCrop,
+            scale,
+            rotate,
+          );
+          const blobUrl = URL.createObjectURL(blob);
+          const img = document?.createElement('img');
+          img.src = blobUrl;
+          document.body.appendChild(img);
+          // imgRef.current,
+          // previewCanvasRef.current,
+          // completedCrop,
+          // scale,
+          // rotate,
+          // const canvas = document.createElement('canvas')
+          // canvasPreview(imgRef.current, previewCanvasRef.current,completedCrop,scale,rotate)
+          // const blob = await toBlob(canvas);
+          // if (!blob) {
+          //   console.error('Failed to create blob')
+          //   return ''
+          // }
+          // const blobUrl = URL.createObjectURL(blob);
+          // const img = document.createElement('img');
+          // img.src = blobUrl;
+          // document.body.appendChild(img);
+         
+          // const image = await resizeFile(imgFinal[0]);
+          // console.log(JSON.stringify(image) + "image resized");
+          // console.log(URL.createObjectURL(image) + " imige url");
+          // var base64result = image?.split(';base64,')[1];
+          // const contentType = 'image/png';
+          // console.log(JSON.stringify(base64result) + "base64result");
+          // const blob = b64toBlob(base64result, contentType);
+          // const blobUrl = URL.createObjectURL(blob);
+          // const img = document.createElement('img');
+          // img.src = blobUrl;
+          // document.body.appendChild(img);
+          //  console.log(JSON.stringify(blobUrl) + " blobUrl");
+          // console.log(JSON.stringify(imgFinal[0]) + " imgFinal[0]");
+          // setImage(blob);
+          // console.log(URL.createObjectURL(blob));
+          setImage(blob);
+          handleClose();
+        }
+        const handleClose = () => {
+          setOpen(false);
+        };
+        const handleToggle = () => {
+          setOpen(!open);
+        };
+
+        //////
     
       
   
@@ -303,11 +558,131 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
     {/* <label htmlFor='wanttolive'>add photosss</label> */}
     <div>
     <div className="container-buttons">
-
-    <input multiple onChange={fileSelected} type="file" accept="image/*"></input>
+{/*  */}
+    {/* <input multiple onChange={fileSelected} type="file" accept="image/*"></input> */}
     {/* <input multiple onChange={handleChange} type="file" accept="image/*"/>
      
     */}
+
+<div className="App">
+      <div className="Crop-Controls">
+        <div onClick={handleToggle}>
+        <input type="file" accept="image/*" onChange={onSelectFile} />
+        </div>
+        <div>
+          <label htmlFor="scale-input">Scale: </label>
+          <input
+            id="scale-input"
+            type="number"
+            step="0.1"
+            value={scale}
+            disabled={!imgSrc}
+            onChange={(e) => setScale(e.target.value)}
+          />
+        </div>
+        <div >
+          <label htmlFor="rotate-input">Rotate: </label>
+          <input
+            id="rotate-input"
+            type="number"
+            value={rotate}
+            disabled={!imgSrc}
+            onChange={(e) =>
+              setRotate(Math.min(180, Math.max(-180, e.target.value)))
+            }
+            
+          />
+        </div>
+        <div>
+          <button onClick={handleToggleAspectClick}>
+            Toggle aspect {aspect ? 'off' : 'on'}
+          </button>
+        </div>
+      </div>
+
+
+      
+      
+      {!!imgSrc && (
+       
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex?.drawer + 1 }}
+        open={open}
+        
+      >
+        
+        <div style={{marginTop: "10%", marginLeft: "30%"}}>
+            
+        {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
+        
+        
+          
+        
+<div style={{width: '20%'}}>
+        <ReactCrop
+          crop={crop}
+          onChange={(_, percentCrop) => setCrop(percentCrop)}
+          onComplete={(c) => setCompletedCrop(c)}
+          aspect={aspect}
+        >
+
+            
+          <img
+            ref={imgRef}
+            alt="Crop me"
+            src={imgSrc}
+            style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+            onLoad={onImageLoad}
+          />
+          
+        </ReactCrop>
+        </div>
+   
+        <Button variant="contained" color="primary" onClick={handleClose}>cancel</Button>
+        
+        {/* <Button  variant="contained" color="primary" onClick={fileCompleted}>  submit</Button> 
+        <Button  variant="contained" color="primary" onClick={fileValues}>  show file values</Button>  */}
+        <Button  variant="contained" color="primary" onClick={resizeSave}>  save values</Button> 
+        resizeSave
+        
+      
+      
+        
+       
+        
+        
+        
+        {!!completedCrop && (
+            
+            <div style={{width: '20%'}}>
+          <canvas
+            ref={previewCanvasRef}
+            style={{
+              border: '1px solid black',
+              objectFit: 'contain',
+              width: completedCrop.width,
+              height: completedCrop.height,
+            }}
+          />
+          </div>
+          
+          
+        )}
+        
+       
+        </div>
+      </Backdrop>
+       
+      )}
+      
+      
+      
+     
+      
+
+      
+      
+    </div>
     <Button  onClick={fileSelectedAdd}>
           Add
         </Button> 

@@ -107,7 +107,9 @@ export default function Cropped() {
   return (
     <div className="App">
       <div className="Crop-Controls">
+        <div onClick={handleToggle}>
         <input type="file" accept="image/*" onChange={onSelectFile} />
+        </div>
         <div>
           <label htmlFor="scale-input">Scale: </label>
           <input
@@ -119,7 +121,7 @@ export default function Cropped() {
             onChange={(e) => setScale(e.target.value)}
           />
         </div>
-        <div>
+        <div >
           <label htmlFor="rotate-input">Rotate: </label>
           <input
             id="rotate-input"
@@ -129,6 +131,7 @@ export default function Cropped() {
             onChange={(e) =>
               setRotate(Math.min(180, Math.max(-180, e.target.value)))
             }
+            
           />
         </div>
         <div>
@@ -137,20 +140,25 @@ export default function Cropped() {
           </button>
         </div>
       </div>
-      {!!imgSrc && (
-        
-        <div style={{width: "30%", marginTop: "30%", marginLeft: "90%"}}>
-            <div>
-        <Button onClick={handleToggle}>Show backdrop</Button>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-          onClick={handleClose}
-        >
-          
-        </Backdrop>
-      </div>
 
+
+      
+      
+      {!!imgSrc && (
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex?.drawer + 1 }}
+        open={open}
+        
+      >
+        
+        <div style={{marginTop: "30%", marginLeft: "50%"}}>
+            
+        {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
+        
+        
+          
+        
+<div style={{width: "50%"}}>
         <ReactCrop
           crop={crop}
           onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -166,11 +174,29 @@ export default function Cropped() {
             style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
             onLoad={onImageLoad}
           />
+          
         </ReactCrop>
+        
         </div>
+        
+          
+        <button onClick={handleClose}>cancel</button>
+        
+      </div>
+      
+        
+       
+        
+        
+        
+      </Backdrop>
+       
       )}
-      <div style={{marginLeft:'40%'}}> 
+      
+      <div style={{marginLeft:'100%'}}> 
         {!!completedCrop && (
+            
+            
           <canvas
             ref={previewCanvasRef}
             style={{
@@ -180,8 +206,19 @@ export default function Cropped() {
               height: completedCrop.height,
             }}
           />
+          
+          
+          
         )}
+        
+       
       </div>
+      
+     
+      
+
+      
+      
     </div>
   )
 }
