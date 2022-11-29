@@ -198,13 +198,19 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
 
         console.log(image[0]?.name + "consol log image name on result");
          const formdata = new FormData();
-         
-        //  for ( let i = 0; i < image.length; i++ ) {
-        //   image[i]?.name
-        //   formdata.append( "imagecropped", image[ i ], 'McNally_.PNG');
-        // }
-        formdata.append( "imagecropped", image, "McNally_.PNG")
-        console.log(JSON.stringify(image) + "image")
+         console.log(image?.length + "image legth");
+         console.log(JSON.stringify(image) + "image");
+         console.log(JSON.stringify(image[0]) + "image at 0");
+         console.log(JSON.stringify(image[1]) + "image at 1");
+         console.log(JSON.stringify(image[2]) + "image at 2");
+         console.log(JSON.stringify(imageNames[0]) + "image at 0 name");
+         console.log(JSON.stringify(imageNames[1]) + "image at 1 name");
+         console.log(JSON.stringify(imageNames[1]) + "image at 2 name");
+         for ( let i = 0; i < image?.length; i++ ) {
+          formdata.append( "imagecropped", image[i], image[i]);
+        }
+        // formdata.append( "imagecropped", image, "McNally_.PNG")
+        // console.log(JSON.stringify(image) + "image")
           const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
             //   // {photos: formdata, address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Apartment and Roomate', collegename: collegesel.title},
         formdata.append("address", postData.address)
@@ -284,6 +290,7 @@ const resizeFile = (file) =>
         const [aspect, setAspect] = useState(16 / 9)
         const [open, setOpen] = React.useState(false);
         const [previewSrc, setPreviewSrc] = React.useState('');
+        const [imageNames, setImageNames] = React.useState([]);
         
       
         function toBlob(canvas){
@@ -301,6 +308,7 @@ const resizeFile = (file) =>
             )
             reader.readAsDataURL(e.target.files[0])
             console.log(JSON.stringify(e.target.files) + "e.target.files");
+            console.log(JSON.stringify(e.target.files?.name) + "e.target.files name")
             setImgFinal(e.target.files);
             // setImage(e.target.files);
           }
@@ -376,31 +384,33 @@ const resizeFile = (file) =>
           const blob = new Blob(byteArrays, {type: contentType});
           return blob;
         }
-        // const resizeSave = async() => {
-
-          
-          
-        //   const image = await resizeFile(imgFinal[0]);
-        //   console.log(JSON.stringify(image) + "image resized");
-          
-        //   var base64result = image?.split(';base64,')[1];
-        //   const contentType = 'image/png';
-        //   console.log(JSON.stringify(base64result) + "base64result");
-        //   const blob = b64toBlob(base64result, contentType);
-        //   const blobUrl = URL.createObjectURL(blob);
-        //   const img = document.createElement('img');
-        //   img.src = blobUrl;
-        //   document.body.appendChild(img);
-        //    console.log(JSON.stringify(blobUrl) + " blobUrl");
-          
-        //   setImage(blob);
-         
-          
-        //   handleClose();
-        // }
+        
       
         
+        // const resizeSave = async() => {
+        //   console.log(JSON.stringify(imgFinal[0]?.name) + "fileValues names" );
+        //   const newNameList = imageNames.concat(imgFinal[0]?.name);
+        //   setImageNames(newNameList);
+
+        //   const blob = await imgPreview(
+        //     imgRef.current,
+        //     completedCrop,
+        //     scale,
+        //     rotate,
+        //   );
+        //   const blobUrl = URL.createObjectURL(blob);
+        //   const img = document?.createElement('img');
+        //   img.src = blobUrl;
+        //   document.body.appendChild(img);
+        //   setImage(blob);
+        //   handleClose();
+        // }
+
         const resizeSave = async() => {
+          console.log(JSON.stringify(imgFinal[0]?.name) + "fileValues names" );
+          // const newNameList = imageNames.concat(imgFinal[0]?.name);
+          // setImageNames(newNameList);
+
           const blob = await imgPreview(
             imgRef.current,
             completedCrop,
@@ -411,39 +421,8 @@ const resizeFile = (file) =>
           const img = document?.createElement('img');
           img.src = blobUrl;
           document.body.appendChild(img);
-          // imgRef.current,
-          // previewCanvasRef.current,
-          // completedCrop,
-          // scale,
-          // rotate,
-          // const canvas = document.createElement('canvas')
-          // canvasPreview(imgRef.current, previewCanvasRef.current,completedCrop,scale,rotate)
-          // const blob = await toBlob(canvas);
-          // if (!blob) {
-          //   console.error('Failed to create blob')
-          //   return ''
-          // }
-          // const blobUrl = URL.createObjectURL(blob);
-          // const img = document.createElement('img');
-          // img.src = blobUrl;
-          // document.body.appendChild(img);
-         
-          // const image = await resizeFile(imgFinal[0]);
-          // console.log(JSON.stringify(image) + "image resized");
-          // console.log(URL.createObjectURL(image) + " imige url");
-          // var base64result = image?.split(';base64,')[1];
-          // const contentType = 'image/png';
-          // console.log(JSON.stringify(base64result) + "base64result");
-          // const blob = b64toBlob(base64result, contentType);
-          // const blobUrl = URL.createObjectURL(blob);
-          // const img = document.createElement('img');
-          // img.src = blobUrl;
-          // document.body.appendChild(img);
-          //  console.log(JSON.stringify(blobUrl) + " blobUrl");
-          // console.log(JSON.stringify(imgFinal[0]) + " imgFinal[0]");
-          // setImage(blob);
-          // console.log(URL.createObjectURL(blob));
-          setImage(blob);
+          const imageList = imageNames.concat(blob);
+          setImage([...image, blob]);
           handleClose();
         }
         const handleClose = () => {

@@ -19,7 +19,7 @@ const ApartmentItem = ({ post, setCurrentId, user, setUser,proplist }) => {
 
   const addIndex = () =>{
     console.log(photoIndex);
-    if(photoIndex > 0){
+    if(photoIndex == post.photos.length - 1){
       setPhotoIndex(0);
     }else{
       setPhotoIndex(photoIndex + 1);
