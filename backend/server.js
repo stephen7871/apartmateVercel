@@ -5,6 +5,7 @@ const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/posts")
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const goldPostRoute = require("./routes/goldPostRoute")
 const aparmentPostRoute = require("./routes/aparmentPostRoute");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
@@ -12,6 +13,7 @@ require("dotenv").config()
 const stripe = require("stripe")("sk_test_51M31CkLqdUUllD3Zms6W2abzsC7epVsyzhEgsXSTQyy6KbN4K4IvbtRvuA1esq3FajBL3wMwgXqoVytz47VoFE9j00SrbnvNKf")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+
 
 
 
@@ -26,7 +28,9 @@ app.use(express.json()); // to accept json data
 //   res.send("API Running!");
 // });
 // app.use("/posts", postRoutes);
+app.use(cors());
 app.use("/posts", aparmentPostRoute);
+// app.use("/goldposts", goldPostRoute);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
@@ -87,7 +91,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:3000","http://localhost:5001/posts","http://localhost:5001/payment"]
+    origin: ["/api/user/login","http://stephens-macbook-pro.local:3000","http://localhost:3000","http://localhost:5001/posts","http://localhost:5001/payment","http://127.0.0.1:5001/api/user/login"]
     // credentials: true,
   },
 });

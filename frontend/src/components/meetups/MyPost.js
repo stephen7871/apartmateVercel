@@ -92,7 +92,8 @@ import classess from './MeetupItem.module.css';
   const handleOnSubmit = (post) =>{
     
     console.log(post?._id, " post id");
-    dispatch(deletePost({id: post?._id}));
+    console.log(post?.route, " post?.route");
+    dispatch(deletePost({id: post?._id,}, {route: post?.route}));
   
   }
 

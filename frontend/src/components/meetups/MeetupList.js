@@ -4,16 +4,16 @@ import classes from './MeetupList.module.css';
 import InputBase from '@material-ui/core/InputBase';
 import { Paper,Typography,TextField, Button, Box, Select, Form,  MenuItem, ListItemText, Label, InputLabel, FormLabel  } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import clas from './NewMeetupForm.module.css';
 import PostChain from './PostChain'
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ComboBoxFirst from './firstpage/ComboBoxFirst';
-import ComboBoxPostChain from './ComboBoxPostchain';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grid from '@mui/material/Grid';
+
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setGoldPosts, setPosts } from './setpostactions.js';
 
 
 import { MenuProps, useStyles } from "./utils";
@@ -25,6 +25,7 @@ import ComboBoxPostchain from './ComboBoxPostchain';
 import { max } from 'moment';
 import GoogleMaps from '../map/GoogleMaps';
 import { blue } from '@material-ui/core/colors';
+import { json } from 'react-router-dom';
 
 const commonStyles = {
   bgcolor: 'background.paper',
@@ -79,9 +80,79 @@ const btnPrice = makeStyles((theme) => ({
 
 
   const MeetupList = ({ setCurrentId, user, currentId}) => {
-    const posts = useSelector((state) => state?.posts);
-    
+    const dispatch = useDispatch();
 
+    // const posts = [
+    //   {_id:{"$oid":"6388c0673575850466268757"},
+    //   photos:["https://stevenewbucket.s3.amazonaws.com/image-1669906534390.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534396.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534413.jpeg"],
+    //   createdAt:{"$date":{"$numberLong":"1669903070354"}},
+    //   address:"2100 Hillside Rd, Storrs, CT 06269",
+    //   typeofplace:"Apartment",
+    //   pricepermonth:"1000",
+    //   nroomates:"1",
+    //   collegename:" A. T. Still University ",
+    //   description:"test",
+    //   typeofpost:"Apartment and Roomate",
+    //   username:"steve","__v":{"$numberInt":"0"}},
+
+    //   {_id:{"$oid":"6388c0673575850466268757"},
+    //   photos:["https://stevenewbucket.s3.amazonaws.com/image-1669906534390.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534396.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534413.jpeg"],
+    //   createdAt:{"$date":{"$numberLong":"1669903070354"}},
+    //   address:"2100 Hillside Rd, Storrs, CT 06269",
+    //   typeofplace:"Apartment",
+    //   pricepermonth:"1000",
+    //   nroomates:"1",
+    //   collegename:" A. T. Still University ",
+    //   description:"test",
+    //   typeofpost:"Apartment and Roomate",
+    //   username:"steve","__v":{"$numberInt":"0"}},
+
+    //   {_id:{"$oid":"6388c0673575850466268757"},
+    //   photos:["https://stevenewbucket.s3.amazonaws.com/image-1669906534390.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534396.jpeg","https://stevenewbucket.s3.amazonaws.com/image-1669906534413.jpeg"],
+    //   createdAt:{"$date":{"$numberLong":"1669903070354"}},
+    //   address:"2100 Hillside Rd, Storrs, CT 06269",
+    //   typeofplace:"Apartment",
+    //   pricepermonth:"1000",
+    //   nroomates:"1",
+    //   collegename:" A. T. Still University ",
+    //   description:"test",
+    //   typeofpost:"Apartment and Roomate",
+    //   username:"steve","__v":{"$numberInt":"0"}}
+    
+    // ]
+   
+
+    useEffect(() => {
+      // Fetch gold posts
+      // axios.get('http://127.0.0.1:5001/goldposts')
+      //   .then(response => {
+      //     const goldPosts = response.data;
+      //     console.log(JSON.stringify(goldPosts)+ "goldPosts")
+      //     dispatch(setGoldPosts(goldPosts));
+      //   })
+      //   .catch(error => {
+      //     console.error(error);
+      //   });
+  
+      // Fetch silver posts
+      axios.get('http://127.0.0.1:5001/posts')
+        .then(response => {
+          const posts = response.data;
+          console.log(JSON.stringify(posts)+ "postsss")
+          dispatch(setPosts(posts));
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, [dispatch]);
+
+
+  // const goldPosts = useSelector(state => state.goldPosts);
+  // console.log(goldPosts + "usestae gold");
+  // const silverPosts = useSelector(state => state.silverPosts);
+  const posts = useSelector((state) => state.posts);
+     
+   console.log(JSON.stringify(posts) + "posts");
     const initialList = [
       {looking: '',typeval: '', bedrooms: ''}
     ];
@@ -315,7 +386,7 @@ const btnPrice = makeStyles((theme) => ({
   return (
     <>
     {/* bellow added this fixed postion */}
-    <div style={{position:'fixed', top: '10%'}}>
+    <div style={{ top: '10%',position: 'fixed', zIndex:'100'}}>
     <Box sx={{ ...commonStyles}}>
 
 
@@ -512,11 +583,11 @@ onKeyPress={(ev) => {
           <>
           
           <form onSubmit={handleSubmit}>
-          <TextField  id="filled-basic" label="max" variant="filled" value={pricelist?.max} onChange={onchangeprice}/>
+          <TextField  style={{width: '25%'}} id="filled-basic" label="max" variant="filled" value={pricelist?.max} onChange={onchangeprice}/>
           
-          <TextField  id="filled-basic" label="min" variant="filled" value={pricelist?.min} onChange={onchangepricemin}/>
+          <TextField style={{width: '25%'}} id="filled-basic" label="min" variant="filled" value={pricelist?.min} onChange={onchangepricemin}/>
          
-          <button onChange={handleSubmit}>Submit</button>
+          <Button style={{width: '10%'}} variant="contained" color="primary" onChange={handleSubmit}>Submit</Button>
          
           </form>
           </>
@@ -529,40 +600,30 @@ onKeyPress={(ev) => {
 
 </Box>
 </div>
-<div className={classes.floatcontainer}></div>
+
 <div className={classes.map}>
-<GoogleMaps  currentId={currentId} setCurrentId={setCurrentId} />
+  <GoogleMaps currentId={currentId} setCurrentId={setCurrentId} />
+</div>
+<div className={classes.floatchild}>
+  <ul>
+    {posts?.map((apartmentpost) => {
+      return (
+        <div >
+          <PostChain firstAddress={firstAddress} college={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
+        </div>
+      );
+    })}
+  </ul>
 </div>
 
-<div >
-    {/* <div className="main" > */}
-    <div className={classes.floatchild}>
-    <div  >
-
-      
 
 
-<ul >
-{/* <ul className={classes.list}> */}
 
-  {posts?.map((apartmentpost) => {
-  
 
-     return(
-      
-       <PostChain firstAddress={firstAddress} college={collegeSubmit} pclist={pclist} address={address} setPcist={setPcist} counter={counter} list={list} collegesel={coll} maxval={maxval} minval={minval} post={apartmentpost} lookingfor={selected} typeval={typeval} bedroomsval={bedroomsval} input={inputText} setCurrentId={setCurrentId} />
-       
-   ); 
-  
 
-   
-  })}
-  
-</ul>
 
-    </div>
-    </div>
-    </div>
+
+    
     
     </>
     

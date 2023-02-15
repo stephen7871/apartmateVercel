@@ -28,10 +28,12 @@ export default function ComboBox(props) {
       options={colleges}
       value={autoselectval}
       getOptionLabel={(option) => option.title}
-      style={{ width: 300 }}
+      style={{ width: 300, position:'relative', zIndex:'0' }}
+
       onChange={(event, value) => setAutoselectval(value)}
       renderInput={(params) => <TextField size="small" {...params} label="choose a college" variant="outlined" />}
     />
+    
   );
 }
 

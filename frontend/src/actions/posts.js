@@ -11,12 +11,33 @@ export const getPosts = () => async (dispatch) => {
     };
     // const { data } = await api.fetchPosts();
     const { data } = await axios.get(
-      "/posts",
+      "http://127.0.0.1:5001/posts",
       {},
       config
     );
     console.log(JSON.stringify(data) + " data both")
     dispatch({ type: FETCH_ALL, payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getGoldPosts = () => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    // const { data } = await api.fetchPosts();
+    const { data } = await axios.get(
+      "http://127.0.0.1:5001/goldposts",
+      {},
+      config
+    );
+    
+    dispatch({ type: FETCH_ALL, payload: data });
+    
   } catch (error) {
     console.log(error.message);
   }
@@ -59,11 +80,12 @@ export const getUsers = () => async (dispatch) => {
 
 
 
-export const deletePost = (id) => async (dispatch) => {
+export const deletePost = (id,route) => async (dispatch) => {
   try {
     console.log("deleting post with id " + id.id);
+    console.log("deleting post with route " + route?.route);
     // await axios.delete(`${'https://univinfomation.herokuapp.com'}/${id.id}`);
-    await axios.delete(`/posts/${id.id}`);
+    await axios.delete(`http://127.0.0.1:5001/${route?.route}/${id.id}`);
     console.log("deleted post with id " + id.id);
     //dispatch({ type: DELETE, payload: id.id });
   } catch (error) {

@@ -41,10 +41,23 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user/login",
+        "http://127.0.0.1:5001/api/user/login",
         { username, password },
         config
       );
+
+      // Send data to the backend via POST
+  //   const data = fetch('http://127.0.0.1:5001/api/user/login', {  // Enter your IP address here
+
+  //   method: 'POST', 
+  //   mode: 'cors', 
+  //   body: JSON.stringify({ username, password }),
+  //   config 
+
+  // })
+  // console.log(JSON.stringify(data?.username));
+  
+
 
       // console.log(JSON.stringify(data));
       toast({

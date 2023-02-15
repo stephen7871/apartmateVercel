@@ -63,7 +63,7 @@ const PromotePost = ({ post, setCurrentId, user, setUser,proplist, typeofpost })
             {showItem ? (
                 
                 <div >
-				<StripeContainer />
+				<StripeContainer returnedPost={returnPost} post={post}/>
         </div>
                
                 

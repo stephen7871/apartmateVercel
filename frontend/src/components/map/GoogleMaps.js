@@ -6,8 +6,9 @@ import { Tooltip } from '@material-ui/core';
 import PushPinIcon from '@mui/icons-material/PushPin';
 
 
-const GoogleMaps = ({ currentId, setCurrentId }) => {
-  const posts = useSelector((state) => state.posts);
+const GoogleMaps = ({ posts, currentId, setCurrentId }) => {
+  const silverPosts = useSelector((state) => state.silverPosts);
+  console.log(silverPosts + "silverPosts googgle");
   
 const AnyReactComponent = props => {
         
@@ -21,7 +22,7 @@ const AnyReactComponent = props => {
  }
  
  const renderMarkers = (map, maps) => {
-    {posts?.map((post) => {
+    {silverPosts?.map((post) => {
       Geocode.setLanguage("en");
       Geocode.setApiKey("AIzaSyBBoDTa2K0ql0d3ssnlMEYXdBvQLI6_LqA");
       Geocode.fromAddress(post.address).then(
@@ -42,7 +43,7 @@ const AnyReactComponent = props => {
         }
 
         const renderMyMarkers = (map, maps) => {
-          {posts?.map((post) => {
+          {silverPosts?.map((post) => {
             Geocode.setLanguage("en");
             Geocode.setApiKey("AIzaSyBBoDTa2K0ql0d3ssnlMEYXdBvQLI6_LqA");
             Geocode.fromAddress(post.address).then(

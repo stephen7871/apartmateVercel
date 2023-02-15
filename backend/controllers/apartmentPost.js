@@ -3,6 +3,7 @@ const express = require('express');
 const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+const GoldPostModel = require('../models/GoldPostModel')
 
 //import mongoose from 'mongoose';
 const mongoose = require('mongoose');
@@ -81,16 +82,27 @@ const s3 = new aws.S3({
 //     accessKeyId: 'AKIAUTVZCIJBJRY6SLNJ',
 //     secretAccessKey: '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',
 // })
-
 module.exports.getPosts = async (req, res) => { 
     try {
         const aparmentMessages = await Apartmentmodel.find();
+        res.status(200).json(aparmentMessages);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+
+module.exports.getGoldPosts = async (req, res) => { 
+    try {
+        const aparmentMessages = await GoldPostModel.find();
                 
         res.status(200).json(aparmentMessages);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
+
+
 
 module.exports.getPost = async (req, res) => { 
     const { id } = req.params;
@@ -103,6 +115,8 @@ module.exports.getPost = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+
 
 
 
@@ -123,8 +137,8 @@ module.exports.createPost = async (req, res) => {
 
         let fileArray = req.files,
 					fileLocation;
-
-        
+        const photos = req.body.photos
+        const typeofpromote = req.body.typeofpromote
         const caption = req.body.address
         const nbedrooms = req.body.nbedroomss
         const pricepermonth = req.body.pricepermonth
@@ -144,42 +158,49 @@ module.exports.createPost = async (req, res) => {
                     // console.log( 'filearray', JSON.stringify(fileArray) );
 					galleryImgLocationArray.push( fileLocation )
 				}
+    
 
+ if (typeofpromote == "1"){
+    await GoldPostModel.create({photos: galleryImgLocationArray, 
+        address: caption,
+        nbedrooms: nbedrooms,
+        typeofplace: typeofplace,
+        pricepermonth: pricepermonth,
+        nroomates: nroomates,
+         collegename: collegename,
+        description: description,
+        typeofpost: typeofpost,
+        username: username,
+         max: max,
+         min: min,
+        wanttolive: wanttolive,
+        promote: 1,
+        photos: photos,
+        route: 'goldposts'
 
-    //             address: String,
-    // nbedrooms: String,
-    // typeofplace: String,
-    // pricepermonth: String,
-    // nroomates: String,
-    // collegename: String,
-    // photos: [String],
-    // description: String,
-    // createdAt: {
-    //     type: Date,
-    //     default: new Date(),
-    // },
-    // id: String,
-    // typeofpost: String,
-    // username: String,
-    // max: String,
-    // min: String,
-    // wanttolive: String,
+    });
 
+ }
 
-        await Apartmentmodel.create({photos: galleryImgLocationArray, 
-            address: caption,
-            nbedrooms: nbedrooms,
-            typeofplace: typeofplace,
-            pricepermonth: pricepermonth,
-            nroomates: nroomates,
-             collegename: collegename,
-            description: description,
-            typeofpost: typeofpost,
-            username: username,
-             max: max,
-             min: min,
-            wanttolive: wanttolive
-        });
+ if(typeofpromote == "4"){
+    await Apartmentmodel.create({photos: galleryImgLocationArray, 
+        address: caption,
+        nbedrooms: nbedrooms,
+        typeofplace: typeofplace,
+        pricepermonth: pricepermonth,
+        nroomates: nroomates,
+         collegename: collegename,
+        description: description,
+        typeofpost: typeofpost,
+        username: username,
+         max: max,
+         min: min,
+        wanttolive: wanttolive,
+        route: 'posts'
+    });
+ }
+            
+        
 
         // res.json( {
         //     filesArray: fileArray,
@@ -196,6 +217,7 @@ module.exports.createPost = async (req, res) => {
     }
 });
 };
+
 
 module.exports.deletePost = async (req, res) => {
     const { id } = req.params;

@@ -121,7 +121,7 @@ function centerAspectCrop(
 
 
 
-const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
+const Sublease = ({ currentId, setCurrentId, user, setUser}) => {
     const post = useSelector((state) => (currentId ? state.posts.find((description) => description._id === currentId) : null));
 
     const [isActive, setIsActive] = useState(false);
@@ -228,7 +228,7 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
           const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
             //   // {photos: formdata, address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Apartment and Roomate', collegename: collegesel.title},
         formdata.append("address", postData.address)
-        formdata.append("nbedroomss", nbedroomss)
+        formdata.append("nbedrooms", nbedroomss)
         formdata.append("pricepermonth", postData.pricepermonth)
         formdata.append("description", postData.description)
         formdata.append("username", user?.username)
@@ -236,7 +236,6 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
         formdata.append("nroomates", roomatenum)
         formdata.append("typeofpost", 'Apartment and Roomate')
         formdata.append("collegename", collegesel.title)
-        formdata.append("typeofpromote", "4")
          await axios.post("http://127.0.0.1:5001/posts", formdata, { headers: {
 					'accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
@@ -251,8 +250,6 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
       }
     };
     const onchangeprice = (e) => {
-      // e.preventDefault();
-      //   setPostData({ ...postData, pricepermonth: e.target.value})
       let input = e.target.value ;
       if( !input || ( input[input.length-1].match('[0-9]') && input[0].match('[1-9]')) ){
       setPostData({ ...postData, pricepermonth: e.target.value})
@@ -557,7 +554,7 @@ const resizeFile = (file) =>
   <FormControl className={opent.formControl}>
     
         {/* <InputLabel htmlFor="demo-customized-textbox">rent</InputLabel> */}
-        <BootstrapInput inputProps={{pattern: "[0-9]*",}} fullWidth value={postData.pricepermonth} onChange={onchangeprice}/>
+        <BootstrapInput inputProps={{pattern: "[0-9]*",}} id="demo-customized-textbox" />
       </FormControl>
       </div>
   
@@ -744,4 +741,4 @@ const resizeFile = (file) =>
 </div>
     );
 }
-export default Apartment;
+export default Sublease;

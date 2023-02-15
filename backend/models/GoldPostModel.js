@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // const postSchema = mongoose.Schema({
-    const AparmentModel = new mongoose.Schema({
+    const GoldPostModel = new mongoose.Schema({
     address: String,
     nbedrooms: String,
     typeofplace: String,
@@ -24,4 +24,4 @@ const mongoose = require("mongoose");
     route: String,
 })
 
-module.exports = mongoose.model("AparmentModel", AparmentModel);
+module.exports = mongoose.model("GoldPostModel", GoldPostModel);

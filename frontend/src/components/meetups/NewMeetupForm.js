@@ -21,6 +21,7 @@ import Apartment from './Apartment';
 import Selling from './Selling';
 import Roomate from './Roomate';
 import { createPost } from '../../actions/posts';
+import Sublease from './Sublease';
 
 
 
@@ -36,6 +37,7 @@ const btn = makeStyles((theme) => ({
 const opentop = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
+    
 
   },
   selectEmpty: {
@@ -103,6 +105,7 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
   const [isShowap, setIsShownap] = useState(true);
   const [isShowro, setIsShownro] = useState(false);
   const [isShowroap, setIsShownroap] = useState(false);
+  const [isShownSub, setIsShownSub]  = useState(false);
   const [selectval, setSelectval] = React.useState('');
   const [username, setUserName] = useState("");
   useEffect(async () => {
@@ -155,48 +158,64 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
     setIsShownap(true);
     setIsShownro(false);
     setIsShownroap(false);
+    setIsShownSub(false);
   };
   const roomateClick = event => {
     setIsShownro(true);
     setIsShownap(false);
     setIsShownroap(false);
+    setIsShownSub(false);
   };
   const roomateapartmentClick = event => {
-    setIsShownroap(true);
+   
     setIsShownro(false);
     setIsShownap(false);
+    setIsShownroap(true);
+    setIsShownSub(false);
   };
 
+  const SubleaseClick = event => {
+    setIsShownro(false);
+    setIsShownap(false);
+    setIsShownroap(false);
+    setIsShownSub(true);
+  };
   
 
-  if (!username) {
-    return (
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Please Sign IIn to create your own memories and like other's memories.
-        </Typography>
-      </Paper>
-    );
-  }
+  // if (!username) {
+  //   return (
+  //     <Paper className={classes.paper}>
+  //       <Typography variant="h6" align="center">
+  //         Please Sign IIn to create your own memories and like other's memories.
+  //       </Typography>
+  //     </Paper>
+  //   );
+  // }
 
   return (
     
     <>
 
    
-    <div className={opent.formControl} style={{width: '200%', 
+    <div className={opent.formControl} style={{width: '100%', 
     marginTop: '30%', 
     marginLeft: '60%'}} >
       <Card >
+        <div style={{textAlign: 'center'}}>
       <Tooltip title="selling an apartment or house" arrow>
-    <Button className={opent.formControl}  style={{width: '32%'}} variant="contained" color="primary" onClick={apartmentClick}>Make a Listing?</Button>
+    <Button className={opent.formControl}  style={{width: '20%'}} variant="contained" color="primary" onClick={apartmentClick}>Make a Listing?</Button>
+    </Tooltip>
+    <Tooltip title="Need to sublease an apartment" arrow>
+    <Button className={opent.formControl} style={{width: '20%'}} variant="contained" color="primary" onClick={SubleaseClick}>List a SubLease?</Button>
     </Tooltip>
     <Tooltip title="looking for roomates and an apartment" arrow>
-    <Button className={opent.formControl}  style={{width: '30%'}} variant="contained" color="primary" onClick={roomateClick}>roomate?</Button>
+    <Button className={opent.formControl}  style={{width: '20%'}} variant="contained" color="primary" onClick={roomateClick}>Need a place?</Button>
     </Tooltip>
     <Tooltip title="have an apartment and looking for roomates" arrow>
-    <Button className={opent.formControl} style={{width: '32%'}} variant="contained" color="primary" onClick={roomateapartmentClick}>Need a Roomate?</Button>
+    <Button className={opent.formControl} style={{width: '20%'}} variant="contained" color="primary" onClick={roomateapartmentClick}>Need a Roomate?</Button>
     </Tooltip>
+    </div>
+    
 {/* 👇️ show elements on click */}
 {isShowap && (
   <Selling currentId={currentId} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
@@ -209,6 +228,9 @@ const NewMeetupForm = ({ currentId, setCurrentId, user, setUser }) => {
  <Roomate currentId={currentId} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
  
   )}
+{isShownSub && (
+  <Sublease currentId={currentId} setCurrentId={setCurrentId} user={user} setUser={setUser}/>
+)}
   </Card>
   </div>
 

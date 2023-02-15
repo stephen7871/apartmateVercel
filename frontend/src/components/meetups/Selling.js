@@ -161,7 +161,7 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
         formdata.append("typeofplace", selectval)
         formdata.append("typeofpost", 'Renting')
         formdata.append("collegename", collegesel.title)
-         await axios.post("/posts", formdata, { headers: {
+         await axios.post("http://127.0.0.1:5001/posts", formdata, { headers: {
 					'accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
 				}})
@@ -285,3 +285,8 @@ const Selling = ({ currentId, setCurrentId, user, setUser}) => {
     );
 }
 export default Selling;
+
+
+
+
+

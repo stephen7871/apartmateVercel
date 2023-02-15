@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const baseURL = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
 const url = 'https://apartmatesearch.herokuapp.com'
-const API = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
+// const API = axios.create({ baseURL: 'https://apartmatesearch.herokuapp.com' });
+const API = axios.create({ baseURL: 'http://127.0.0.1:5001' })
 // const url = 'https://apartmatesearch.herokuapp.com';
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('form')) {

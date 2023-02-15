@@ -23,7 +23,7 @@ const CARD_OPTIONS = {
 	}
 }
 
-export default function PaymentForm() {
+export default function PaymentForm({post,returnedPost}) {
     const [success, setSuccess ] = useState(false)
     const stripe = useStripe()
     const elements = useElements()
@@ -86,7 +86,7 @@ export default function PaymentForm() {
     if(!error) {
         try {
             const {id} = paymentMethod
-            const response = await axios.post("/payment", {
+            const response = await axios.post("http://127.0.0.1:5001/payment", {
                 amount: 1000,  ///this is in cents
                 id
             })
@@ -104,7 +104,40 @@ export default function PaymentForm() {
 
             if(response.data.success) {
                 console.log("Successful payment")
-                setSuccess(true)
+                setSuccess(true);
+                const formdata = new FormData();
+            //     for ( let i = 0; i < post?.photos?.length; i++ ) {
+            //      formdata.append( "imagecropped", image[i], imageNames[i]);
+            //    }
+               // formdata.append( "imagecropped", image, "McNally_.PNG")
+               // console.log(JSON.stringify(image) + "image")
+                 const collegesel = await JSON.parse(localStorage.getItem("autoselectval"));
+                   //   // {photos: formdata, address: postData.address, nbedrooms: nbedroomss, pricepermonth: postData.pricepermonth, description: postData.description,username: user?.username, typeofplace: selectval, nroomates: roomatenum, typeofpost: 'Apartment and Roomate', collegename: collegesel.title},
+               formdata.append("photos", post?.photos)
+                formdata.append("address", post?.address)
+               formdata.append("nbedrooms", post?.nbedrooms)
+               formdata.append("pricepermonth", post.pricepermonth)
+               formdata.append("description", post.description)
+               formdata.append("username", post.username)
+               formdata.append("typeofplace", post.typeofplace)
+               formdata.append("nroomates", post.nroomates)
+               formdata.append("typeofpost", post.typeofpost)
+               formdata.append("collegename", post.collegename)
+               formdata.append("typeofpromote", "1")
+               const {data} = await axios.post("http://127.0.0.1:5001/goldposts", formdata, { headers: {
+                           'accept': 'application/json',
+                           'Content-Type': 'multipart/form-data'
+                       }}).then(
+                        await axios.delete(`http://127.0.0.1:5001/${post?.route}/${post?._id}`)
+
+                       );
+                
+                        
+                // const {delData} = await axios.delete(`http://127.0.0.1:5001/${post?.route}/${post.id}`);
+
+                    
+            
+                   
             }
 
         } catch (error) {
@@ -114,6 +147,9 @@ export default function PaymentForm() {
         console.log(error.message)
     }
 }
+
+
+
 
     return (
         <>

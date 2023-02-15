@@ -4,7 +4,7 @@
   min-height: 100vh;
   display: flex;
   background-color: rgb(21, 152, 185);
-  
+  background-attachment: local, scroll;
   background-position: center;
   background-size: cover;
   

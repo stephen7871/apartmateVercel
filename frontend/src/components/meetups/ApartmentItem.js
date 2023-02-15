@@ -8,6 +8,9 @@ import useStyles from './styles.js';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box';
+import PostCard from '../ui/PostCard';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { textAlign } from '@mui/system';
 // import Card from '@mui/material/Card';
 
 
@@ -63,31 +66,47 @@ const ApartmentItem = ({ post, setCurrentId, user, setUser,proplist }) => {
     return(
       <div>
       
-<Card>
-        <Button>
+<PostCard>
+        
+        
+        
         <div id="container" style={{position: "relative"}}>
-          <div style={{ width:"55%", left:"0"}}>
-        <img  src={post.photos[photoIndex]}  alt="BigCo Inc. logo"></img>
+
+        <div id="container" style={{position: "relative"}}>
+        <div style={{position: "absolute",marginLeft: '95%'}}>
+        <BookmarkBorderIcon/>
         </div>
-        <div id="div1" style={{position: "absolute", top:'50%', right: '85%'}}>
+        <h3 style={{marginRight: '80%'}}>NorthLand</h3> 
+        <Typography style={{marginRight: '0%'}} variant="body2" color="textSecondary" component="h2"> {post.address}</Typography>
+
+
+        
+        </div>
+        
+        <hr style={{padding: '1%'}}></hr>
+        <img style={{ width:"300px",borderRadius: '9px',padding:"1%"}} src={post.photos[photoIndex]}  alt="BigCo Inc. logo"></img>
+        <div style={{position: "absolute", top:'25%',left:'61%', fontWeight: '900'}}>${post.pricepermonth}</div>
+       
+        <div id="div1" style={{position: "absolute", top:'50%', right: '90%'}}>
         <Button onClick={removeIndex}style={{width:'30%'}}>
         
         <ArrowBackIosNewIcon style={{width:'40%'}}/>
         </Button>
         </div>
-        <div id="div1" style={{position: "absolute", top:'50%', left: '85%'}}>
+        <div id="div1" style={{position: "absolute", top:'50%', left: '50%'}}>
         <Button onClick={addIndex} style={{width:'30%'}}>
         
         <ArrowForwardIosIcon style={{width:'40%'}}/>
         </Button>
         </div>
+        
+        <Typography style={{position: "absolute",top:'35%',left:'61%',fontWeight: '600' }} variant="body2" color="textSecondary" component="h2">{post.typeofplace}</Typography>
+        <div style={{position: "absolute",top:'45%',left:'61%',fontWeight: '400',fontSize: 'smaller', textAlign: 'left'}}>Dog & cat Friendly, fitness center, DishWasher, refidgerator, Kitchen in unit washer & Dryer, Range, Heat</div>
+        <h3 style={{position: "absolute",top:'90%',left:'61%', fontWeight: '700'}}>(860)-988-5657</h3>
         </div>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.typeofplace}</Typography>
-        <p>{post.description}</p>
-        <h3>(860)-988-5657</h3>
          
-        </Button>
-        </Card>
+        
+        </PostCard>
       </div>
       
      

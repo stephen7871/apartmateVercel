@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import * as actionType from '../../constants/actionTypes';
-import useStyles from './styles';
+
 
 const Navbar = (props ) => {
   const navigate = useNavigate()
@@ -25,12 +25,18 @@ const Navbar = (props ) => {
   const dispatch = useDispatch();
   const location = useLocation();
   
-  const classess = useStyles();
+
   
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
     //localStorage.setItem("userInfo", JSON.stringify(""));
     localStorage.removeItem("userInfo");
+    //props.setUser(undefined);
+   // props.history.push("/Auth");
+    navigate("/Home/Auth")
+    
+  };
+  const signIn = () => {
     //props.setUser(undefined);
    // props.history.push("/Auth");
     navigate("/Home/Auth")
@@ -58,12 +64,12 @@ const stringifiedPerson = localStorage.getItem("name");
 const personAsObjectAgain = JSON.parse(stringifiedPerson);
 
   return (
-    <div style={{position: 'fixed'}}>
+    <div style={{position: 'fixed', zIndex:'100'}}>
     <header className={classes.header}>
       <div className={classes.logo}>Apartmate</div>
       <nav>
         <ul>
-          <li>
+          <li >
             <Link to="/Home/Blog">Listings Page</Link>
           </li>
           <li>
@@ -82,18 +88,13 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
             <Link to='/checkout'>checkout</Link>
           </li> */}
           <li>
+
+          {username
+        ? <Button style={{width: '60%'}} variant="contained"  color="secondary" onClick={logout}>Logout</Button>
+        : <Button style={{width: '60%'}}  variant="contained" color="primary" onClick={signIn} >sign in</Button>
+      }
           
-          {username ? (
-          <>
-            {/* <Avatar className={classess.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-            <Typography className={classess.userName} variant="h6">{user?.result.name}</Typography> */}
-            <Button style={{width: '60%'}} variant="contained"  color="secondary" onClick={logout}>Logout</Button>
-            </>
-        ) : (
-          <>
-          <Button style={{width: '60%'}}  component={Link} to="/Home/Auth" variant="contained" color="primary">Sign In</Button>
-          </>
-        )}
+  
           </li>
 
 

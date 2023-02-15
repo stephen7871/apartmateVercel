@@ -2,13 +2,15 @@
 //const express = require('express');
 
 //import { getPosts, getPost, createPost, getUsers,deletePost} from '../controllers/posts.js';
-const {getPosts, getPost, createPost, deletePost, getGoldPosts} = require('../controllers/apartmentPost.js')
+const { getGoldPosts, createGoldPost} = require('../controllers/goldPost.js')
 
 
 
 const router = require("express").Router();
 
-router.route("/").get(getPosts);
+
+router.route("/").get(getGoldPosts);
+router.route("/").post(createGoldPost);
 
 
 
@@ -17,11 +19,5 @@ router.route("/").get(getPosts);
 ///router.post('/', createPost);
 
 
-router.route("/").post(createPost);
-
-router.route('/:id').get(getPost);
-/// router.get('/:id', getPost);
-//router.patch('/:id', updatePost);
-router.route('/:id').delete(deletePost);
 
 module.exports = router;

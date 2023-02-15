@@ -2,12 +2,14 @@ import React, { useState, useEffect,useSelector } from 'react';
 import { Container, Grow, Grid, Button } from '@material-ui/core';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getPosts } from '../../actions/posts';
+import { getPosts, getGoldPosts } from '../../actions/posts';
 import NewMeetupForm from '../meetups/NewMeetupForm.js';
 import MeetupList from '../meetups/MeetupList.js';
 //import AllMeetupsPage from '../../pages/AllMeetups';
 //import Layout from '../layout/NewLayout';
 import Navbar from '../Navbar/Navbar';
+import axios from 'axios';
+
 //import Auth from '../Auth/Auth.js';
 import { getUsers } from '../../actions/posts';
 import MyPost from '../meetups/MyPost';
@@ -35,13 +37,18 @@ const Home = (props ) => {
   }, []);
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
+  const [posts, setPosts] = useState([]);
+  const [goldPosts, setGoldPosts] = useState([]);
   
-   useEffect(() => {
-    dispatch(getUsers());
-  }, [currentId, dispatch]);
+  //  useEffect(() => {
+  //   dispatch(getUsers());
+  // }, [currentId, dispatch]);
 
+  
 
-  useEffect(async() => {
+   useEffect(async() => {
+    
+  //  dispatch(getGoldPosts());
     dispatch(getPosts());
 }, [currentId, dispatch]);
 
@@ -58,7 +65,7 @@ const Home = (props ) => {
     
     
 <div >
-            <div>
+            <div className={classes.navbar}>
             <Navbar user={username} setUser={setUserName} />
             </div>
             <Routes>

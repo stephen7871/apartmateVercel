@@ -143,7 +143,7 @@ const Roomate = ({ currentId, setCurrentId, user, setUser }) => {
      formdata.append("wanttolive", postData.wanttolive)
      formdata.append("typeofpost", "Looking for a Roomate")
      formdata.append("collegename", collegesel.title)
-      await axios.post("/posts", formdata, { headers: {
+      await axios.post("http://127.0.0.1:5001/posts", formdata, { headers: {
        'accept': 'application/json',
        'Content-Type': 'multipart/form-data'
      }})
