@@ -1,8 +1,8 @@
 
-# Talk-A-Tive
+# Apartmate
 
-Talk-a-tive is a Full Stack Chatting App.
-Uses Socket.io for real time communication and stores user details in encrypted format in Mongo DB Database.
+Apartmate is a Full MERN Stack apartment website app.
+allows user to post apartments for sale,sublease,look for roomates, promote post with strip Api. user details in encrypted format in Mongo DB Database.  Also uses Aws S3 bucket
 ## Tech Stack
 
 **Client:** React JS
@@ -27,7 +27,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd mern-chat-app
+  cd apartmate
 ```
 
 Install dependencies
@@ -44,7 +44,7 @@ Install dependencies
 Start the server
 
 ```bash
-  npm run start
+  npm start
 ```
 Start the Client
 
