@@ -237,7 +237,9 @@ const Apartment = ({ currentId, setCurrentId, user, setUser}) => {
         formdata.append("typeofpost", 'Apartment and Roomate')
         formdata.append("collegename", collegesel.title)
         formdata.append("typeofpromote", "4")
-         await axios.post("http://127.0.0.1:5001/posts", formdata, { headers: {
+        //  await axios.post("http://127.0.0.1:5001/posts", formdata, { headers: {
+          await axios.post("https://apartmate-vercel-6vc8.vercel.app/posts", formdata, { headers: {
+          
 					'accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
 				}})

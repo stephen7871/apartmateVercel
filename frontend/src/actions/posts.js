@@ -11,7 +11,8 @@ export const getPosts = () => async (dispatch) => {
     };
     // const { data } = await api.fetchPosts();
     const { data } = await axios.get(
-      "http://127.0.0.1:5001/posts",
+      // "http://127.0.0.1:5001/posts",
+      "https://apartmate-vercel-6vc8.vercel.app/posts",
       {},
       config
     );
@@ -31,7 +32,9 @@ export const getGoldPosts = () => async (dispatch) => {
     };
     // const { data } = await api.fetchPosts();
     const { data } = await axios.get(
-      "http://127.0.0.1:5001/goldposts",
+      // "http://127.0.0.1:5001/goldposts",
+      "https://apartmate-vercel-6vc8.vercel.app/goldposts",
+      
       {},
       config
     );

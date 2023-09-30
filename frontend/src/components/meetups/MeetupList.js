@@ -135,7 +135,8 @@ const btnPrice = makeStyles((theme) => ({
       //   });
   
       // Fetch silver posts
-      axios.get('http://127.0.0.1:5001/posts')
+      // axios.get('http://127.0.0.1:5001/posts')
+      axios.get('https://apartmate-vercel-6vc8.vercel.app/posts')
         .then(response => {
           const posts = response.data;
           console.log(JSON.stringify(posts)+ "postsss")

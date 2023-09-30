@@ -51,7 +51,9 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "http://127.0.0.1:5001/api/user",
+        
+        "https://apartmate-vercel-6vc8.vercel.app/api/user",
+
         {
           name,
           username,

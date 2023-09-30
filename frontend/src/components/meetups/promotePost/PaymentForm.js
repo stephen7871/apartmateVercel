@@ -86,7 +86,9 @@ export default function PaymentForm({post,returnedPost}) {
     if(!error) {
         try {
             const {id} = paymentMethod
-            const response = await axios.post("http://127.0.0.1:5001/payment", {
+            // const response = await axios.post("http://127.0.0.1:5001/payment", {
+                const response = await axios.post("https://apartmate-vercel-6vc8.vercel.app/payment", {
+                
                 amount: 1000,  ///this is in cents
                 id
             })
@@ -124,11 +126,15 @@ export default function PaymentForm({post,returnedPost}) {
                formdata.append("typeofpost", post.typeofpost)
                formdata.append("collegename", post.collegename)
                formdata.append("typeofpromote", "1")
-               const {data} = await axios.post("http://127.0.0.1:5001/goldposts", formdata, { headers: {
+               const {data} = await axios.post("https://apartmate-vercel-6vc8.vercel.app/goldposts", formdata, { headers: {
+ //               const {data} = await axios.post("http://127.0.0.1:5001/goldposts", formdata, { headers: {
+                
                            'accept': 'application/json',
                            'Content-Type': 'multipart/form-data'
                        }}).then(
-                        await axios.delete(`http://127.0.0.1:5001/${post?.route}/${post?._id}`)
+                        //await axios.delete(`http://127.0.0.1:5001/${post?.route}/${post?._id}`)
+                        await axios.delete(`https://apartmate-vercel-6vc8.vercel.app/${post?.route}/${post?._id}`)
+                       
 
                        );
                 
