@@ -85,7 +85,8 @@ export const deletePost = (id,route) => async (dispatch) => {
     console.log("deleting post with id " + id.id);
     console.log("deleting post with route " + route?.route);
     // await axios.delete(`${'https://univinfomation.herokuapp.com'}/${id.id}`);
-    await axios.delete(`http://127.0.0.1:5001/${route?.route}/${id.id}`);
+    // await axios.delete(`http://127.0.0.1:5001/${route?.route}/${id.id}`);
+    await axios.delete(`https://apartmate-vercel-6vc8.vercel.app/${route?.route}/${id.id}`);
     console.log("deleted post with id " + id.id);
     //dispatch({ type: DELETE, payload: id.id });
   } catch (error) {

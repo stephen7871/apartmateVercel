@@ -91,7 +91,8 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["/api/user/login","http://stephens-macbook-pro.local:3000","http://localhost:3000","http://localhost:5001/posts","http://localhost:5001/payment","http://127.0.0.1:5001/api/user/login"]
+    // origin: ["/api/user/login","http://stephens-macbook-pro.local:3000","http://localhost:3000","http://localhost:5001/posts","http://localhost:5001/payment","http://127.0.0.1:5001/api/user/login"]
+    origin: ["https://apartmate-vercel-6vc8.vercel.app/"]
     // credentials: true,
   },
 });
